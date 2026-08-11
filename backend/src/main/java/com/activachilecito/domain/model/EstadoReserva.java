@@ -1,4 +1,4 @@
-package com.activachilecito.model;
+package com.activachilecito.domain.model;
 
 /**
  * Enum que representa los estados posibles para una reserva.

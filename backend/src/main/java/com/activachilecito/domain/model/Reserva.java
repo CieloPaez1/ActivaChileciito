@@ -1,4 +1,4 @@
-package com.activachilecito.model;
+package com.activachilecito.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
