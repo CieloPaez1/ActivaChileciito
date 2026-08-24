@@ -1,0 +1,64 @@
+<div class="lista-container">
+  <div class="card">
+    <div class="header-actions">
+      <h2>Gestión de Usuarios</h2>
+      <div class="filter-group">
+        <label for="filtroRol">Filtrar por Rol:</label>
+        <select id="filtroRol" [(ngModel)]="filtroRol" (change)="onRolChange()">
+          <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="loader-lg"></div>
+      <p>Cargando usuarios...</p>
+    </div>
+
+    <div *ngIf="!isLoading && usuarios.length === 0" class="empty-state">
+      <div class="empty-icon">👥</div>
+      <h3>No hay usuarios</h3>
+      <p>Aún no hay usuarios registrados con el rol {{ filtroRol }}.</p>
+    </div>
+
+    <div class="table-responsive" *ngIf="!isLoading && usuarios.length > 0">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Nombre Completo</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of usuarios">
+            <td>
+              <div class="user-info">
+                <div class="avatar">{{ u.nombre.charAt(0) }}{{ u.apellido.charAt(0) }}</div>
+                <span class="user-name">{{ u.nombre }} {{ u.apellido }}</span>
+              </div>
+            </td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.telefono }}</td>
+            <td>
+              <span class="badge" [class.badge-active]="u.activo" [class.badge-inactive]="!u.activo">
+                {{ u.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn-icon delete" (click)="eliminarUsuario(u.id)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
