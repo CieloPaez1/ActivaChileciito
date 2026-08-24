@@ -26,6 +26,9 @@ public class UsuarioDto {
     @JsonProperty("rol")
     private RolUsuario rol;
 
+    @JsonProperty("telefono")
+    private String telefono;
+
     @JsonProperty("activo")
     private boolean activo;
 
@@ -33,13 +36,14 @@ public class UsuarioDto {
     public UsuarioDto() {}
 
     // Constructor COMPLETO (para que el Mapper o el Controlador puedan usarlo sin problemas)
-    public UsuarioDto(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, boolean activo) {
+    public UsuarioDto(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, String telefono, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.password = password;
         this.rol = rol;
+        this.telefono = telefono;
         this.activo = activo;
     }
 
@@ -50,5 +54,6 @@ public class UsuarioDto {
     public String getEmail() { return email; }
     public String getPassword() { return password; }
     public RolUsuario getRol() { return rol; }
+    public String getTelefono() { return telefono; }
     public boolean isActivo() { return activo; }
 }

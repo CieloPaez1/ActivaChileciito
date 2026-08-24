@@ -17,6 +17,7 @@ public class UsuarioMapper {
                 data.getEmail(),
                 data.getPassword(),
                 data.getRol(),
+                data.getTelefono(),
                 data.isActivo()
         );
     }
@@ -31,6 +32,7 @@ public class UsuarioMapper {
                 domain.getEmail(),
                 domain.getPassword(),
                 domain.getRol(),
+                domain.getTelefono(),
                 domain.isActivo()
         );
     }
@@ -45,9 +47,8 @@ public class UsuarioMapper {
                 usuario.getEmail(),
                 usuario.getPassword(),
                 usuario.getRol(),
+                usuario.getTelefono(),
                 usuario.isActivo()
-
-
         );
     }
 

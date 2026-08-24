@@ -33,6 +33,9 @@ public class UsuarioData {
     @Column(nullable = false, length = 20)
     private RolUsuario rol;
 
+    @Column(length = 20)
+    private String telefono;
+
     @Column(nullable = false)
     private boolean activo;
 

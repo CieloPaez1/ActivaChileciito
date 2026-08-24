@@ -55,5 +55,17 @@ public class UsuarioRepository implements UsuarioOutput {
                 .map(usuarioMapper::toDomain)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void eliminar(Long id) {
+        usuarioCrud.deleteById(id);
+    }
+
+    @Override
+    public List<Usuario> obtenerPorRol(model.RolUsuario rol) {
+        return usuarioCrud.findByRol(rol).stream()
+                .map(usuarioMapper::toDomain)
+                .collect(Collectors.toList());
+    }
 }
 

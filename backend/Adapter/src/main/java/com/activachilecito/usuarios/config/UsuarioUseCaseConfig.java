@@ -14,4 +14,14 @@ public class UsuarioUseCaseConfig {
         // Aquí instanciamos manualmente el caso de uso puro, pasándole el puerto que se conecta a la BD
         return new RegistrarUsuarioUseCase(usuarioOutput);
     }
+
+    @Bean
+    public usecase.EliminarUsuarioUseCase eliminarUsuarioUseCase(UsuarioOutput usuarioOutput) {
+        return new usecase.EliminarUsuarioUseCase(usuarioOutput);
+    }
+
+    @Bean
+    public usecase.ObtenerUsuariosPorRolUseCase obtenerUsuariosPorRolUseCase(UsuarioOutput usuarioOutput) {
+        return new usecase.ObtenerUsuariosPorRolUseCase(usuarioOutput);
+    }
 }

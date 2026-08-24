@@ -32,7 +32,8 @@ public class UsuarioPostController {
                 dto.getApellido(),
                 dto.getEmail(),
                 dto.getPassword(),
-                dto.getRol()
+                dto.getRol(),
+                dto.getTelefono()
         );
 
         // 2. Le pasamos el modelo validado al Caso de Uso (idéntico a tu proyecto anterior)

@@ -18,4 +18,9 @@ public interface UsuarioOutput {
     // Trae la lista de todos los usuarios (útil para el ADMIN_SISTEMA)
     List<Usuario> listarTodos();
 
+    // Elimina un usuario por su ID
+    void eliminar(Long id);
+
+    // Obtiene usuarios por su rol
+    List<Usuario> obtenerPorRol(model.RolUsuario rol);
 }

@@ -10,25 +10,27 @@ public class Usuario {
     private String email;
     private String password;
     private RolUsuario rol; // Usamos el Enum que ya tenías pensado
+    private String telefono;
     private boolean activo;
 
     public Usuario() {
     }
-    public static Usuario restaurar(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, boolean activo) {
+    public static Usuario restaurar(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, String telefono, boolean activo) {
         // Aquí no validamos nada porque asumimos que los datos en la BD ya son válidos
-        return new Usuario(id, nombre, apellido, email, password, rol, activo);
+        return new Usuario(id, nombre, apellido, email, password, rol, telefono, activo);
     }
 
-    Usuario(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, boolean activo) {
+    Usuario(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, String telefono, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.password = password;
         this.rol = rol;
+        this.telefono = telefono;
         this.activo = activo;
     }
-    public static Usuario crear(String nombre, String apellido, String email, String password, RolUsuario rol) {
+    public static Usuario crear(String nombre, String apellido, String email, String password, RolUsuario rol, String telefono) {
 
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new ExcepcionUsuario("El nombre del usuario no puede estar nulo o vacío.");
@@ -57,7 +59,7 @@ public class Usuario {
 
         // Si pasa todas las barreras, instanciamos el objeto.
         // El ID nace en null (lo da PostgreSQL) y el estado activo por defecto es true.
-        return new Usuario(null, nombre, apellido, email, password, rol, true);
+        return new Usuario(null, nombre, apellido, email, password, rol, telefono, true);
     }
 
     public Long getId() {
@@ -114,5 +116,13 @@ public class Usuario {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }
