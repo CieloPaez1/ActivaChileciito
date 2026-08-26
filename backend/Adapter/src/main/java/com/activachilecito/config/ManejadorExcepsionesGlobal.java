@@ -1,5 +1,6 @@
-package com.activachilecito.usuarios.config;
+package com.activachilecito.config;
 
+import com.activachilecito.core.complejo.exception.ComplejoException;
 import exception.ExcepcionUsuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,13 @@ public class ManejadorExcepsionesGlobal {
     @ExceptionHandler(ExcepcionUsuario.class)
     public ResponseEntity<Map<String, String>> manejarExcepcionUsuario(ExcepcionUsuario e) {
         // Devolvemos el error 400 (Bad Request) con el mensaje de tu regla de negocio
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap("error", e.getMessage()));
+    }
+
+    @ExceptionHandler(ComplejoException.class)
+    public ResponseEntity<Map<String, String>> manejarExcepcionComplejo(ComplejoException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap("error", e.getMessage()));
