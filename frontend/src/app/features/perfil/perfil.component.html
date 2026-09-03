@@ -1,0 +1,86 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Mi Perfil</h2>
+  
+  <div class="row">
+    <!-- Datos del perfil -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Datos Personales</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="perfilMessage" class="alert alert-info">
+            {{ perfilMessage }}
+          </div>
+          
+          <form [formGroup]="perfilForm" (ngSubmit)="onUpdatePerfil()">
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-0">Email</label>
+              <p class="form-control-plaintext pt-0">{{ usuario?.email }}</p>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-0">Rol</label>
+              <p class="form-control-plaintext pt-0"><span class="badge bg-secondary">{{ usuario?.rol }}</span></p>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-0">Estado</label>
+              <p class="form-control-plaintext pt-0">
+                <span class="badge" [ngClass]="usuario?.estado === 'ACTIVO' ? 'bg-success' : 'bg-danger'">
+                  {{ usuario?.estado }}
+                </span>
+              </p>
+            </div>
+
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" formControlName="nombre">
+            </div>
+
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" id="apellido" class="form-control" formControlName="apellido">
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="perfilForm.invalid || isPerfilLoading">
+              <span *ngIf="isPerfilLoading" class="spinner-border spinner-border-sm me-2"></span>
+              Actualizar Datos
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cambiar Contraseña -->
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Cambiar Contraseña</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="passwordMessage" class="alert alert-info">
+            {{ passwordMessage }}
+          </div>
+          
+          <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+            <div class="mb-3">
+              <label for="contrasenaActual" class="form-label">Contraseña Actual</label>
+              <input type="password" id="contrasenaActual" class="form-control" formControlName="contrasenaActual">
+            </div>
+
+            <div class="mb-3">
+              <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
+              <input type="password" id="nuevaContrasena" class="form-control" formControlName="nuevaContrasena">
+            </div>
+
+            <button type="submit" class="btn btn-warning" [disabled]="passwordForm.invalid || isPasswordLoading">
+              <span *ngIf="isPasswordLoading" class="spinner-border spinner-border-sm me-2"></span>
+              Cambiar Contraseña
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

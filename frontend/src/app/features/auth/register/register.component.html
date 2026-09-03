@@ -1,0 +1,72 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h3 class="text-center mb-4">Registro de Usuario</h3>
+          
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+          </div>
+          
+          <div *ngIf="successMessage" class="alert alert-success" role="alert">
+            {{ successMessage }}
+          </div>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" class="form-control" formControlName="nombre">
+                <div *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="text-danger small mt-1">
+                  Requerido
+                </div>
+              </div>
+              <div class="col-md-6 mt-3 mt-md-0">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" id="apellido" class="form-control" formControlName="apellido">
+                <div *ngIf="registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched" class="text-danger small mt-1">
+                  Requerido
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input type="email" id="email" class="form-control" formControlName="email">
+              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small mt-1">
+                Ingrese un correo válido.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="contrasena" class="form-label">Contraseña</label>
+              <input type="password" id="contrasena" class="form-control" formControlName="contrasena">
+              <div *ngIf="registerForm.get('contrasena')?.invalid && registerForm.get('contrasena')?.touched" class="text-danger small mt-1">
+                La contraseña debe tener al menos 6 caracteres.
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="rol" class="form-label">Tipo de Usuario</label>
+              <select id="rol" class="form-select" formControlName="rol">
+                <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
+              </select>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid || isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Registrarse
+              </button>
+            </div>
+          </form>
+          
+          <div class="text-center mt-3">
+            <p class="mb-0">¿Ya tienes cuenta? <a routerLink="/login" class="text-decoration-none">Inicia sesión</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
