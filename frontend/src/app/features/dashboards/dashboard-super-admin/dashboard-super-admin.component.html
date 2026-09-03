@@ -1,0 +1,75 @@
+<div class="dashboard admin-theme">
+  <div class="sidebar">
+    <div class="brand">
+      <span class="icon">M</span>
+      Activa Master
+    </div>
+    <nav class="nav-menu">
+      <a href="#" class="active">Visión Global</a>
+      <a href="#">Todos los Usuarios</a>
+      <a href="#">Complejos y Canchas</a>
+      <a href="#">Configuración del Sistema</a>
+    </nav>
+  </div>
+
+  <main class="main-content">
+    <header class="dash-header">
+      <div class="welcome">
+        <h1>Centro de Control Global</h1>
+        <p>Súper Administrador del Sistema</p>
+      </div>
+    </header>
+
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <h4>Total Usuarios</h4>
+        <h2>{{ globalStats.totalUsuarios }}</h2>
+        <div class="trend positive">↑ 12% este mes</div>
+      </div>
+      <div class="kpi-card">
+        <h4>Complejos Registrados</h4>
+        <h2>{{ globalStats.totalComplejos }}</h2>
+        <div class="trend positive">↑ 3 nuevos</div>
+      </div>
+      <div class="kpi-card">
+        <h4>Total Canchas</h4>
+        <h2>{{ globalStats.totalCanchas }}</h2>
+      </div>
+      <div class="kpi-card">
+        <h4>Reservas Globales (Mes)</h4>
+        <h2>{{ globalStats.reservasMes }}</h2>
+        <div class="trend positive">↑ 8% este mes</div>
+      </div>
+    </section>
+
+    <section class="management-section">
+      <div class="card recent-complexes">
+        <h3>Últimos Complejos Agregados</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Complejo</th>
+              <th>Ciudad</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let comp of ultimosComplejos">
+              <td><strong>{{ comp.nombre }}</strong></td>
+              <td>{{ comp.ciudad }}</td>
+              <td>
+                <span class="badge" [class.activo]="comp.estado === 'Activo'" [class.pendiente]="comp.estado === 'Pendiente'">
+                  {{ comp.estado }}
+                </span>
+              </td>
+              <td>
+                <button class="btn-action">Auditar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

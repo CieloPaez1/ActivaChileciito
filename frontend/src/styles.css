@@ -52,3 +52,30 @@ body {
 .main-content {
   min-height: calc(100vh - 70px);
 }
+
+.divider {
+  color: #cbd5e1;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+}
+
+.role-link {
+  border: 1px solid #e2e8f0;
+}
+
+.role-link:hover {
+  border-color: #cbd5e1;
+}
+
+.role-link.super {
+  background: linear-gradient(90deg, #fef3c7, #fde68a);
+  color: #b45309;
+  border: 1px solid #fcd34d;
+}
+
+.role-link.super:hover {
+  background: linear-gradient(90deg, #fde68a, #fcd34d);
+  color: #92400e;
+}
+

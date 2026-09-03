@@ -1,0 +1,72 @@
+<div class="dashboard dark-theme">
+  <div class="sidebar">
+    <div class="brand">ActivaAdmin</div>
+    <nav class="nav-menu">
+      <a href="#" class="active">Resumen</a>
+      <a href="#">Mis Canchas</a>
+      <a href="#">Reservas</a>
+      <a href="#">Finanzas</a>
+    </nav>
+  </div>
+
+  <main class="main-content">
+    <header class="dash-header">
+      <div class="welcome">
+        <h1>Mi Complejo Deportivo</h1>
+        <p>Panel de Administración</p>
+      </div>
+    </header>
+
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="icon-bg ingresos">$</div>
+        <div class="details">
+          <p>Ingresos de Hoy</p>
+          <h3>${{ metricas.ingresosHoy }}</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon-bg reservas">R</div>
+        <div class="details">
+          <p>Reservas Activas</p>
+          <h3>{{ metricas.reservasActivas }}</h3>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon-bg canchas">C</div>
+        <div class="details">
+          <p>Canchas Habilitadas</p>
+          <h3>{{ metricas.canchasTotales }}</h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="recent-reservations">
+      <h2>Próximos Turnos (Hoy)</h2>
+      <div class="table-container">
+        <table class="dark-table">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Cancha</th>
+              <th>Cliente</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let res of reservas">
+              <td><strong>{{ res.hora }}</strong></td>
+              <td>{{ res.cancha }}</td>
+              <td>{{ res.cliente }}</td>
+              <td>
+                <span class="badge" [class.confirmada]="res.estado === 'Confirmada'" [class.pendiente]="res.estado === 'Pendiente'">
+                  {{ res.estado }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

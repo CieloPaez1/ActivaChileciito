@@ -1,8 +1,15 @@
 <nav class="navbar">
-  <div class="nav-brand">🎾 ActivaChilecito</div>
+  <div class="nav-brand">ActivaChilecito</div>
   <div class="nav-links">
-    <a routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
-    <a routerLink="/registro" routerLinkActive="active">Registrar</a>
+    <!-- Links temporales para probar roles -->
+    <a routerLink="/deportista" routerLinkActive="active" class="role-link">Deportista</a>
+    <a routerLink="/admin-complejo" routerLinkActive="active" class="role-link">Admin Complejo</a>
+    <a routerLink="/super-admin" routerLinkActive="active" class="role-link super">Súper Admin</a>
+    
+    <span class="divider">|</span>
+    
+    <a routerLink="/login" routerLinkActive="active">Iniciar Sesión</a>
+    <a routerLink="/registro" routerLinkActive="active">Registrarse</a>
   </div>
 </nav>
 

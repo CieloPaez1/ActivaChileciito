@@ -1,0 +1,48 @@
+<div class="dashboard light-theme">
+  <header class="dash-header">
+    <div class="welcome">
+      <h1>¡Hola, Deportista!</h1>
+      <p>Encuentra y reserva tu próxima cancha.</p>
+    </div>
+  </header>
+
+  <main class="dash-content">
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="icon">R</div>
+        <div class="details">
+          <h3>2</h3>
+          <p>Reservas Próximas</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon">P</div>
+        <div class="details">
+          <h3>15</h3>
+          <p>Partidos Jugados</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="canchas-section">
+      <h2>Canchas Disponibles Hoy</h2>
+      <div class="canchas-grid">
+        <div class="cancha-card" *ngFor="let c of canchas">
+          <div class="cancha-header">
+            <span class="badge" [class.disponible]="c.disponible" [class.ocupada]="!c.disponible">
+              {{ c.disponible ? 'Disponible' : 'Ocupada' }}
+            </span>
+          </div>
+          <div class="cancha-body">
+            <h3>{{ c.nombre }}</h3>
+            <p class="complejo">📍 {{ c.complejo }}</p>
+            <p class="precio">${{ c.precio }} / hr</p>
+          </div>
+          <button class="btn-book" [disabled]="!c.disponible">
+            {{ c.disponible ? 'Reservar Ahora' : 'No Disponible' }}
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
