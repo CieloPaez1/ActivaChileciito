@@ -4,4 +4,6 @@ import com.activachilecito.core.complejo.model.Complejo;
 
 public interface ComplejoRepositoryPort {
     void guardar(Complejo complejo);
+    void guardar(Long idDueno, Complejo complejo);
+    boolean existePorDueno(Long idDueno);
 }

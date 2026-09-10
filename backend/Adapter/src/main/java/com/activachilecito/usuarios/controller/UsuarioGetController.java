@@ -19,10 +19,14 @@ import java.util.stream.Collectors;
 public class UsuarioGetController {
 
     private final ObtenerUsuariosPorRolInput obtenerUsuariosPorRolInput;
+    private final usecase.ObtenerTodosLosUsuariosUseCase obtenerTodosLosUsuariosUseCase;
     private final UsuarioMapper usuarioMapper;
 
-    public UsuarioGetController(ObtenerUsuariosPorRolInput obtenerUsuariosPorRolInput, UsuarioMapper usuarioMapper) {
+    public UsuarioGetController(ObtenerUsuariosPorRolInput obtenerUsuariosPorRolInput, 
+                                usecase.ObtenerTodosLosUsuariosUseCase obtenerTodosLosUsuariosUseCase,
+                                UsuarioMapper usuarioMapper) {
         this.obtenerUsuariosPorRolInput = obtenerUsuariosPorRolInput;
+        this.obtenerTodosLosUsuariosUseCase = obtenerTodosLosUsuariosUseCase;
         this.usuarioMapper = usuarioMapper;
     }
 
@@ -35,5 +39,16 @@ public class UsuarioGetController {
                 .collect(Collectors.toList());
                 
         return ResponseEntity.ok(dtos); // Status 200 OK
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<List<UsuarioDto>> obtenerTodos() {
+        List<Usuario> usuarios = obtenerTodosLosUsuariosUseCase.obtenerTodos();
+        
+        List<UsuarioDto> dtos = usuarios.stream()
+                .map(usuarioMapper::toDto)
+                .collect(Collectors.toList());
+                
+        return ResponseEntity.ok(dtos);
     }
 }

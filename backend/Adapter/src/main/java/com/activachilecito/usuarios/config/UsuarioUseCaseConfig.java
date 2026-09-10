@@ -24,4 +24,68 @@ public class UsuarioUseCaseConfig {
     public usecase.ObtenerUsuariosPorRolUseCase obtenerUsuariosPorRolUseCase(UsuarioOutput usuarioOutput) {
         return new usecase.ObtenerUsuariosPorRolUseCase(usuarioOutput);
     }
+
+    @Bean
+    public usecase.IniciarSesionUseCase iniciarSesionUseCase(
+            output.ValidarCredencialesPort validarCredencialesPort,
+            output.JwtProviderPort jwtProviderPort) {
+        return new usecase.IniciarSesionUseCase(validarCredencialesPort, jwtProviderPort);
+    }
+
+    @Bean
+    public usecase.VisualizarCredencialesUseCase visualizarCredencialesUseCase(
+            output.ObtenerUsuarioPorIdPort obtenerUsuarioPorIdPort) {
+        return new usecase.VisualizarCredencialesUseCase(obtenerUsuarioPorIdPort);
+    }
+
+    @Bean
+    public usecase.SolicitarRestablecimientoUseCase solicitarRestablecimientoUseCase(
+            output.UsuarioRepositoryPort usuarioRepositoryPort,
+            output.TokenRecuperacionPort tokenRecuperacionPort,
+            output.EmailSenderPort emailSenderPort) {
+        return new usecase.SolicitarRestablecimientoUseCase(usuarioRepositoryPort, tokenRecuperacionPort, emailSenderPort);
+    }
+
+    @Bean
+    public usecase.EjecutarRestablecimientoUseCase ejecutarRestablecimientoUseCase(
+            output.TokenRecuperacionPort tokenRecuperacionPort,
+            output.UsuarioRepositoryPort usuarioRepositoryPort,
+            output.PasswordEncoderPort passwordEncoderPort) {
+        return new usecase.EjecutarRestablecimientoUseCase(tokenRecuperacionPort, usuarioRepositoryPort, passwordEncoderPort);
+    }
+
+    @Bean
+    public usecase.VisualizarPerfilUseCase visualizarPerfilUseCase(
+            output.UsuarioRepositoryPort usuarioRepositoryPort) {
+        return new usecase.VisualizarPerfilUseCase(usuarioRepositoryPort);
+    }
+
+    @Bean
+    public usecase.CerrarSesionUseCase cerrarSesionUseCase(
+            output.TokenBlacklistPort tokenBlacklistPort) {
+        return new usecase.CerrarSesionUseCase(tokenBlacklistPort);
+    }
+
+    @Bean
+    public usecase.ModificarPerfilUseCase modificarPerfilUseCase(
+            output.UsuarioRepositoryPort usuarioRepositoryPort) {
+        return new usecase.ModificarPerfilUseCase(usuarioRepositoryPort);
+    }
+
+    @Bean
+    public usecase.CambiarContrasenaUseCase cambiarContrasenaUseCase(
+            output.UsuarioRepositoryPort usuarioRepositoryPort,
+            output.PasswordEncoderPort passwordEncoderPort) {
+        return new usecase.CambiarContrasenaUseCase(usuarioRepositoryPort, passwordEncoderPort);
+    }
+
+    @Bean
+    public usecase.ObtenerTodosLosUsuariosUseCase obtenerTodosLosUsuariosUseCase(UsuarioOutput usuarioOutput) {
+        return new usecase.ObtenerTodosLosUsuariosUseCase(usuarioOutput);
+    }
+
+    @Bean
+    public usecase.ModificarUsuarioAdminUseCase modificarUsuarioAdminUseCase(UsuarioOutput usuarioOutput) {
+        return new usecase.ModificarUsuarioAdminUseCase(usuarioOutput);
+    }
 }

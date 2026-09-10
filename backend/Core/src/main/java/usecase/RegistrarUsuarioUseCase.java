@@ -20,8 +20,6 @@ public class RegistrarUsuarioUseCase implements RegistrarUsuarioInput {
 
 
         // Regla de Negocio 1: Verificar si el email ya está registrado
-        // Aquí vemos el poder del Optional. Preguntamos si la caja "tiene algo".
-
         if (usuarioOutput.buscarPorEmail(nuevoUsuario.getEmail()).isPresent()) {
             throw new ExcepcionUsuario("El email " + nuevoUsuario.getEmail() + " ya se encuentra registrado.");
         }
