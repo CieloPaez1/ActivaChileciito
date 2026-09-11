@@ -1,1 +1,22 @@
-/* No custom css needed */
+.btn-register {
+  background-color: #2C533E;
+  border-color: #2C533E;
+  transition: background-color 0.3s ease;
+}
+
+.btn-register:hover {
+  background-color: #1e3a2b;
+  border-color: #1e3a2b;
+}
+
+.nav-link {
+  font-size: 1rem;
+}
+
+.nav-link:hover {
+  color: #2C533E !important;
+}
+
+.dropdown-item:active {
+  background-color: #2C533E;
+}

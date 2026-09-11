@@ -1,0 +1,12 @@
+/* Empty for now as we use Bootstrap utilities mostly */
+.text-success {
+  color: #2C533E !important;
+}
+.btn-success {
+  background-color: #2C533E;
+  border-color: #2C533E;
+}
+.btn-success:hover {
+  background-color: #1e3a2b;
+  border-color: #1e3a2b;
+}
