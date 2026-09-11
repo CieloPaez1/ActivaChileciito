@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminService } from '../../../../core/services/admin.service';
-import { Usuario, Rol, EstadoUsuario } from '../../../../core/models/usuario';
+import { AdminService } from '../../../core/services/admin.service';
+import { Usuario, Rol, EstadoUsuario } from '../../../core/models/usuario';
 
 @Component({
   selector: 'app-admin-usuarios',
