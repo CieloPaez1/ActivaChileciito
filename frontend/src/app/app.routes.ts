@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login/login.component';
-import { RegisterComponent } from './features/auth/register/register.component';
+
 import { PerfilComponent } from './features/perfil/perfil.component';
 import { UsuariosComponent } from './features/admin/usuarios/usuarios.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
+import { AuthPageComponent } from './features/auth/auth-page/auth-page.component';
 
 import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: AuthPageComponent },
+  { path: 'register', component: AuthPageComponent },
   { 
     path: 'perfil', 
     component: PerfilComponent,

@@ -1,0 +1,89 @@
+<div class="auth-page-wrapper d-flex justify-content-center align-items-center">
+  <div class="auth-container" [class.right-panel-active]="isRightPanelActive" id="container">
+    
+    <!-- Sign Up / Register Form -->
+    <div class="form-container sign-up-container">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+        <h2 class="fw-bold mb-3" style="color: #1E4231;">Crear Cuenta</h2>
+        
+        <div *ngIf="registerError" class="alert alert-danger p-2 mb-2 w-100" style="font-size: 0.85rem;">
+          {{ registerError }}
+        </div>
+        <div *ngIf="registerSuccess" class="alert alert-success p-2 mb-2 w-100" style="font-size: 0.85rem;">
+          {{ registerSuccess }}
+        </div>
+
+        <div class="input-group-custom">
+          <input type="text" placeholder="Nombre" formControlName="nombre" />
+        </div>
+        <div class="input-group-custom">
+          <input type="text" placeholder="Apellido" formControlName="apellido" />
+        </div>
+        <div class="input-group-custom">
+          <input type="email" placeholder="Correo Electrónico" formControlName="email" />
+        </div>
+        <div class="input-group-custom">
+          <input type="password" placeholder="Contraseña" formControlName="contrasena" />
+        </div>
+        <div class="input-group-custom mb-3">
+          <select formControlName="rol">
+            <option *ngFor="let rol of roles" [value]="rol">{{ rol === 'USUARIO' ? 'Deportista' : (rol === 'ADMIN' ? 'Dueño de Complejo' : rol) }}</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn-solid" [disabled]="registerForm.invalid || isLoadingRegister">
+          <span *ngIf="isLoadingRegister" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          {{ isLoadingRegister ? 'Creando...' : 'Registrarme' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Sign In / Login Form -->
+    <div class="form-container sign-in-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <h2 class="fw-bold mb-3" style="color: #1E4231;">Iniciar Sesión</h2>
+        
+        <div *ngIf="loginError" class="alert alert-danger p-2 mb-3 w-100" style="font-size: 0.85rem;">
+          {{ loginError }}
+        </div>
+
+        <div class="input-group-custom">
+          <input type="email" placeholder="Correo Electrónico" formControlName="email" />
+        </div>
+        <div class="input-group-custom mb-3">
+          <input type="password" placeholder="Contraseña" formControlName="contrasena" />
+        </div>
+        
+        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        
+        <button type="submit" class="btn-solid mt-3" [disabled]="loginForm.invalid || isLoadingLogin">
+          <span *ngIf="isLoadingLogin" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          {{ isLoadingLogin ? 'Ingresando...' : 'Ingresar' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Overlay Panel (The slider) -->
+    <div class="overlay-container">
+      <div class="overlay">
+        
+        <!-- Left Overlay (Visible when Register is active) -->
+        <div class="overlay-panel overlay-left">
+          <img src="/images/logo.png" alt="Activa Chilecito" class="overlay-logo mb-4">
+          <h2>¡Bienvenido de Nuevo!</h2>
+          <p>Para mantenerte conectado, por favor inicia sesión con tu información personal.</p>
+          <button class="btn-ghost" (click)="togglePanel(false)">Iniciar Sesión</button>
+        </div>
+        
+        <!-- Right Overlay (Visible when Login is active) -->
+        <div class="overlay-panel overlay-right">
+          <img src="/images/logo.png" alt="Activa Chilecito" class="overlay-logo mb-4">
+          <h2>¡Hola, Deportista!</h2>
+          <p>Ingresa tus datos personales y comienza tu viaje con nosotros organizando y reservando partidos.</p>
+          <button class="btn-ghost" (click)="togglePanel(true)">Crear Cuenta</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
