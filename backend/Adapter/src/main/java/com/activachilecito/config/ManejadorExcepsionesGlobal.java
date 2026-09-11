@@ -28,6 +28,31 @@ public class ManejadorExcepsionesGlobal {
                 .body(Collections.singletonMap("error", e.getMessage()));
     }
 
+    @ExceptionHandler(exception.ExcepcionUsuarioNoEncontrado.class)
+    public ResponseEntity<Map<String, String>> manejarExcepcionUsuarioNoEncontrado(exception.ExcepcionUsuarioNoEncontrado e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap("error", e.getMessage()));
+    }
+
+    @ExceptionHandler(exception.ExcepcionCredencialesInvalidas.class)
+    public ResponseEntity<Map<String, String>> manejarExcepcionCredencialesInvalidas(exception.ExcepcionCredencialesInvalidas e) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Collections.singletonMap("error", e.getMessage()));
+    }
+
+    @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public ResponseEntity<Map<String, String>> manejarExcepcionAutenticacion(org.springframework.security.core.AuthenticationException e) {
+        String mensaje = e.getMessage();
+        if (mensaje != null && mensaje.equals("Bad credentials")) {
+            mensaje = "Credenciales incorrectas";
+        }
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Collections.singletonMap("error", mensaje));
+    }
+
     // Un "catch-all" para cualquier otro error inesperado (el equivalente a Exception e)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> manejarErroresInesperados(Exception e) {

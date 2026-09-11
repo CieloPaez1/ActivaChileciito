@@ -4,8 +4,10 @@ import com.activachilecito.usuarios.dto.LoginRequestDTO;
 import com.activachilecito.usuarios.dto.TokenResponseDTO;
 import input.EjecutarRestablecimientoRequest;
 import input.IniciarSesionInput;
+import input.RegistrarUsuarioInput;
 import input.SolicitarRestablecimientoRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ public class AuthController {
     private final SolicitarRestablecimientoUseCase solicitarRestablecimientoUseCase;
     private final EjecutarRestablecimientoUseCase ejecutarRestablecimientoUseCase;
     private final CerrarSesionUseCase cerrarSesionUseCase;
+
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponseDTO> login(@RequestBody LoginRequestDTO request) {

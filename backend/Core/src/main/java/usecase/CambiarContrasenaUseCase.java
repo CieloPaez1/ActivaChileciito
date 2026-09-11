@@ -7,16 +7,16 @@ import input.CambiarContrasenaRequest;
 import lombok.RequiredArgsConstructor;
 import model.Usuario;
 import output.PasswordEncoderPort;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 @RequiredArgsConstructor
 public class CambiarContrasenaUseCase {
 
-    private final UsuarioRepositoryPort usuarioRepositoryPort;
+    private final UsuarioOutput usuarioOutput;
     private final PasswordEncoderPort passwordEncoderPort;
 
     public void cambiarContrasena(Long id, CambiarContrasenaRequest request) {
-        Usuario usuario = usuarioRepositoryPort.buscarPorId(id)
+        Usuario usuario = usuarioOutput.buscarPorId(id)
                 .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con ID: " + id));
 
         if (!passwordEncoderPort.coincide(request.getPasswordActual(), usuario.getPassword())) {
@@ -30,6 +30,6 @@ public class CambiarContrasenaUseCase {
         String passwordEncriptada = passwordEncoderPort.encriptar(request.getNuevaPassword());
         usuario.setPassword(passwordEncriptada);
 
-        usuarioRepositoryPort.actualizar(usuario);
+        usuarioOutput.guardar(usuario);
     }
 }

@@ -5,15 +5,15 @@ import input.ModificarPerfilRequest;
 import lombok.RequiredArgsConstructor;
 import model.Usuario;
 import output.PerfilResponseDTO;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 @RequiredArgsConstructor
 public class ModificarPerfilUseCase {
 
-    private final UsuarioRepositoryPort usuarioRepositoryPort;
+    private final UsuarioOutput usuarioOutput;
 
     public PerfilResponseDTO modificar(Long id, ModificarPerfilRequest request) {
-        Usuario usuario = usuarioRepositoryPort.buscarPorId(id)
+        Usuario usuario = usuarioOutput.buscarPorId(id)
                 .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con ID: " + id));
 
         // Reglas de negocio: Solo actualizar campos permitidos, evitando nulos que pisen la info actual
@@ -27,7 +27,7 @@ public class ModificarPerfilUseCase {
             usuario.setTelefono(request.getTelefono());
         }
 
-        usuarioRepositoryPort.actualizar(usuario);
+        usuarioOutput.guardar(usuario);
 
         return PerfilResponseDTO.builder()
                 .id(usuario.getId())

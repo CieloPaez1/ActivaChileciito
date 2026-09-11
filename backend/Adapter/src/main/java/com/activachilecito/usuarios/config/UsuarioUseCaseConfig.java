@@ -40,24 +40,23 @@ public class UsuarioUseCaseConfig {
 
     @Bean
     public usecase.SolicitarRestablecimientoUseCase solicitarRestablecimientoUseCase(
-            output.UsuarioRepositoryPort usuarioRepositoryPort,
+            output.UsuarioOutput usuarioOutput,
             output.TokenRecuperacionPort tokenRecuperacionPort,
             output.EmailSenderPort emailSenderPort) {
-        return new usecase.SolicitarRestablecimientoUseCase(usuarioRepositoryPort, tokenRecuperacionPort, emailSenderPort);
+        return new usecase.SolicitarRestablecimientoUseCase(usuarioOutput, tokenRecuperacionPort, emailSenderPort);
     }
 
     @Bean
     public usecase.EjecutarRestablecimientoUseCase ejecutarRestablecimientoUseCase(
             output.TokenRecuperacionPort tokenRecuperacionPort,
-            output.UsuarioRepositoryPort usuarioRepositoryPort,
+            output.UsuarioOutput usuarioOutput,
             output.PasswordEncoderPort passwordEncoderPort) {
-        return new usecase.EjecutarRestablecimientoUseCase(tokenRecuperacionPort, usuarioRepositoryPort, passwordEncoderPort);
+        return new usecase.EjecutarRestablecimientoUseCase(tokenRecuperacionPort, usuarioOutput, passwordEncoderPort);
     }
 
     @Bean
-    public usecase.VisualizarPerfilUseCase visualizarPerfilUseCase(
-            output.UsuarioRepositoryPort usuarioRepositoryPort) {
-        return new usecase.VisualizarPerfilUseCase(usuarioRepositoryPort);
+    public usecase.VisualizarPerfilUseCase visualizarPerfilUseCase(UsuarioOutput usuarioOutput) {
+        return new usecase.VisualizarPerfilUseCase(usuarioOutput);
     }
 
     @Bean
@@ -67,16 +66,15 @@ public class UsuarioUseCaseConfig {
     }
 
     @Bean
-    public usecase.ModificarPerfilUseCase modificarPerfilUseCase(
-            output.UsuarioRepositoryPort usuarioRepositoryPort) {
-        return new usecase.ModificarPerfilUseCase(usuarioRepositoryPort);
+    public usecase.ModificarPerfilUseCase modificarPerfilUseCase(UsuarioOutput usuarioOutput) {
+        return new usecase.ModificarPerfilUseCase(usuarioOutput);
     }
 
     @Bean
     public usecase.CambiarContrasenaUseCase cambiarContrasenaUseCase(
-            output.UsuarioRepositoryPort usuarioRepositoryPort,
+            output.UsuarioOutput usuarioOutput,
             output.PasswordEncoderPort passwordEncoderPort) {
-        return new usecase.CambiarContrasenaUseCase(usuarioRepositoryPort, passwordEncoderPort);
+        return new usecase.CambiarContrasenaUseCase(usuarioOutput, passwordEncoderPort);
     }
 
     @Bean

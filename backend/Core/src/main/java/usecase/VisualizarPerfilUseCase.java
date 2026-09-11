@@ -4,15 +4,15 @@ import exception.ExcepcionUsuarioNoEncontrado;
 import lombok.RequiredArgsConstructor;
 import model.Usuario;
 import output.PerfilResponseDTO;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 @RequiredArgsConstructor
 public class VisualizarPerfilUseCase {
 
-    private final UsuarioRepositoryPort usuarioRepositoryPort;
+    private final UsuarioOutput usuarioOutput;
 
     public PerfilResponseDTO visualizar(Long id) {
-        Usuario usuario = usuarioRepositoryPort.buscarPorId(id)
+        Usuario usuario = usuarioOutput.buscarPorId(id)
                 .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con ID: " + id));
 
         return PerfilResponseDTO.builder()

@@ -5,19 +5,19 @@ import lombok.RequiredArgsConstructor;
 import model.Usuario;
 import output.EmailSenderPort;
 import output.TokenRecuperacionPort;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class SolicitarRestablecimientoUseCase {
 
-    private final UsuarioRepositoryPort usuarioRepositoryPort;
+    private final UsuarioOutput usuarioOutput;
     private final TokenRecuperacionPort tokenRecuperacionPort;
     private final EmailSenderPort emailSenderPort;
 
     public void solicitar(SolicitarRestablecimientoRequest request) {
-        Optional<Usuario> usuarioOpt = usuarioRepositoryPort.buscarPorEmail(request.getEmail());
+        Optional<Usuario> usuarioOpt = usuarioOutput.buscarPorEmail(request.getEmail());
         
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();

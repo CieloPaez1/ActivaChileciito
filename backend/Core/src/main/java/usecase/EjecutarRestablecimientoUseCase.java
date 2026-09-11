@@ -1,38 +1,34 @@
 package usecase;
 
-import exception.ExcepcionTokenInvalido;
+import exception.ExcepcionUsuario;
 import exception.ExcepcionUsuarioNoEncontrado;
 import input.EjecutarRestablecimientoRequest;
 import lombok.RequiredArgsConstructor;
 import model.Usuario;
 import output.PasswordEncoderPort;
 import output.TokenRecuperacionPort;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 @RequiredArgsConstructor
 public class EjecutarRestablecimientoUseCase {
 
     private final TokenRecuperacionPort tokenRecuperacionPort;
-    private final UsuarioRepositoryPort usuarioRepositoryPort;
+    private final UsuarioOutput usuarioOutput;
     private final PasswordEncoderPort passwordEncoderPort;
 
     public void ejecutar(EjecutarRestablecimientoRequest request) {
         if (!tokenRecuperacionPort.esTokenValido(request.getToken())) {
-            throw new ExcepcionTokenInvalido("El token es inválido o ha expirado.");
-        }
-
-        if (request.getNuevaClave() == null || request.getNuevaClave().length() < 8) {
-            throw new IllegalArgumentException("La nueva contraseña debe tener al menos 8 caracteres.");
+            throw new ExcepcionUsuario("El token de recuperación es inválido o ha expirado.");
         }
 
         Long usuarioId = tokenRecuperacionPort.obtenerUsuarioIdPorToken(request.getToken());
-        Usuario usuario = usuarioRepositoryPort.buscarPorId(usuarioId)
-                .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con el ID asociado al token."));
+        Usuario usuario = usuarioOutput.buscarPorId(usuarioId)
+                .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado"));
 
-        String claveEncriptada = passwordEncoderPort.encriptar(request.getNuevaClave());
-        usuario.setPassword(claveEncriptada);
-        
-        usuarioRepositoryPort.actualizar(usuario);
+        String passwordEncriptada = passwordEncoderPort.encriptar(request.getNuevaClave());
+        usuario.setPassword(passwordEncriptada);
+
+        usuarioOutput.guardar(usuario);
         tokenRecuperacionPort.invalidarToken(request.getToken());
     }
 }
