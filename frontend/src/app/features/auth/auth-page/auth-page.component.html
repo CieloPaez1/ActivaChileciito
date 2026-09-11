@@ -30,7 +30,7 @@
         </div>
         <div class="input-group-custom mb-3">
           <select formControlName="rol">
-            <option *ngFor="let rol of roles" [value]="rol">{{ rol === 'DEPORTISTA' ? 'Deportista' : (rol === 'ADMINISTRADOR' ? 'Dueño de Complejo' : rol) }}</option>
+            <option *ngFor="let rol of roles" [value]="rol">{{ rol === 'CLIENTE' ? 'Deportista (Cliente)' : (rol === 'ADMIN_COMPLEJO' ? 'Dueño de Complejo' : rol) }}</option>
           </select>
         </div>
         

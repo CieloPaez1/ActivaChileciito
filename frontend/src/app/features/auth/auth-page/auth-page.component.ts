@@ -24,7 +24,7 @@ export class AuthPageComponent implements OnInit {
   isLoadingLogin: boolean = false;
   isLoadingRegister: boolean = false;
   
-  roles: string[] = ['DEPORTISTA', 'ADMINISTRADOR'];
+  roles: string[] = ['CLIENTE', 'ADMIN_COMPLEJO'];
 
   constructor(
     private fb: FormBuilder,
@@ -43,7 +43,7 @@ export class AuthPageComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       telefono: [''], // Optional field as per model
-      rol: ['DEPORTISTA', Validators.required]
+      rol: ['CLIENTE', Validators.required]
     });
   }
 
@@ -99,7 +99,7 @@ export class AuthPageComponent implements OnInit {
       next: (response) => {
         this.isLoadingRegister = false;
         this.registerSuccess = '¡Registro exitoso! Ahora puedes iniciar sesión.';
-        this.registerForm.reset({ rol: 'DEPORTISTA' });
+        this.registerForm.reset({ rol: 'CLIENTE' });
         
         // Volver al login tras 2 segundos
         setTimeout(() => {

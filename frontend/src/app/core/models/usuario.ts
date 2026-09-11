@@ -1,6 +1,6 @@
 export enum Rol {
-  DEPORTISTA = 'DEPORTISTA',
-  ADMINISTRADOR = 'ADMINISTRADOR'
+  CLIENTE = 'CLIENTE',
+  ADMIN_COMPLEJO = 'ADMIN_COMPLEJO'
 }
 
 export enum EstadoUsuario {
