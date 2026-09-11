@@ -24,7 +24,7 @@ export class AuthPageComponent implements OnInit {
   isLoadingLogin: boolean = false;
   isLoadingRegister: boolean = false;
   
-  roles: string[] = ['USUARIO', 'ADMIN'];
+  roles: string[] = ['DEPORTISTA', 'ADMINISTRADOR'];
 
   constructor(
     private fb: FormBuilder,
@@ -34,15 +34,15 @@ export class AuthPageComponent implements OnInit {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      contrasena: ['', [Validators.required]]
+      password: ['', [Validators.required]]
     });
     
     this.registerForm = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      contrasena: ['', [Validators.required, Validators.minLength(6)]],
-      rol: ['USUARIO', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rol: ['DEPORTISTA', Validators.required]
     });
   }
 
@@ -72,9 +72,9 @@ export class AuthPageComponent implements OnInit {
     this.isLoadingLogin = true;
     this.loginError = '';
 
-    const { email, contrasena } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, contrasena).subscribe({
+    this.authService.login({ email, password }).subscribe({
       next: () => {
         this.isLoadingLogin = false;
         this.router.navigate(['/']); // O redirigir al perfil/dashboard
@@ -98,7 +98,7 @@ export class AuthPageComponent implements OnInit {
       next: (response) => {
         this.isLoadingRegister = false;
         this.registerSuccess = '¡Registro exitoso! Ahora puedes iniciar sesión.';
-        this.registerForm.reset({ rol: 'USUARIO' });
+        this.registerForm.reset({ rol: 'DEPORTISTA' });
         
         // Volver al login tras 2 segundos
         setTimeout(() => {

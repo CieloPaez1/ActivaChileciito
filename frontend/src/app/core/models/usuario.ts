@@ -1,7 +1,6 @@
 export enum Rol {
   DEPORTISTA = 'DEPORTISTA',
-  ADMINISTRADOR_CANCHA = 'ADMINISTRADOR_CANCHA',
-  SUPERUSUARIO = 'SUPERUSUARIO'
+  ADMINISTRADOR = 'ADMINISTRADOR'
 }
 
 export enum EstadoUsuario {
@@ -28,14 +27,14 @@ export interface LoginResponse {
 
 export interface LoginRequest {
   email: string;
-  contrasena: string;
+  password: string;
 }
 
 export interface RegisterRequest {
   nombre: string;
   apellido: string;
   email: string;
-  contrasena: string;
+  password: string;
   rol: Rol;
 }
 
