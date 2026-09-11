@@ -9,24 +9,20 @@ import lombok.RequiredArgsConstructor;
 import model.RolUsuario;
 import model.Usuario;
 import output.ComplejoResponseDTO;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 @RequiredArgsConstructor
 public class RegistrarComplejoUseCase {
 
     private final ComplejoRepositoryPort complejoRepositoryPort;
-    private final UsuarioRepositoryPort usuarioRepositoryPort;
+    private final UsuarioOutput usuarioOutput;
 
     public ComplejoResponseDTO registrar(Long idUsuarioDueño, RegistrarComplejoRequest request) {
-        Usuario usuario = usuarioRepositoryPort.buscarPorId(idUsuarioDueño)
+        Usuario usuario = usuarioOutput.buscarPorId(idUsuarioDueño)
                 .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con ID: " + idUsuarioDueño));
 
         if (usuario.getRol() != RolUsuario.ADMIN_COMPLEJO) {
             throw new ComplejoException("Operación denegada. El usuario no posee rol de Propietario de Complejo.");
-        }
-
-        if (complejoRepositoryPort.existePorDueno(idUsuarioDueño)) {
-            throw new ComplejoException("El usuario ya tiene un complejo comercial registrado.");
         }
 
         Complejo complejo = Complejo.crear(

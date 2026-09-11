@@ -4,7 +4,7 @@ import com.activachilecito.core.complejo.output.ComplejoRepositoryPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import usecase.RegistrarComplejoUseCase;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 @Configuration
 public class ComplejoConfig {
@@ -12,7 +12,7 @@ public class ComplejoConfig {
     @Bean
     public RegistrarComplejoUseCase registrarComplejoUseCase(
             ComplejoRepositoryPort complejoRepositoryPort,
-            UsuarioRepositoryPort usuarioRepositoryPort) {
-        return new RegistrarComplejoUseCase(complejoRepositoryPort, usuarioRepositoryPort);
+            UsuarioOutput usuarioOutput) {
+        return new RegistrarComplejoUseCase(complejoRepositoryPort, usuarioOutput);
     }
 }
