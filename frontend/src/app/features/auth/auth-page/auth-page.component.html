@@ -25,6 +25,9 @@
         <div class="input-group-custom">
           <input type="password" placeholder="Contraseña" formControlName="password" />
         </div>
+        <div class="input-group-custom">
+          <input type="tel" placeholder="Teléfono (Opcional)" formControlName="telefono" />
+        </div>
         <div class="input-group-custom mb-3">
           <select formControlName="rol">
             <option *ngFor="let rol of roles" [value]="rol">{{ rol === 'DEPORTISTA' ? 'Deportista' : (rol === 'ADMINISTRADOR' ? 'Dueño de Complejo' : rol) }}</option>

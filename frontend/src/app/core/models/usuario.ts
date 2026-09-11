@@ -35,6 +35,7 @@ export interface RegisterRequest {
   apellido: string;
   email: string;
   password: string;
+  telefono?: string;
   rol: Rol;
 }
 

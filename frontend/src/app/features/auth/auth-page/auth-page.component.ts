@@ -42,6 +42,7 @@ export class AuthPageComponent implements OnInit {
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      telefono: [''], // Optional field as per model
       rol: ['DEPORTISTA', Validators.required]
     });
   }
