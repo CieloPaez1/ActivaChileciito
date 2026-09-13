@@ -1,55 +1,188 @@
-<div class="hero-section text-center text-light d-flex align-items-center justify-content-center" style="min-height: 80vh; background: linear-gradient(rgba(44, 83, 62, 0.8), rgba(44, 83, 62, 0.8)), url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;">
-  <div class="container px-4">
-    <h1 class="display-3 fw-bold mb-4">Conectando el deporte en Chilecito</h1>
-    <p class="lead mb-5 fs-4 mx-auto" style="max-width: 800px;">
-      ActivaChilecito es la plataforma digital que te permite organizar partidos, encontrar compañeros y reservar las mejores canchas de la ciudad en un solo lugar.
-    </p>
-    <div class="d-flex gap-3 justify-content-center">
-      <a routerLink="/register" class="btn btn-light btn-lg px-5 fw-bold text-success rounded-pill shadow">Registrarse</a>
-      <a routerLink="/login" class="btn btn-outline-light btn-lg px-5 fw-bold rounded-pill">Iniciar Sesión</a>
+<div class="home-wrapper">
+  
+  <!-- 1. HERO SECTION -->
+  <section class="hero-startup">
+    <div class="hero-glow-blob"></div>
+    <div class="container-fluid px-4 px-lg-5 position-relative z-1">
+      <div class="row align-items-center">
+        <!-- Left Content -->
+        <div class="col-lg-6 col-xl-5 fade-in-up">
+          <span class="badge rounded-pill bg-surface text-brand-lime border px-3 py-2 mb-4 shadow-sm fw-bold">
+            <i class="bi bi-geo-alt-fill me-1"></i> Exclusivo para Chilecito
+          </span>
+          <h1 class="display-3 fw-black mb-4">
+            CHILECITO <br>
+            <span class="text-gradient">SE MUEVE.</span>
+          </h1>
+          <p class="lead text-secondary mb-5 fw-medium" style="max-width: 450px;">
+            Encontrá tu próximo desafío, conectate con otros deportistas y descubrí dónde practicar tu deporte.
+          </p>
+          <div class="d-flex flex-column flex-sm-row gap-3">
+            <a routerLink="/complejos" class="btn btn-brand-lime btn-pill fs-5 shadow-sm">
+              EXPLORAR ACTIVIDADES
+            </a>
+            <a href="#deportes" class="btn btn-outline-theme btn-pill fs-5 bg-surface shadow-sm">
+              CONOCÉ ACTIVACHILECITO
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Floating Mockups -->
+        <div class="col-lg-6 col-xl-7 d-none d-lg-block">
+          <div class="hero-floating-cards">
+            <div class="floating-pill fp-1 text-theme">
+              <span class="fs-4">⚽</span> Fútbol 5
+            </div>
+            <div class="floating-pill fp-2 text-theme">
+              <span class="fs-4">🎾</span> Pádel
+            </div>
+            <div class="floating-pill fp-3 text-theme">
+              <span class="fs-4">🚴</span> Ciclismo
+            </div>
+            <div class="floating-pill fp-4 text-theme">
+              <span class="fs-4">🏃</span> Running
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- 2. DEPORTES SECTION -->
+  <section id="deportes" class="section-padding bg-surface">
+    <div class="container px-4 px-lg-5">
+      <div class="text-center mb-5 reveal-up">
+        <h2 class="display-5 fw-black text-theme">LO QUE TE APASIONA</h2>
+        <p class="lead text-secondary">Explora los deportes más populares de la ciudad</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Fútbol -->
+        <div class="col-md-6 col-lg-3 reveal-up">
+          <div class="sport-card-large">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbb6b69da8?q=80&w=600&auto=format&fit=crop" alt="Fútbol">
+            <div class="overlay">
+              <h3 class="fw-black mb-0">FÚTBOL</h3>
+              <p class="text-white-50 mb-0">15 complejos · 40 partidos hoy</p>
+            </div>
+          </div>
+        </div>
+        <!-- Pádel -->
+        <div class="col-md-6 col-lg-3 reveal-up" style="animation-delay: 0.1s;">
+          <div class="sport-card-large">
+            <img src="https://images.unsplash.com/photo-1622279457486-62dcc4a631d6?q=80&w=600&auto=format&fit=crop" alt="Pádel">
+            <div class="overlay">
+              <h3 class="fw-black mb-0">PÁDEL</h3>
+              <p class="text-white-50 mb-0">8 complejos · Torneos activos</p>
+            </div>
+          </div>
+        </div>
+        <!-- Ciclismo -->
+        <div class="col-md-6 col-lg-3 reveal-up" style="animation-delay: 0.2s;">
+          <div class="sport-card-large">
+            <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=600&auto=format&fit=crop" alt="Ciclismo">
+            <div class="overlay">
+              <h3 class="fw-black mb-0">CICLISMO</h3>
+              <p class="text-white-50 mb-0">Rutas · Grupos de salida</p>
+            </div>
+          </div>
+        </div>
+        <!-- Running -->
+        <div class="col-md-6 col-lg-3 reveal-up" style="animation-delay: 0.3s;">
+          <div class="sport-card-large">
+            <img src="https://images.unsplash.com/photo-1571008840902-276d45dd689e?q=80&w=600&auto=format&fit=crop" alt="Running">
+            <div class="overlay">
+              <h3 class="fw-black mb-0">RUNNING</h3>
+              <p class="text-white-50 mb-0">Entrenamientos · Comunidad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. DESCUBRIR ACTIVIDADES -->
+  <section class="section-padding">
+    <div class="container px-4 px-lg-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6 order-2 order-lg-1 reveal-left">
+          <div class="glass-panel p-5 position-relative">
+            <span class="badge bg-brand-lime text-white rounded-pill mb-3 fs-6 px-3 py-2">Próximos Partidos</span>
+            <h3 class="fw-bold text-theme mb-3">Fútbol 5 - Jueves 20:00hs</h3>
+            <p class="text-secondary mb-4"><i class="bi bi-geo-alt"></i> Complejo La Estación</p>
+            <div class="d-flex align-items-center gap-3">
+              <div class="d-flex avatar-group">
+                <img src="https://i.pravatar.cc/100?img=1" class="rounded-circle border border-2 border-white" width="40" height="40">
+                <img src="https://i.pravatar.cc/100?img=2" class="rounded-circle border border-2 border-white ms-n2" width="40" height="40">
+                <img src="https://i.pravatar.cc/100?img=3" class="rounded-circle border border-2 border-white ms-n2" width="40" height="40">
+              </div>
+              <span class="text-theme fw-medium">Faltan 2 jugadores</span>
+            </div>
+            <button class="btn btn-outline-theme btn-pill w-100 mt-4 fw-bold">UNIRME AL PARTIDO</button>
+          </div>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 reveal-up">
+          <h2 class="display-6 fw-black text-theme mb-4">Nunca más te falte uno.</h2>
+          <p class="lead text-secondary mb-4">
+            Descubrí partidos organizados por la comunidad a los que te puedes sumar al instante. Ya sea que quieras jugar al fútbol, buscar pareja de pádel o salir a rodar en bici.
+          </p>
+          <a href="#" class="btn btn-brand-lime btn-pill fw-bold">Ver Cartelera de Partidos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ENCONTRAR ESPACIOS DEPORTIVOS -->
+  <section class="section-padding bg-surface border-top border-bottom border-light">
+    <div class="container px-4 px-lg-5 text-center reveal-up">
+      <h2 class="display-6 fw-black text-theme mb-4">Las mejores canchas, en un solo lugar.</h2>
+      <p class="lead text-secondary mx-auto mb-5" style="max-width: 600px;">
+        Explora todos los complejos deportivos de Chilecito. Mira fotos, lee reseñas y encuentra el espacio perfecto para tu próximo encuentro.
+      </p>
+      <a routerLink="/complejos" class="btn btn-outline-theme btn-pill fw-bold px-5">Explorar Complejos</a>
+    </div>
+  </section>
+
+  <!-- 5. PARA DUEÑOS DE COMPLEJOS -->
+  <section class="section-padding position-relative overflow-hidden bg-brand-dark">
+    <!-- Watermark Background -->
+    <img src="/images/logo-watermark.png" alt="" class="watermark-bg">
+    
+    <div class="container px-4 px-lg-5 position-relative z-1">
+      <div class="row justify-content-end">
+        <div class="col-lg-7 col-xl-6 reveal-up">
+          <div class="glass-panel p-4 p-md-5 border-0 shadow-lg" style="background: rgba(20, 30, 25, 0.8);">
+            <span class="badge bg-brand-lime text-white rounded-pill mb-3 fs-6 px-3 py-2">Para Administradores</span>
+            <h2 class="display-6 fw-black text-white mb-4">Potencia tu complejo deportivo.</h2>
+            <p class="lead text-white-50 mb-4">
+              Toma el control total de tus canchas. Gestiona reservas automáticamente, atrae nuevos jugadores y olvídate de los huecos en tu agenda.
+            </p>
+            <ul class="list-unstyled text-white-50 mb-5 fs-5">
+              <li class="mb-3"><i class="bi bi-check-circle-fill text-brand-lime me-2"></i> Recibe reservas online 24/7</li>
+              <li class="mb-3"><i class="bi bi-check-circle-fill text-brand-lime me-2"></i> Aumenta tu visibilidad local</li>
+              <li class="mb-3"><i class="bi bi-check-circle-fill text-brand-lime me-2"></i> Panel de gestión inteligente</li>
+            </ul>
+            <a href="#" class="btn btn-brand-lime btn-pill fw-bold px-4">Suma tu Complejo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CTA FINAL -->
+  <section class="section-padding position-relative overflow-hidden" style="background-color: var(--brand-lime);">
+    <div class="position-absolute top-50 start-50 translate-middle w-100 h-100" style="background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 60%); animation: pulseGlow 5s infinite alternate;"></div>
+    <div class="container px-4 px-lg-5 position-relative z-1 text-center py-5">
+      <h2 class="display-4 fw-black text-white mb-4">EMPEZÁ A MOVERTE HOY</h2>
+      <p class="lead text-white mb-5 mx-auto fw-medium" style="max-width: 500px;">
+        Únete a la comunidad deportiva más grande de Chilecito. Crea tu cuenta gratis en menos de 1 minuto.
+      </p>
+      <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+        <a routerLink="/register" class="btn btn-outline-theme bg-white text-brand-lime border-white btn-pill fs-5 shadow-lg px-5 fw-black">
+          Crear mi cuenta gratis
+        </a>
+      </div>
+    </div>
+  </section>
+
 </div>
-
-<div class="container py-5 my-5">
-  <h2 class="text-center fw-bold mb-5" style="color: #2C533E;">¿Qué puedes hacer en ActivaChilecito?</h2>
-  <div class="row g-4 text-center">
-    
-    <div class="col-md-4">
-      <div class="card h-100 border-0 shadow-sm p-4 rounded-4">
-        <div class="card-body">
-          <div class="display-4 text-success mb-3"><i class="bi bi-calendar2-check"></i></div>
-          <h4 class="card-title fw-bold">Reservar Canchas</h4>
-          <p class="card-text text-muted">Explora complejos deportivos, verifica horarios disponibles y realiza reservas al instante sin mensajes ni esperas.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-4">
-      <div class="card h-100 border-0 shadow-sm p-4 rounded-4">
-        <div class="card-body">
-          <div class="display-4 text-success mb-3"><i class="bi bi-people"></i></div>
-          <h4 class="card-title fw-bold">Unirte a Partidos</h4>
-          <p class="card-text text-muted">Encuentra actividades abiertas o crea la tuya para sumar jugadores y completar tus equipos fácilmente.</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-4">
-      <div class="card h-100 border-0 shadow-sm p-4 rounded-4">
-        <div class="card-body">
-          <div class="display-4 text-success mb-3"><i class="bi bi-shop"></i></div>
-          <h4 class="card-title fw-bold">Gestionar tu Complejo</h4>
-          <p class="card-text text-muted">Si eres dueño, administra tus instalaciones, controla las reservas en tiempo real y aumenta tus ingresos.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<footer class="bg-dark text-light py-5">
-  <div class="container text-center">
-    <p class="mb-0">© 2026 ActivaChilecito. Desarrollado por Carlos Agustín Gómez y Cielo Ailén Páez Campillay.</p>
-  </div>
-</footer>

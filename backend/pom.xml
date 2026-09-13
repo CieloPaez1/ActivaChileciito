@@ -17,7 +17,8 @@
 	<description>Parent POM para ActivaChilecito</description>
 
 	<properties>
-		<java.version>17</java.version>
+		<java.version>25</java.version>
+		<lombok.version>1.18.48</lombok.version>
 	</properties>
 
 	<modules>

@@ -1,22 +1,49 @@
-.btn-register {
-  background-color: #2C533E;
-  border-color: #2C533E;
-  transition: background-color 0.3s ease;
+.modern-navbar {
+  transition: all 0.4s ease;
+  padding: 1.5rem 0;
+  background: transparent;
 }
 
-.btn-register:hover {
-  background-color: #1e3a2b;
-  border-color: #1e3a2b;
+.modern-navbar.scrolled {
+  padding: 0.8rem 0;
+  background: var(--navbar-scrolled);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
 .nav-link {
-  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-.nav-link:hover {
-  color: #2C533E !important;
+@media (min-width: 992px) {
+  .nav-pill-container {
+    background-color: var(--card-bg);
+    padding: 6px 15px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    border: 1px solid var(--border-color);
+  }
+  
+  [data-theme="dark"] .nav-pill-container {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background-color: var(--brand-lime);
+    color: white !important;
+  }
 }
 
-.dropdown-item:active {
-  background-color: #2C533E;
+.brand-logo-img {
+  transition: transform 0.3s ease;
+}
+
+.brand-logo-img:hover {
+  transform: scale(1.05);
 }

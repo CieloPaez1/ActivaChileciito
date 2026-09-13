@@ -4,7 +4,8 @@
     <!-- Sign Up / Register Form -->
     <div class="form-container sign-up-container">
       <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
-        <h2 class="fw-bold mb-3" style="color: #1E4231;">Crear Cuenta</h2>
+        <h2 class="form-title mb-2">Creá tu cuenta</h2>
+        <p class="text-secondary mb-4" style="font-size: 0.95rem;">Formá parte de la comunidad deportiva de Chilecito.</p>
         
         <div *ngIf="registerError" class="alert alert-danger p-2 mb-2 w-100" style="font-size: 0.85rem;">
           {{ registerError }}
@@ -13,77 +14,87 @@
           {{ registerSuccess }}
         </div>
 
-        <div class="input-group-custom">
-          <input type="text" placeholder="Nombre" formControlName="nombre" />
+        <div class="d-flex gap-2 w-100">
+          <div class="input-group-custom">
+            <input type="text" placeholder="Nombre" formControlName="nombre" />
+          </div>
+          <div class="input-group-custom">
+            <input type="text" placeholder="Apellido" formControlName="apellido" />
+          </div>
         </div>
         <div class="input-group-custom">
-          <input type="text" placeholder="Apellido" formControlName="apellido" />
-        </div>
-        <div class="input-group-custom">
-          <input type="email" placeholder="Correo Electrónico" formControlName="email" />
+          <input type="email" placeholder="Correo electrónico" formControlName="email" />
         </div>
         <div class="input-group-custom">
           <input type="password" placeholder="Contraseña" formControlName="password" />
         </div>
         <div class="input-group-custom">
-          <input type="tel" placeholder="Teléfono (Opcional)" formControlName="telefono" />
-        </div>
-        <div class="input-group-custom mb-3">
-          <select formControlName="rol">
-            <option *ngFor="let rol of roles" [value]="rol">{{ rol === 'CLIENTE' ? 'Deportista (Cliente)' : (rol === 'ADMIN_COMPLEJO' ? 'Dueño de Complejo' : rol) }}</option>
-          </select>
+          <input type="password" placeholder="Confirmar contraseña" />
         </div>
         
-        <button type="submit" class="btn-solid" [disabled]="registerForm.invalid || isLoadingRegister">
+        <!-- Hidden required fields for backend compatibility -->
+        <input type="hidden" formControlName="telefono" value="0000000" />
+        <input type="hidden" formControlName="rol" value="CLIENTE" />
+        
+        <button type="submit" class="btn-solid mt-2" [disabled]="registerForm.invalid || isLoadingRegister">
           <span *ngIf="isLoadingRegister" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          {{ isLoadingRegister ? 'Creando...' : 'Registrarme' }}
+          {{ isLoadingRegister ? 'CREANDO...' : 'REGISTRARSE' }}
         </button>
+
+        <p class="mt-4 d-block d-md-none text-secondary" style="font-size: 0.9rem;">
+          ¿Ya tenés una cuenta? <a href="#" class="text-brand-lime fw-bold text-decoration-none" (click)="togglePanel(false); $event.preventDefault()">INICIAR SESIÓN</a>
+        </p>
       </form>
     </div>
 
     <!-- Sign In / Login Form -->
     <div class="form-container sign-in-container">
       <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-        <h2 class="fw-bold mb-3" style="color: #1E4231;">Iniciar Sesión</h2>
+        <h2 class="form-title mb-2">Bienvenido de nuevo</h2>
+        <p class="text-secondary mb-4" style="font-size: 0.95rem;">Iniciá sesión para continuar en ActivaChilecito.</p>
         
         <div *ngIf="loginError" class="alert alert-danger p-2 mb-3 w-100" style="font-size: 0.85rem;">
           {{ loginError }}
         </div>
 
         <div class="input-group-custom">
-          <input type="email" placeholder="Correo Electrónico" formControlName="email" />
+          <input type="email" placeholder="Correo electrónico" formControlName="email" />
         </div>
-        <div class="input-group-custom mb-3">
+        <div class="input-group-custom">
           <input type="password" placeholder="Contraseña" formControlName="password" />
         </div>
         
-        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        <a href="#" class="forgot-password w-100 text-end pe-3 mt-2 mb-4">¿Olvidaste tu contraseña?</a>
         
-        <button type="submit" class="btn-solid mt-3" [disabled]="loginForm.invalid || isLoadingLogin">
+        <button type="submit" class="btn-solid" [disabled]="loginForm.invalid || isLoadingLogin">
           <span *ngIf="isLoadingLogin" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          {{ isLoadingLogin ? 'Ingresando...' : 'Ingresar' }}
+          {{ isLoadingLogin ? 'INGRESANDO...' : 'INICIAR SESIÓN' }}
         </button>
+
+        <p class="mt-4 d-block d-md-none text-secondary" style="font-size: 0.9rem;">
+          ¿No tenés una cuenta? <a href="#" class="text-brand-lime fw-bold text-decoration-none" (click)="togglePanel(true); $event.preventDefault()">REGISTRARSE</a>
+        </p>
       </form>
     </div>
 
     <!-- Overlay Panel (The slider) -->
-    <div class="overlay-container">
+    <div class="overlay-container d-none d-md-block">
       <div class="overlay">
         
         <!-- Left Overlay (Visible when Register is active) -->
         <div class="overlay-panel overlay-left">
-          <img src="/images/logo.png" alt="Activa Chilecito" class="overlay-logo mb-4">
-          <h2>¡Bienvenido de Nuevo!</h2>
-          <p>Para mantenerte conectado, por favor inicia sesión con tu información personal.</p>
-          <button class="btn-ghost" (click)="togglePanel(false)">Iniciar Sesión</button>
+          <img src="/images/logo.png" alt="Activa Chilecito" class="overlay-logo mb-5">
+          <h2>EL DEPORTE TAMBIÉN NOS CONECTA.</h2>
+          <p class="mb-5">¿Ya tenés una cuenta en ActivaChilecito? Ingresá para ver tus partidos.</p>
+          <button class="btn-ghost" (click)="togglePanel(false)">INICIAR SESIÓN</button>
         </div>
         
         <!-- Right Overlay (Visible when Login is active) -->
         <div class="overlay-panel overlay-right">
-          <img src="/images/logo.png" alt="Activa Chilecito" class="overlay-logo mb-4">
-          <h2>¡Hola, Deportista!</h2>
-          <p>Ingresa tus datos personales y comienza tu viaje con nosotros organizando y reservando partidos.</p>
-          <button class="btn-ghost" (click)="togglePanel(true)">Crear Cuenta</button>
+          <img src="/images/logo.png" alt="Activa Chilecito" class="overlay-logo mb-5">
+          <h2>EL DEPORTE TAMBIÉN NOS CONECTA.</h2>
+          <p class="mb-5">Descubrí partidos, sumate a equipos y reservá canchas fácilmente.</p>
+          <button class="btn-ghost" (click)="togglePanel(true)">REGISTRARSE</button>
         </div>
         
       </div>
