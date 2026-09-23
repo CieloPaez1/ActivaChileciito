@@ -22,14 +22,20 @@ export class AuthService {
   private checkToken() {
     const token = this.getToken();
     if (token) {
-      // Decode JWT base64 (payload is middle part)
       try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const usuarioInfo: Partial<Usuario> = {
-          email: payload.sub,
-          rol: payload.role as Rol
-        };
-        this.currentUserSubject.next(usuarioInfo as Usuario);
+        if (token.startsWith('jwt-token-')) {
+          // Mock token from backend (e.g. jwt-token-email@ejemplo.com-uuid)
+          const email = token.split('-')[2];
+          this.currentUserSubject.next({ email: email, rol: 'CLIENTE' } as Usuario);
+        } else {
+          // Decode real JWT base64
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const usuarioInfo: Partial<Usuario> = {
+            email: payload.sub,
+            rol: payload.role as Rol
+          };
+          this.currentUserSubject.next(usuarioInfo as Usuario);
+        }
       } catch (e) {
         this.logout();
       }

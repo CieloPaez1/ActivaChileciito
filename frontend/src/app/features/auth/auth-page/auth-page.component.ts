@@ -41,10 +41,47 @@ export class AuthPageComponent implements OnInit {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Added back
       password: ['', [Validators.required, Validators.minLength(6)]],
-      telefono: [''], // Optional field as per model
-      rol: ['CLIENTE', Validators.required]
-    });
+      confirmPassword: ['', [Validators.required]],
+      rol: ['CLIENTE', Validators.required] // Kept for backend
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('password')?.value === g.get('confirmPassword')?.value
+      ? null : { 'mismatch': true };
+  }
+
+  // UI state for password visibility
+  showLoginPassword = false;
+  showRegisterPassword = false;
+  showConfirmPassword = false;
+
+  toggleLoginPassword() {
+    this.showLoginPassword = !this.showLoginPassword;
+  }
+  
+  toggleRegisterPassword() {
+    this.showRegisterPassword = !this.showRegisterPassword;
+  }
+  
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
+  loginInfo: string = '';
+  registerInfo: string = '';
+
+  loginWithGoogle(): void {
+    const msg = '✨ ¡El inicio de sesión con Google estará disponible próximamente!';
+    if (this.isRightPanelActive) {
+      this.registerInfo = msg;
+      setTimeout(() => this.registerInfo = '', 4000);
+    } else {
+      this.loginInfo = msg;
+      setTimeout(() => this.loginInfo = '', 4000);
+    }
   }
 
   ngOnInit(): void {
@@ -78,7 +115,7 @@ export class AuthPageComponent implements OnInit {
     this.authService.login({ email, password }).subscribe({
       next: () => {
         this.isLoadingLogin = false;
-        this.router.navigate(['/']); // O redirigir al perfil/dashboard
+        this.router.navigate(['/dashboard']); // Redirigir al dashboard provisorio
       },
       error: (error) => {
         this.isLoadingLogin = false;

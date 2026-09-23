@@ -23,14 +23,16 @@
 
 @media (min-width: 992px) {
   .nav-pill-container {
-    background-color: var(--card-bg);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
     padding: 6px 15px;
     border-radius: 50px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
   }
   
   [data-theme="dark"] .nav-pill-container {
+    background-color: rgba(0, 0, 0, 0.7);
     box-shadow: 0 5px 15px rgba(0,0,0,0.4);
   }
 

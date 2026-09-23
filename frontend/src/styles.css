@@ -129,6 +129,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.drop-shadow-glow {
+  filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.9));
+}
+
 /* Smooth animations */
 .fade-in-up {
   opacity: 0;

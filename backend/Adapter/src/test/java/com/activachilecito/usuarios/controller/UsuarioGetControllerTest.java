@@ -32,6 +32,9 @@ public class UsuarioGetControllerTest {
     private ObtenerUsuariosPorRolInput obtenerUsuariosPorRolInput;
 
     @MockBean
+    private usecase.ObtenerTodosLosUsuariosUseCase obtenerTodosLosUsuariosUseCase;
+
+    @MockBean
     private UsuarioMapper usuarioMapper;
 
     @Test
