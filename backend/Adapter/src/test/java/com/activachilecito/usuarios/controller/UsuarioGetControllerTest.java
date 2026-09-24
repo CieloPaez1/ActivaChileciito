@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import com.activachilecito.usuarios.adapter.output.JwtProviderAdapter;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,6 +33,9 @@ public class UsuarioGetControllerTest {
     private ObtenerUsuariosPorRolInput obtenerUsuariosPorRolInput;
 
     @MockBean
+    private JwtProviderAdapter jwtProviderAdapter;
+
+    @MockBean
     private usecase.ObtenerTodosLosUsuariosUseCase obtenerTodosLosUsuariosUseCase;
 
     @MockBean
@@ -40,15 +44,15 @@ public class UsuarioGetControllerTest {
     @Test
     void testObtenerUsuariosPorRol_DevuelveLista() throws Exception {
         // Arrange
-        Usuario usuario = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.CLIENTE, "3825123456");
-        UsuarioDto dto = new UsuarioDto(1L, "Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.CLIENTE, "3825123456", true);
+        Usuario usuario = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.DEPORTISTA, "3825123456");
+        UsuarioDto dto = new UsuarioDto(1L, "Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.DEPORTISTA, "3825123456", true);
 
-        when(obtenerUsuariosPorRolInput.obtenerUsuariosPorRol(RolUsuario.CLIENTE))
+        when(obtenerUsuariosPorRolInput.obtenerUsuariosPorRol(RolUsuario.DEPORTISTA))
                 .thenReturn(List.of(usuario));
         when(usuarioMapper.toDto(any(Usuario.class))).thenReturn(dto);
 
         // Act & Assert
-        mockMvc.perform(get("/api/usuarios/rol/CLIENTE")
+        mockMvc.perform(get("/api/usuarios/rol/DEPORTISTA")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].nombre").value("Cielo"))

@@ -28,7 +28,7 @@ public class CredencialesController {
     }
 
     private Long extraerIdDeAutenticacion(Authentication authentication) {
-        // Retornamos 1L como ID de ejemplo simulando la extracción del Principal
+        // Retornamos 1L como ID de ejemplo simulando la extracciÃ³n del Principal
         return 1L;
     }
 }

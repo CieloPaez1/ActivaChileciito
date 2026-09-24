@@ -12,10 +12,10 @@ public interface UsuarioOutput {
     // Busca un usuario por su ID (devuelve Optional por si no existe)
     Optional<Usuario> buscarPorId(Long id);
 
-    // Clave para el Login: buscar si el email ya está registrado
+    // Clave para el Login: buscar si el email ya estÃ¡ registrado
     Optional<Usuario> buscarPorEmail(String email);
 
-    // Trae la lista de todos los usuarios (útil para el ADMIN_SISTEMA)
+    // Trae la lista de todos los usuarios (Ãºtil para el DUENO_DE_COMPLEJO)
     List<Usuario> listarTodos();
 
     // Elimina un usuario por su ID

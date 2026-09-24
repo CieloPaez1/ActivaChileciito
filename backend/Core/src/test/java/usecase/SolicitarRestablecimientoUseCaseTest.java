@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import output.EmailSenderPort;
 import output.TokenRecuperacionPort;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 class SolicitarRestablecimientoUseCaseTest {
 
     @Mock
-    private UsuarioRepositoryPort usuarioRepositoryPort;
+    private UsuarioOutput usuarioOutput;
     @Mock
     private TokenRecuperacionPort tokenRecuperacionPort;
     @Mock
@@ -37,8 +37,8 @@ class SolicitarRestablecimientoUseCaseTest {
         SolicitarRestablecimientoRequest request = new SolicitarRestablecimientoRequest();
         request.setEmail("cielo@ejemplo.com");
         
-        Usuario usuario = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.CLIENTE, "3825123456");
-        when(usuarioRepositoryPort.buscarPorEmail(request.getEmail())).thenReturn(Optional.of(usuario));
+        Usuario usuario = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.DEPORTISTA, "3825123456");
+        when(usuarioOutput.buscarPorEmail(request.getEmail())).thenReturn(Optional.of(usuario));
         when(tokenRecuperacionPort.generarToken(any())).thenReturn("token-uuid-123");
 
         // Act
@@ -55,7 +55,7 @@ class SolicitarRestablecimientoUseCaseTest {
         SolicitarRestablecimientoRequest request = new SolicitarRestablecimientoRequest();
         request.setEmail("noexiste@ejemplo.com");
         
-        when(usuarioRepositoryPort.buscarPorEmail(request.getEmail())).thenReturn(Optional.empty());
+        when(usuarioOutput.buscarPorEmail(request.getEmail())).thenReturn(Optional.empty());
 
         // Act
         solicitarRestablecimientoUseCase.solicitar(request);

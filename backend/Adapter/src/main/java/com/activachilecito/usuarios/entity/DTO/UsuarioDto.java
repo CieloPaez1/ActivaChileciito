@@ -19,7 +19,7 @@ public class UsuarioDto {
     @JsonProperty("email")
     private String email;
 
-    // AQUÍ ESTÁ LA MAGIA: Solo se lee desde Angular, nunca se devuelve.
+    // AQUÃ ESTÃ LA MAGIA: Solo se lee desde Angular, nunca se devuelve.
     @JsonProperty(value = "password", access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -32,7 +32,7 @@ public class UsuarioDto {
     @JsonProperty("activo")
     private boolean activo;
 
-    // Constructor vacío
+    // Constructor vacÃ­o
     public UsuarioDto() {}
 
     // Constructor COMPLETO (para que el Mapper o el Controlador puedan usarlo sin problemas)

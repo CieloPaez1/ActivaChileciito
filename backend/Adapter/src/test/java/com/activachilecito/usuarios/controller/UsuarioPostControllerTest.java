@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import com.activachilecito.usuarios.adapter.output.JwtProviderAdapter;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,10 +26,13 @@ public class UsuarioPostControllerTest {
     @MockBean
     private RegistrarUsuarioInput registrarUsuarioInput;
 
+    @MockBean
+    private JwtProviderAdapter jwtProviderAdapter;
+
     @Test
     void testRegistrarUsuario_Devuelve201() throws Exception {
         // Arrange
-        Usuario usuarioDevuelto = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", model.RolUsuario.CLIENTE, "3825123456");
+        Usuario usuarioDevuelto = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", model.RolUsuario.DEPORTISTA, "3825123456");
         when(registrarUsuarioInput.registrarUsuario(any(Usuario.class))).thenReturn(usuarioDevuelto);
 
         String jsonBody = """
@@ -37,7 +41,7 @@ public class UsuarioPostControllerTest {
                   "apellido": "Paez",
                   "email": "cielo@ejemplo.com",
                   "password": "Password123",
-                  "rol": "CLIENTE",
+                  "rol": "DEPORTISTA",
                   "telefono": "3825123456"
                 }
                 """;

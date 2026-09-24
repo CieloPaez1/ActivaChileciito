@@ -26,7 +26,7 @@ public class UsuarioPostController {
     public ResponseEntity<String> registrar(@RequestBody UsuarioDto dto) {
 
         // 1. Usamos el DTO para instanciar el Modelo mediante el Factory Method.
-        // Si hay un dato vacío o nulo, explotará aquí mismo lanzando la excepción.
+        // Si hay un dato vacÃ­o o nulo, explotarÃ¡ aquÃ­ mismo lanzando la excepciÃ³n.
         Usuario usuarioPuro = Usuario.crear(
                 dto.getNombre(),
                 dto.getApellido(),
@@ -36,10 +36,10 @@ public class UsuarioPostController {
                 dto.getTelefono()
         );
 
-        // 2. Le pasamos el modelo validado al Caso de Uso (idéntico a tu proyecto anterior)
+        // 2. Le pasamos el modelo validado al Caso de Uso (idÃ©ntico a tu proyecto anterior)
         registrarUsuarioInput.registrarUsuario(usuarioPuro);
 
-        // 3. Devolvemos la respuesta de éxito
+        // 3. Devolvemos la respuesta de Ã©xito
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado correctamente");
     }
 }

@@ -7,12 +7,12 @@ import usecase.RegistrarUsuarioUseCase;
 
 @Configuration
 public class UsuarioUseCaseConfig {
-    // @Bean le dice a Spring que guarde el resultado de este método en su contexto
-    // y lo inyecte automáticamente cuando un controlador lo pida (como el UsuarioPostController)
+    // @Bean le dice a Spring que guarde el resultado de este mÃ©todo en su contexto
+    // y lo inyecte automÃ¡ticamente cuando un controlador lo pida (como el UsuarioPostController)
     @Bean
-    public RegistrarUsuarioUseCase registrarUsuarioUseCase(UsuarioOutput usuarioOutput) {
-        // Aquí instanciamos manualmente el caso de uso puro, pasándole el puerto que se conecta a la BD
-        return new RegistrarUsuarioUseCase(usuarioOutput);
+    public RegistrarUsuarioUseCase registrarUsuarioUseCase(UsuarioOutput usuarioOutput, output.PasswordEncoderPort passwordEncoderPort) {
+        // AquÃ­ instanciamos manualmente el caso de uso puro, pasÃ¡ndole el puerto que se conecta a la BD
+        return new RegistrarUsuarioUseCase(usuarioOutput, passwordEncoderPort);
     }
 
     @Bean
@@ -82,8 +82,4 @@ public class UsuarioUseCaseConfig {
         return new usecase.ObtenerTodosLosUsuariosUseCase(usuarioOutput);
     }
 
-    @Bean
-    public usecase.ModificarUsuarioAdminUseCase modificarUsuarioAdminUseCase(UsuarioOutput usuarioOutput) {
-        return new usecase.ModificarUsuarioAdminUseCase(usuarioOutput);
-    }
 }

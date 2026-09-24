@@ -24,6 +24,6 @@ public class SolicitarRestablecimientoUseCase {
             String token = tokenRecuperacionPort.generarToken(usuario.getId());
             emailSenderPort.enviarEmailRecuperacion(usuario.getEmail(), token);
         }
-        // Si no existe, simulamos éxito silenciosamente.
+        // Si no existe, simulamos Ã©xito silenciosamente.
     }
 }

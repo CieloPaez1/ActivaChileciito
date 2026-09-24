@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import output.PasswordEncoderPort;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 class CambiarContrasenaUseCaseTest {
 
     @Mock
-    private UsuarioRepositoryPort usuarioRepositoryPort;
+    private UsuarioOutput usuarioOutput;
 
     @Mock
     private PasswordEncoderPort passwordEncoderPort;
@@ -35,19 +35,19 @@ class CambiarContrasenaUseCaseTest {
     @Test
     void cambiarContrasena_Exitosa() {
         Long userId = 1L;
-        Usuario usuario = Usuario.crear("Test", "User", "test@test.com", "hash-actual", RolUsuario.CLIENTE, "12345");
+        Usuario usuario = Usuario.crear("Test", "User", "test@test.com", "hash-actual", RolUsuario.DEPORTISTA, "12345");
         usuario.setId(userId);
         
         CambiarContrasenaRequest request = new CambiarContrasenaRequest("clave-actual", "nueva-clave-valida");
 
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.of(usuario));
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.of(usuario));
         when(passwordEncoderPort.coincide("clave-actual", "hash-actual")).thenReturn(true);
         when(passwordEncoderPort.encriptar("nueva-clave-valida")).thenReturn("nuevo-hash");
 
         cambiarContrasenaUseCase.cambiarContrasena(userId, request);
 
         assertEquals("nuevo-hash", usuario.getPassword());
-        verify(usuarioRepositoryPort).actualizar(usuario);
+        verify(usuarioOutput).guardar(usuario);
     }
 
     @Test
@@ -55,7 +55,7 @@ class CambiarContrasenaUseCaseTest {
         Long userId = 99L;
         CambiarContrasenaRequest request = new CambiarContrasenaRequest("clave", "nueva-clave");
 
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.empty());
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.empty());
 
         assertThrows(ExcepcionUsuarioNoEncontrado.class, () -> cambiarContrasenaUseCase.cambiarContrasena(userId, request));
         verifyNoInteractions(passwordEncoderPort);
@@ -64,28 +64,28 @@ class CambiarContrasenaUseCaseTest {
     @Test
     void cambiarContrasena_ClaveActualIncorrecta_Lanza400() {
         Long userId = 1L;
-        Usuario usuario = Usuario.crear("Test", "User", "test@test.com", "hash-actual", RolUsuario.CLIENTE, "12345");
+        Usuario usuario = Usuario.crear("Test", "User", "test@test.com", "hash-actual", RolUsuario.DEPORTISTA, "12345");
         CambiarContrasenaRequest request = new CambiarContrasenaRequest("clave-mala", "nueva-clave");
 
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.of(usuario));
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.of(usuario));
         when(passwordEncoderPort.coincide("clave-mala", "hash-actual")).thenReturn(false);
 
         assertThrows(ExcepcionCredencialesInvalidas.class, () -> cambiarContrasenaUseCase.cambiarContrasena(userId, request));
         verify(passwordEncoderPort, never()).encriptar(anyString());
-        verify(usuarioRepositoryPort, never()).actualizar(any());
+        verify(usuarioOutput, never()).guardar(any());
     }
 
     @Test
     void cambiarContrasena_NuevaClaveCorta_LanzaExcepcion() {
         Long userId = 1L;
-        Usuario usuario = Usuario.crear("Test", "User", "test@test.com", "hash-actual", RolUsuario.CLIENTE, "12345");
+        Usuario usuario = Usuario.crear("Test", "User", "test@test.com", "hash-actual", RolUsuario.DEPORTISTA, "12345");
         CambiarContrasenaRequest request = new CambiarContrasenaRequest("clave-actual", "corta");
 
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.of(usuario));
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.of(usuario));
         when(passwordEncoderPort.coincide("clave-actual", "hash-actual")).thenReturn(true);
 
         assertThrows(ExcepcionUsuario.class, () -> cambiarContrasenaUseCase.cambiarContrasena(userId, request));
         verify(passwordEncoderPort, never()).encriptar(anyString());
-        verify(usuarioRepositoryPort, never()).actualizar(any());
+        verify(usuarioOutput, never()).guardar(any());
     }
 }

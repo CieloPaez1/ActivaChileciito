@@ -17,7 +17,8 @@ public class ComplejoMapper {
                 entity.getNombre(),
                 entity.getDireccion(),
                 entity.getTelefono(),
-                entity.getPrestaciones()
+                entity.getPrestaciones(),
+                new java.util.ArrayList<>()
         );
     }
 

@@ -25,8 +25,8 @@ class ObtenerTodosLosUsuariosUseCaseTest {
 
     @Test
     void obtenerTodos_RetornaListaDeUsuarios() {
-        Usuario u1 = Usuario.restaurar(1L, "Juan", "Perez", "juan@test.com", "hash", RolUsuario.CLIENTE, "123", true);
-        Usuario u2 = Usuario.restaurar(2L, "Ana", "Gomez", "ana@test.com", "hash", RolUsuario.ADMIN_SISTEMA, "456", true);
+        Usuario u1 = Usuario.restaurar(1L, "Juan", "Perez", "juan@test.com", "hash", RolUsuario.DEPORTISTA, "123", true);
+        Usuario u2 = Usuario.restaurar(2L, "Ana", "Gomez", "ana@test.com", "hash", RolUsuario.DUENO_DE_COMPLEJO, "456", true);
         
         when(usuarioOutput.listarTodos()).thenReturn(List.of(u1, u2));
 

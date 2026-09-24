@@ -1,9 +1,11 @@
 package com.activachilecito.usuarios.config;
 
+import com.activachilecito.usuarios.adapter.output.JwtProviderAdapter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -13,7 +15,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtProviderAdapter jwtProviderAdapter;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -24,32 +29,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String jwt = authHeader.substring(7);
             
-            // Simulación de la extracción del JWT
-            Long extractedId = simularExtraccionId(jwt);
-            String extractedEmail = "usuario@test.com";
-            String extractedRole = "CLIENTE";
-
-            if (extractedId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                CustomUserDetails userDetails = new CustomUserDetails(extractedId, extractedEmail, "", extractedRole);
+            try {
+                String email = jwtProviderAdapter.extraerEmail(jwt);
                 
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    if (jwtProviderAdapter.esTokenValido(jwt, email)) {
+                        Long id = jwtProviderAdapter.extraerId(jwt);
+                        String rol = jwtProviderAdapter.extraerRol(jwt);
+
+                        CustomUserDetails userDetails = new CustomUserDetails(id, email, "", rol);
+
+                        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities()
+                        );
+                        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authToken);
+                    }
+                }
+            } catch (Exception e) {
+                // Token invÃ¡lido o expirado
             }
         }
         filterChain.doFilter(request, response);
-    }
-
-    private Long simularExtraccionId(String jwt) {
-        try {
-            if (jwt.contains("id-")) {
-                String idStr = jwt.substring(jwt.indexOf("id-") + 3);
-                if(idStr.contains("-")) idStr = idStr.substring(0, idStr.indexOf("-"));
-                return Long.parseLong(idStr);
-            }
-        } catch (Exception ignored) {}
-        return 1L;
     }
 }

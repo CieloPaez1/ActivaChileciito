@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import output.PerfilResponseDTO;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 class VisualizarPerfilUseCaseTest {
 
     @Mock
-    private UsuarioRepositoryPort usuarioRepositoryPort;
+    private UsuarioOutput usuarioOutput;
 
     @InjectMocks
     private VisualizarPerfilUseCase visualizarPerfilUseCase;
@@ -30,9 +30,9 @@ class VisualizarPerfilUseCaseTest {
     void visualizar_UsuarioExiste_DevuelvePerfilResponseDTO_SinPassword() {
         // Arrange
         Long userId = 1L;
-        Usuario usuario = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "PassSecreta", RolUsuario.CLIENTE, "3825123456");
+        Usuario usuario = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "PassSecreta", RolUsuario.DEPORTISTA, "3825123456");
         usuario.setId(userId);
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.of(usuario));
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.of(usuario));
 
         // Act
         PerfilResponseDTO response = visualizarPerfilUseCase.visualizar(userId);
@@ -43,16 +43,16 @@ class VisualizarPerfilUseCaseTest {
         assertEquals("Cielo", response.getNombre());
         assertEquals("Paez", response.getApellido());
         assertEquals("cielo@ejemplo.com", response.getEmail());
-        assertEquals("CLIENTE", response.getRol());
+        assertEquals("DEPORTISTA", response.getRol());
         assertTrue(response.isActivo());
-        verify(usuarioRepositoryPort).buscarPorId(userId);
+        verify(usuarioOutput).buscarPorId(userId);
     }
 
     @Test
     void visualizar_UsuarioNoExiste_LanzaExcepcion404() {
         // Arrange
         Long userId = 99L;
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.empty());
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(ExcepcionUsuarioNoEncontrado.class, () -> visualizarPerfilUseCase.visualizar(userId));

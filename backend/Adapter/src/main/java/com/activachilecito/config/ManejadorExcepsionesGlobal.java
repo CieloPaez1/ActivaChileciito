@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ManejadorExcepsionesGlobal {
-    // Le decimos qué excepción específica debe atrapar este método
+    // Le decimos quÃ© excepciÃ³n especÃ­fica debe atrapar este mÃ©todo
     @ExceptionHandler(ExcepcionUsuario.class)
     public ResponseEntity<Map<String, String>> manejarExcepcionUsuario(ExcepcionUsuario e) {
         // Devolvemos el error 400 (Bad Request) con el mensaje de tu regla de negocio
@@ -56,9 +56,9 @@ public class ManejadorExcepsionesGlobal {
     // Un "catch-all" para cualquier otro error inesperado (el equivalente a Exception e)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> manejarErroresInesperados(Exception e) {
-        // En producción, aquí normalmente guardarías el error en un log
+        // En producciÃ³n, aquÃ­ normalmente guardarÃ­as el error en un log
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Collections.singletonMap("error", "Error interno del servidor. Por favor, intente más tarde."));
+                .body(Collections.singletonMap("error", "Error interno del servidor. Por favor, intente mÃ¡s tarde."));
     }
 }

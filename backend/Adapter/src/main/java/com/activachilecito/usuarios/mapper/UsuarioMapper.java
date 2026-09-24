@@ -37,7 +37,7 @@ public class UsuarioMapper {
         );
     }
 
-    // 3. Traduce de Negocio Puro (Core) a Respuesta para Angular (Web) - ¡SIN PASSWORD!
+    // 3. Traduce de Negocio Puro (Core) a Respuesta para Angular (Web) - Â¡SIN PASSWORD!
     public UsuarioDto toDto(Usuario usuario) {
         if (usuario == null) return null;
         return new UsuarioDto(

@@ -28,7 +28,7 @@ class VisualizarCredencialesUseCaseTest {
     void visualizar_ConIdExistente_DevuelveCredencialesDTO() {
         // Arrange
         Long idUsuario = 1L;
-        Usuario usuarioSimulado = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.CLIENTE, "3825123456");
+        Usuario usuarioSimulado = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "Pass123", RolUsuario.DEPORTISTA, "3825123456");
         
         when(obtenerUsuarioPorIdPort.obtenerPorId(idUsuario)).thenReturn(usuarioSimulado);
 
@@ -38,7 +38,7 @@ class VisualizarCredencialesUseCaseTest {
         // Assert
         assertNotNull(resultado);
         assertEquals("cielo@ejemplo.com", resultado.getEmail());
-        assertEquals("CLIENTE", resultado.getRol());
+        assertEquals("DEPORTISTA", resultado.getRol());
         verify(obtenerUsuarioPorIdPort).obtenerPorId(idUsuario);
     }
 }

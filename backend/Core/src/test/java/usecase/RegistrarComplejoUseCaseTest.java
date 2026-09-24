@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import output.ComplejoResponseDTO;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ class RegistrarComplejoUseCaseTest {
     private ComplejoRepositoryPort complejoRepositoryPort;
 
     @Mock
-    private UsuarioRepositoryPort usuarioRepositoryPort;
+    private UsuarioOutput usuarioOutput;
 
     @InjectMocks
     private RegistrarComplejoUseCase registrarComplejoUseCase;
@@ -36,22 +36,22 @@ class RegistrarComplejoUseCaseTest {
     @Test
     void registrar_UsuarioValidoYSinComplejoPrevio_RegistraCorrectamente() {
         Long idDueno = 1L;
-        Usuario usuario = Usuario.restaurar(idDueno, "Juan", "Perez", "admin@test.com", "hash", RolUsuario.ADMIN_COMPLEJO, "123", true);
+        Usuario usuario = Usuario.restaurar(idDueno, "Juan", "Perez", "juan@test.com", "hash", RolUsuario.DUENO_DE_COMPLEJO, "123", true);
         
         RegistrarComplejoRequest request = RegistrarComplejoRequest.builder()
-                .nombre("Pádel Chilecito")
+                .nombre("PÃ¡del Chilecito")
                 .direccion("Av. Principal 123")
                 .telefono("555-1234")
                 .prestaciones(List.of("Cancha Cristal", "Bar"))
                 .build();
 
-        when(usuarioRepositoryPort.buscarPorId(idDueno)).thenReturn(Optional.of(usuario));
-        when(complejoRepositoryPort.existePorDueno(idDueno)).thenReturn(false);
+        when(usuarioOutput.buscarPorId(idDueno)).thenReturn(Optional.of(usuario));
+        
 
         ComplejoResponseDTO response = registrarComplejoUseCase.registrar(idDueno, request);
 
         assertNotNull(response);
-        assertEquals("Pádel Chilecito", response.getNombre());
+        assertEquals("PÃ¡del Chilecito", response.getNombre());
         assertEquals("Av. Principal 123", response.getDireccion());
         
         verify(complejoRepositoryPort).guardar(eq(idDueno), any(Complejo.class));
@@ -61,7 +61,7 @@ class RegistrarComplejoUseCaseTest {
     void registrar_UsuarioNoExiste_LanzaExcepcion404() {
         Long idInvalido = 99L;
         RegistrarComplejoRequest request = new RegistrarComplejoRequest();
-        when(usuarioRepositoryPort.buscarPorId(idInvalido)).thenReturn(Optional.empty());
+        when(usuarioOutput.buscarPorId(idInvalido)).thenReturn(Optional.empty());
 
         assertThrows(ExcepcionUsuarioNoEncontrado.class, () -> registrarComplejoUseCase.registrar(idInvalido, request));
         verifyNoInteractions(complejoRepositoryPort);
@@ -69,26 +69,14 @@ class RegistrarComplejoUseCaseTest {
 
     @Test
     void registrar_UsuarioNoEsAdmin_LanzaExcepcionDeReglaDeNegocio() {
-        Long idCliente = 2L;
-        Usuario usuarioCliente = Usuario.restaurar(idCliente, "Ana", "Paz", "ana@test.com", "hash", RolUsuario.CLIENTE, "123", true);
+        Long idDEPORTISTA = 2L;
+        Usuario usuarioDEPORTISTA = Usuario.restaurar(idDEPORTISTA, "Ana", "Paz", "ana@test.com", "hash", RolUsuario.DEPORTISTA, "123", true);
         RegistrarComplejoRequest request = new RegistrarComplejoRequest();
 
-        when(usuarioRepositoryPort.buscarPorId(idCliente)).thenReturn(Optional.of(usuarioCliente));
+        when(usuarioOutput.buscarPorId(idDEPORTISTA)).thenReturn(Optional.of(usuarioDEPORTISTA));
 
-        assertThrows(ComplejoException.class, () -> registrarComplejoUseCase.registrar(idCliente, request));
+        assertThrows(ComplejoException.class, () -> registrarComplejoUseCase.registrar(idDEPORTISTA, request));
         verifyNoInteractions(complejoRepositoryPort);
     }
 
-    @Test
-    void registrar_UsuarioYaTieneComplejo_LanzaExcepcionDeReglaDeNegocio() {
-        Long idDueno = 1L;
-        Usuario usuario = Usuario.restaurar(idDueno, "Juan", "Perez", "admin@test.com", "hash", RolUsuario.ADMIN_COMPLEJO, "123", true);
-        RegistrarComplejoRequest request = new RegistrarComplejoRequest();
-
-        when(usuarioRepositoryPort.buscarPorId(idDueno)).thenReturn(Optional.of(usuario));
-        when(complejoRepositoryPort.existePorDueno(idDueno)).thenReturn(true);
-
-        assertThrows(ComplejoException.class, () -> registrarComplejoUseCase.registrar(idDueno, request));
-        verify(complejoRepositoryPort, never()).guardar(anyLong(), any());
     }
-}

@@ -27,7 +27,7 @@ class CredencialesControllerTest {
     void visualizarCredenciales_DevuelveCredencialesDTOYStatus200() {
         // Arrange
         Long idUsuarioSimulado = 1L; // Hardcoded en el controlador para este ejemplo
-        CredencialesDTO credencialesDTO = new CredencialesDTO("agustin@ejemplo.com", "CLIENTE");
+        CredencialesDTO credencialesDTO = new CredencialesDTO("agustin@ejemplo.com", "DEPORTISTA");
         
         when(visualizarCredencialesInput.visualizar(idUsuarioSimulado)).thenReturn(credencialesDTO);
 
@@ -37,7 +37,7 @@ class CredencialesControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("agustin@ejemplo.com", response.getBody().getEmail());
-        assertEquals("CLIENTE", response.getBody().getRol());
+        assertEquals("DEPORTISTA", response.getBody().getRol());
         verify(visualizarCredencialesInput).visualizar(idUsuarioSimulado);
     }
 }

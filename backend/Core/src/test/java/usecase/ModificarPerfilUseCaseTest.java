@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import output.PerfilResponseDTO;
-import output.UsuarioRepositoryPort;
+import output.UsuarioOutput;
 
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 class ModificarPerfilUseCaseTest {
 
     @Mock
-    private UsuarioRepositoryPort usuarioRepositoryPort;
+    private UsuarioOutput usuarioOutput;
 
     @InjectMocks
     private ModificarPerfilUseCase modificarPerfilUseCase;
@@ -31,7 +31,7 @@ class ModificarPerfilUseCaseTest {
     void modificar_UsuarioExiste_ActualizaDatosPermitidosYRetornaDTOSinAlterarDatosSensibles() {
         // Arrange
         Long userId = 1L;
-        Usuario usuarioExistente = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "PassSecreta", RolUsuario.CLIENTE, "3825123456");
+        Usuario usuarioExistente = Usuario.crear("Cielo", "Paez", "cielo@ejemplo.com", "PassSecreta", RolUsuario.DEPORTISTA, "3825123456");
         usuarioExistente.setId(userId);
         
         ModificarPerfilRequest request = ModificarPerfilRequest.builder()
@@ -40,7 +40,7 @@ class ModificarPerfilUseCaseTest {
                 .telefono("111111111")
                 .build();
 
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.of(usuarioExistente));
 
         // Act
         PerfilResponseDTO response = modificarPerfilUseCase.modificar(userId, request);
@@ -51,10 +51,10 @@ class ModificarPerfilUseCaseTest {
         assertEquals("NuevoNombre", response.getNombre());
         assertEquals("NuevoApellido", response.getApellido());
         assertEquals("cielo@ejemplo.com", response.getEmail()); // Email inalterado
-        assertEquals("CLIENTE", response.getRol()); // Rol inalterado
+        assertEquals("DEPORTISTA", response.getRol()); // Rol inalterado
         assertEquals("PassSecreta", usuarioExistente.getPassword()); // Password inalterada en la entidad
 
-        verify(usuarioRepositoryPort).actualizar(usuarioExistente);
+        verify(usuarioOutput).guardar(usuarioExistente);
     }
 
     @Test
@@ -62,7 +62,7 @@ class ModificarPerfilUseCaseTest {
         // Arrange
         Long userId = 99L;
         ModificarPerfilRequest request = new ModificarPerfilRequest();
-        when(usuarioRepositoryPort.buscarPorId(userId)).thenReturn(Optional.empty());
+        when(usuarioOutput.buscarPorId(userId)).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(ExcepcionUsuarioNoEncontrado.class, () -> modificarPerfilUseCase.modificar(userId, request));

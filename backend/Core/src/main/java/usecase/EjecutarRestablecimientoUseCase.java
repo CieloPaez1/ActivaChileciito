@@ -18,7 +18,7 @@ public class EjecutarRestablecimientoUseCase {
 
     public void ejecutar(EjecutarRestablecimientoRequest request) {
         if (!tokenRecuperacionPort.esTokenValido(request.getToken())) {
-            throw new ExcepcionUsuario("El token de recuperación es inválido o ha expirado.");
+            throw new ExcepcionUsuario("El token de recuperaciÃ³n es invÃ¡lido o ha expirado.");
         }
 
         Long usuarioId = tokenRecuperacionPort.obtenerUsuarioIdPorToken(request.getToken());

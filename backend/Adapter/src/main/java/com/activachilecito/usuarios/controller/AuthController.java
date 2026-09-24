@@ -50,6 +50,6 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader(value = "Authorization", required = false) String token) {
         cerrarSesionUseCase.cerrarSesion(token);
-        return ResponseEntity.ok("Sesión cerrada correctamente");
+        return ResponseEntity.ok("SesiÃ³n cerrada correctamente");
     }
 }

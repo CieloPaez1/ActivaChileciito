@@ -17,12 +17,12 @@ public class RegistrarComplejoUseCase {
     private final ComplejoRepositoryPort complejoRepositoryPort;
     private final UsuarioOutput usuarioOutput;
 
-    public ComplejoResponseDTO registrar(Long idUsuarioDueño, RegistrarComplejoRequest request) {
-        Usuario usuario = usuarioOutput.buscarPorId(idUsuarioDueño)
-                .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con ID: " + idUsuarioDueño));
+    public ComplejoResponseDTO registrar(Long idUsuarioDueÃno, RegistrarComplejoRequest request) {
+        Usuario usuario = usuarioOutput.buscarPorId(idUsuarioDueÃno)
+                .orElseThrow(() -> new ExcepcionUsuarioNoEncontrado("Usuario no encontrado con ID: " + idUsuarioDueÃno));
 
-        if (usuario.getRol() != RolUsuario.ADMIN_COMPLEJO) {
-            throw new ComplejoException("Operación denegada. El usuario no posee rol de Propietario de Complejo.");
+        if (usuario.getRol() != RolUsuario.DUENO_DE_COMPLEJO) {
+            throw new ComplejoException("OperaciÃ³n denegada. El usuario no posee rol de Propietario de Complejo.");
         }
 
         Complejo complejo = Complejo.crear(
@@ -32,7 +32,7 @@ public class RegistrarComplejoUseCase {
                 request.getPrestaciones()
         );
 
-        complejoRepositoryPort.guardar(idUsuarioDueño, complejo);
+        complejoRepositoryPort.guardar(idUsuarioDueÃno, complejo);
 
         return ComplejoResponseDTO.builder()
                 .nombre(complejo.getNombre())

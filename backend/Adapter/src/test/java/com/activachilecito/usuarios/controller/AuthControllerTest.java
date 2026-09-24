@@ -79,7 +79,7 @@ class AuthControllerTest {
         ResponseEntity<String> response = authController.logout(token);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Sesión cerrada correctamente", response.getBody());
+        assertEquals("SesiÃ³n cerrada correctamente", response.getBody());
         verify(cerrarSesionUseCase).cerrarSesion(token);
     }
 }

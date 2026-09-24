@@ -18,7 +18,7 @@ public class UsuarioRepository implements UsuarioOutput {
     private final UsuarioCrud usuarioCrud;
     private final UsuarioMapper usuarioMapper;
 
-    // Inyección de dependencias
+    // InyecciÃ³n de dependencias
     public UsuarioRepository(UsuarioCrud usuarioCrud, UsuarioMapper usuarioMapper) {
         this.usuarioCrud = usuarioCrud;
         this.usuarioMapper = usuarioMapper;
@@ -38,7 +38,7 @@ public class UsuarioRepository implements UsuarioOutput {
 
     @Override
     public Optional<Usuario> buscarPorId(Long id) {
-        // Usamos .map() del Optional para traducir si la caja no está vacía
+        // Usamos .map() del Optional para traducir si la caja no estÃ¡ vacÃ­a
         return usuarioCrud.findById(id)
                 .map(usuarioMapper::toDomain);
     }

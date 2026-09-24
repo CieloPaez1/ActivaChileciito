@@ -9,14 +9,14 @@ public class Usuario {
     private String apellido;
     private String email;
     private String password;
-    private RolUsuario rol; // Usamos el Enum que ya tenías pensado
+    private RolUsuario rol; // Usamos el Enum que ya tenÃ­as pensado
     private String telefono;
     private boolean activo;
 
     public Usuario() {
     }
     public static Usuario restaurar(Long id, String nombre, String apellido, String email, String password, RolUsuario rol, String telefono, boolean activo) {
-        // Aquí no validamos nada porque asumimos que los datos en la BD ya son válidos
+        // AquÃ­ no validamos nada porque asumimos que los datos en la BD ya son vÃ¡lidos
         return new Usuario(id, nombre, apellido, email, password, rol, telefono, activo);
     }
 
@@ -33,24 +33,24 @@ public class Usuario {
     public static Usuario crear(String nombre, String apellido, String email, String password, RolUsuario rol, String telefono) {
 
         if (nombre == null || nombre.trim().isEmpty()) {
-            throw new ExcepcionUsuario("El nombre del usuario no puede estar nulo o vacío.");
+            throw new ExcepcionUsuario("El nombre del usuario no puede estar nulo o vacÃ­o.");
         }
 
         if (apellido == null || apellido.trim().isEmpty()) {
-            throw new ExcepcionUsuario("El apellido no puede estar nulo o vacío.");
+            throw new ExcepcionUsuario("El apellido no puede estar nulo o vacÃ­o.");
         }
 
         if (email == null || email.trim().isEmpty()) {
-            throw new ExcepcionUsuario("El email no puede estar nulo o vacío.");
+            throw new ExcepcionUsuario("El email no puede estar nulo o vacÃ­o.");
         }
 
         if (!email.contains("@") || !email.contains(".")) {
             // Una regla de negocio simple para validar el formato
-            throw new ExcepcionUsuario("El formato del correo electrónico es inválido.");
+            throw new ExcepcionUsuario("El formato del correo electrÃ³nico es invÃ¡lido.");
         }
 
         if (password == null || password.trim().isEmpty()) {
-            throw new ExcepcionUsuario("La contraseña es obligatoria.");
+            throw new ExcepcionUsuario("La contraseÃna es obligatoria.");
         }
 
         if (rol == null) {
