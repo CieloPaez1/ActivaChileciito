@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;700;800;900&display=swap');
+
+:root {
+  /* Official Brand Colors (from Logo) */
+  --brand-dark-green: #1f3f2d;
+  --brand-lime: #85bb3a;
+  --brand-earth: #7a5035;
+
+  /* Light Theme (Default) */
+  --bg-primary: #fcfcfc;
+  --bg-secondary: #ffffff;
+  --text-primary: #121c17;
+  --text-secondary: #5c6861;
+  --card-bg: #ffffff;
+  --card-shadow: 0 10px 40px rgba(0,0,0,0.04);
+  --border-color: rgba(31, 63, 45, 0.08);
+  
+  --primary-color: var(--brand-lime);
+  --navbar-bg: transparent;
+  --navbar-scrolled: rgba(255, 255, 255, 0.9);
+  --navbar-text: var(--text-primary);
+}
+
+.dark-theme {
+  /* Dark Theme Premium */
+  --bg-primary: #0f1211;
+  --bg-secondary: #161b18;
+  --text-primary: #f0f4f2;
+  --text-secondary: #97a39d;
+  --card-bg: #151a17;
+  --card-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  --border-color: rgba(255,255,255,0.05);
+
+  --navbar-bg: transparent;
+  --navbar-scrolled: rgba(15, 18, 17, 0.9);
+  --navbar-text: var(--text-primary);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.text-theme {
+  color: var(--text-primary) !important;
+}
+
+.text-brand-dark { color: var(--brand-dark-green) !important; }
+.text-brand-lime { color: var(--brand-lime) !important; }
+.bg-brand-dark { background-color: var(--brand-dark-green) !important; color: #fff; }
+.bg-brand-lime { background-color: var(--brand-lime) !important; color: #fff; }
+
+/* Buttons Pill */
+.btn-pill {
+  border-radius: 50px;
+  padding: 0.75rem 2rem;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.btn-brand-lime {
+  background-color: var(--brand-lime);
+  color: #fff;
+  border: 2px solid var(--brand-lime);
+}
+
+.btn-brand-lime:hover {
+  background-color: #72a32f;
+  border-color: #72a32f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(133, 187, 58, 0.3);
+  color: #fff;
+}
+
+.btn-outline-theme {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.btn-outline-theme:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+  border-color: var(--text-primary);
+}
+
+/* Cards */
+.sport-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.sport-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] .sport-card:hover {
+  box-shadow: 0 20px 40px rgba(133, 187, 58, 0.1);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+}
+
+[data-theme="dark"] .glass-panel {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.drop-shadow-glow {
+  filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.9));
+}
+
+/* Smooth animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Utils */
+.fw-black { font-weight: 900; }
+.z-max { z-index: 1050; }

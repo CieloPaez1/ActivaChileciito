@@ -1,0 +1,51 @@
+.modern-navbar {
+  transition: all 0.4s ease;
+  padding: 1.5rem 0;
+  background: transparent;
+}
+
+.modern-navbar.scrolled {
+  padding: 0.8rem 0;
+  background: var(--navbar-scrolled);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 992px) {
+  .nav-pill-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 6px 15px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  [data-theme="dark"] .nav-pill-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background-color: var(--brand-lime);
+    color: white !important;
+  }
+}
+
+.brand-logo-img {
+  transition: transform 0.3s ease;
+}
+
+.brand-logo-img:hover {
+  transform: scale(1.05);
+}

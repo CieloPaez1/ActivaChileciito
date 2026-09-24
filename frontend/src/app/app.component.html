@@ -1,0 +1,5 @@
+<app-navbar *ngIf="!isStandalonePage"></app-navbar>
+
+<main [ngClass]="{'min-vh-100 bg-light py-4': !isStandalonePage}">
+  <router-outlet></router-outlet>
+</main>

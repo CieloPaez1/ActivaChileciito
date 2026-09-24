@@ -1,0 +1,286 @@
+.dashboard-wrapper {
+  min-height: 100vh;
+  background: #0a110d;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cinematic glowing background orbs */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  opacity: 0.4;
+  animation: float 20s infinite alternate;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--brand-dark-green);
+  top: -100px;
+  right: -100px;
+}
+
+.orb-2 {
+  width: 350px;
+  height: 350px;
+  background: rgba(133, 187, 58, 0.2);
+  bottom: 10%;
+  left: -50px;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 250px;
+  height: 250px;
+  background: rgba(42, 82, 60, 0.3);
+  top: 40%;
+  right: 20%;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+.z-index-1 {
+  z-index: 1;
+}
+
+/* Glass Navbar */
+.glass-nav {
+  background: rgba(10, 17, 13, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.logo-container {
+  background: rgba(255, 255, 255, 1);
+  padding: 6px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(255,255,255,0.2);
+}
+
+.nav-logo {
+  height: 35px;
+}
+
+.tracking-wide {
+  letter-spacing: 1px;
+}
+
+.btn-glass-logout {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+}
+
+.btn-glass-logout:hover {
+  background: rgba(220, 53, 69, 0.15);
+  color: #ff6b6b;
+  border-color: rgba(220, 53, 69, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.1);
+}
+
+/* Hero Glass Card */
+.hero-glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 45px;
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(133, 187, 58, 0.5), transparent);
+}
+
+.welcome-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 3rem;
+  margin-bottom: 0;
+  letter-spacing: -1px;
+}
+
+.welcome-subtitle {
+  font-size: 1.15rem;
+  color: #a0aab2;
+  font-weight: 300;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(133, 187, 58, 0.1);
+  color: var(--brand-lime);
+  border: 1px solid rgba(133, 187, 58, 0.3);
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  box-shadow: 0 0 20px rgba(133, 187, 58, 0.15);
+}
+
+.role-badge.badge-admin {
+  background: rgba(255, 204, 0, 0.1);
+  color: #ffcc00;
+  border-color: rgba(255, 204, 0, 0.3);
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.15);
+}
+
+.hero-watermark {
+  max-height: 180px;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+  animation: pulse-glow 4s infinite alternate;
+}
+
+.hero-image-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: var(--brand-lime);
+  filter: blur(80px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+  z-index: -1;
+}
+
+@keyframes pulse-glow {
+  0% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.05)); transform: scale(1); }
+  100% { filter: drop-shadow(0 0 25px rgba(255,255,255,0.15)); transform: scale(1.02); }
+}
+
+/* Feature Glass Cards */
+.feature-glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  height: 100%;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.05) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.feature-glass-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px rgba(133, 187, 58, 0.05);
+}
+
+.feature-glass-card:hover::before {
+  opacity: 1;
+}
+
+.icon-wrapper {
+  width: 54px;
+  height: 54px;
+  background: rgba(133, 187, 58, 0.1);
+  border: 1px solid rgba(133, 187, 58, 0.2);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.admin-icon {
+  background: rgba(255, 204, 0, 0.1);
+  border-color: rgba(255, 204, 0, 0.2);
+}
+
+.feature-glass-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.feature-glass-card p {
+  color: #9ba4ac;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+.card-action {
+  color: var(--brand-lime);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.admin-style .card-action {
+  color: #ffcc00;
+}
+
+.card-action::after {
+  content: '→';
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.feature-glass-card:hover .card-action::after {
+  transform: translateX(5px);
+}
+
+.active-card {
+  border-color: rgba(133, 187, 58, 0.2);
+  background: linear-gradient(180deg, rgba(133, 187, 58, 0.05) 0%, rgba(255,255,255,0.02) 100%);
+}
+
+.active-card.admin-style {
+  border-color: rgba(255, 204, 0, 0.2);
+  background: linear-gradient(180deg, rgba(255, 204, 0, 0.05) 0%, rgba(255,255,255,0.02) 100%);
+}
