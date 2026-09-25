@@ -18,9 +18,10 @@ public class UsuarioDeleteController {
         this.eliminarUsuarioInput = eliminarUsuarioInput;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        eliminarUsuarioInput.eliminarUsuario(id);
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> eliminar(org.springframework.security.core.Authentication authentication) {
+        com.activachilecito.usuarios.config.CustomUserDetails userDetails = (com.activachilecito.usuarios.config.CustomUserDetails) authentication.getPrincipal();
+        eliminarUsuarioInput.eliminarUsuario(userDetails.getId());
         return ResponseEntity.noContent().build(); // Status 204
     }
 }

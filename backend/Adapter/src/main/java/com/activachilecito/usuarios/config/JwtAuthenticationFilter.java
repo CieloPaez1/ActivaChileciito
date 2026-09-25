@@ -36,8 +36,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (jwtProviderAdapter.esTokenValido(jwt, email)) {
                         Long id = jwtProviderAdapter.extraerId(jwt);
                         String rol = jwtProviderAdapter.extraerRol(jwt);
+                        boolean activo = jwtProviderAdapter.extraerActivo(jwt);
 
-                        CustomUserDetails userDetails = new CustomUserDetails(id, email, "", rol);
+                        CustomUserDetails userDetails = new CustomUserDetails(id, email, "", rol, activo);
 
                         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities()

@@ -30,6 +30,7 @@ public class JwtProviderAdapter implements JwtProviderPort {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userDetails.getId());
         claims.put("rol", userDetails.getRole());
+        claims.put("activo", userDetails.isEnabled());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -46,6 +47,11 @@ public class JwtProviderAdapter implements JwtProviderPort {
     
     public String extraerRol(String token) {
         return (String) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("rol");
+    }
+    
+    public boolean extraerActivo(String token) {
+        Object obj = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("activo");
+        return obj != null && (Boolean) obj;
     }
     
     public Long extraerId(String token) {

@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UsuarioDeleteController.class)
@@ -33,7 +34,7 @@ public class UsuarioDeleteControllerTest {
         doNothing().when(eliminarUsuarioInput).eliminarUsuario(userId);
 
         // Act & Assert
-        mockMvc.perform(delete("/api/usuarios/{id}", userId)
+        mockMvc.perform(delete("/api/usuarios/me").principal(new UsernamePasswordAuthenticationToken(new com.activachilecito.usuarios.config.CustomUserDetails(userId, "test@test.com", "", "DEPORTISTA", true), null))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent()); // 204
     }
