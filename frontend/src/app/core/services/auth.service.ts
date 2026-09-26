@@ -26,7 +26,7 @@ export class AuthService {
         if (token.startsWith('jwt-token-')) {
           // Mock token from backend (e.g. jwt-token-email@ejemplo.com-uuid)
           const email = token.split('-')[2];
-          this.currentUserSubject.next({ email: email, rol: 'CLIENTE' } as Usuario);
+          this.currentUserSubject.next({ email: email, rol: Rol.DEPORTISTA } as Usuario);
         } else {
           // Decode real JWT base64
           const payload = JSON.parse(atob(token.split('.')[1]));
@@ -53,9 +53,18 @@ export class AuthService {
     );
   }
 
-  register(data: RegisterRequest): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/register`, data);
+  register(data: RegisterRequest): Observable<string> {
+    return this.http.post(`${environment.apiUrl}/usuarios`, data, { responseType: 'text' });
   }
+
+  requestPasswordReset(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/password-reset/request`, { email });
+  }
+
+  executePasswordReset(token: string, nuevaClave: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/password-reset/execute`, { token, nuevaClave });
+  }
+
 
   logout(): void {
     localStorage.removeItem('token');

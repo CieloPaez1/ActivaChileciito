@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   userName: string = 'Usuario';
-  userRole: string = 'CLIENTE';
+  userRole: string = 'DEPORTISTA';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       if (user) {
         this.userName = user.nombre || user.email?.split('@')[0] || 'Deportista';
-        this.userRole = user.rol || 'CLIENTE';
+        this.userRole = user.rol || 'DEPORTISTA';
       }
     });
   }

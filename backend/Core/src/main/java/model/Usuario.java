@@ -9,7 +9,7 @@ public class Usuario {
     private String apellido;
     private String email;
     private String password;
-    private RolUsuario rol; // Usamos el Enum que ya tenÃ­as pensado
+    private RolUsuario rol; // Usamos el Enum que ya tenÃas pensado
     private String telefono;
     private boolean activo;
 

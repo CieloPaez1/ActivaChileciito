@@ -26,9 +26,9 @@
         <div class="col-md-8 text-center text-md-start">
           <h1 class="welcome-title">Bienvenido, <span class="text-brand-lime">{{ userName }}</span></h1>
           <p class="welcome-subtitle mt-2">Tu centro de control en ActivaChilecito.</p>
-          <div class="role-badge mt-4" [class.badge-admin]="userRole === 'ADMIN_COMPLEJO'">
+          <div class="role-badge mt-4" [class.badge-admin]="userRole === 'DUENO_DE_COMPLEJO'">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            {{ userRole === 'ADMIN_COMPLEJO' ? 'DUEÑO DE COMPLEJO' : 'DEPORTISTA VIP' }}
+            {{ userRole === 'DUENO_DE_COMPLEJO' ? 'DUEÑO DE COMPLEJO' : 'DEPORTISTA VIP' }}
           </div>
         </div>
         <div class="col-md-4 text-center mt-4 mt-md-0 d-none d-md-block position-relative">
@@ -40,7 +40,7 @@
 
     <!-- Glassy Grid Layout -->
     <div class="row mt-5 g-4">
-      <ng-container *ngIf="userRole === 'CLIENTE'">
+      <ng-container *ngIf="userRole === 'DEPORTISTA'">
         <div class="col-md-4">
           <div class="feature-glass-card">
             <div class="icon-wrapper">⚽</div>
@@ -67,7 +67,7 @@
         </div>
       </ng-container>
 
-      <ng-container *ngIf="userRole === 'ADMIN_COMPLEJO'">
+      <ng-container *ngIf="userRole === 'DUENO_DE_COMPLEJO'">
         <div class="col-md-4">
           <div class="feature-glass-card admin-style">
             <div class="icon-wrapper admin-icon">📊</div>

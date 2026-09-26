@@ -56,9 +56,9 @@ public class ManejadorExcepsionesGlobal {
     // Un "catch-all" para cualquier otro error inesperado (el equivalente a Exception e)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> manejarErroresInesperados(Exception e) {
-        // En producciÃ³n, aquÃ­ normalmente guardarÃ­as el error en un log
+        e.printStackTrace();
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Collections.singletonMap("error", "Error interno del servidor. Por favor, intente mÃ¡s tarde."));
+                .body(Collections.singletonMap("error", e.getMessage() != null ? e.getMessage() : "Error interno del servidor"));
     }
 }

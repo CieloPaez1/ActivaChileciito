@@ -1,7 +1,6 @@
-export enum Rol {
-  CLIENTE = 'CLIENTE',
-  ADMIN_COMPLEJO = 'ADMIN_COMPLEJO'
-}
+import { RolUsuario } from './rol-usuario.enum';
+
+export { RolUsuario, RolUsuario as Rol };
 
 export enum EstadoUsuario {
   ACTIVO = 'ACTIVO',
@@ -14,7 +13,7 @@ export interface Usuario {
   apellido: string;
   email: string;
   estado: EstadoUsuario;
-  rol: Rol;
+  rol: RolUsuario;
   fechaRegistro?: string;
   perfilDeportivoId?: number;
 }
@@ -36,7 +35,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   telefono?: string;
-  rol: Rol;
+  rol: RolUsuario;
 }
 
 export interface UpdateUserRequest {

@@ -14,7 +14,7 @@ import { RolUsuario } from '../../../core/models/rol-usuario.enum';
 })
 export class ListaUsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
-  filtroRol: RolUsuario = RolUsuario.CLIENTE;
+  filtroRol: RolUsuario = RolUsuario.DEPORTISTA;
   roles = Object.values(RolUsuario);
   isLoading = false;
   error = '';

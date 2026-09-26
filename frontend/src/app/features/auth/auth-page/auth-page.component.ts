@@ -24,7 +24,7 @@ export class AuthPageComponent implements OnInit {
   isLoadingLogin: boolean = false;
   isLoadingRegister: boolean = false;
   
-  roles: string[] = ['CLIENTE', 'ADMIN_COMPLEJO'];
+  roles: string[] = ['DEPORTISTA', 'DUENO_DE_COMPLEJO'];
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +44,7 @@ export class AuthPageComponent implements OnInit {
       telefono: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Added back
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
-      rol: ['CLIENTE', Validators.required] // Kept for backend
+      rol: ['DEPORTISTA', Validators.required] // Kept for backend
     }, { validators: this.passwordMatchValidator });
   }
 
@@ -136,7 +136,7 @@ export class AuthPageComponent implements OnInit {
       next: (response) => {
         this.isLoadingRegister = false;
         this.registerSuccess = '¡Registro exitoso! Ahora puedes iniciar sesión.';
-        this.registerForm.reset({ rol: 'CLIENTE' });
+        this.registerForm.reset({ rol: 'DEPORTISTA' });
         
         // Volver al login tras 2 segundos
         setTimeout(() => {
@@ -145,11 +145,22 @@ export class AuthPageComponent implements OnInit {
       },
       error: (error) => {
         this.isLoadingRegister = false;
-        if (error.status === 409) {
-          this.registerError = 'El correo electrónico ya está registrado.';
-        } else {
-          this.registerError = 'Ocurrió un error al registrar el usuario.';
+        let errorMsg = 'Ocurrió un error al registrar el usuario.';
+        if (error.status === 400 || error.status === 409) {
+          if (typeof error.error === 'string') {
+            try {
+              const parsed = JSON.parse(error.error);
+              errorMsg = parsed.error || error.error;
+            } catch (e) {
+              errorMsg = error.error;
+            }
+          } else if (error.error?.error) {
+            errorMsg = error.error.error;
+          } else {
+            errorMsg = 'El correo electrónico ya está registrado.';
+          }
         }
+        this.registerError = errorMsg;
         console.error('Error en registro:', error);
       }
     });

@@ -29,7 +29,7 @@ export class RegistroUsuarioComponent {
       apellido: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      rol: [RolUsuario.CLIENTE, Validators.required],
+      rol: [RolUsuario.DEPORTISTA, Validators.required],
       telefono: ['', Validators.required]
     });
   }
@@ -43,7 +43,7 @@ export class RegistroUsuarioComponent {
       this.usuarioService.registrarUsuario(this.registroForm.value).subscribe({
         next: (res) => {
           this.mensaje = '¡Usuario creado con éxito!';
-          this.registroForm.reset({ rol: RolUsuario.CLIENTE });
+          this.registroForm.reset({ rol: RolUsuario.DEPORTISTA });
           this.isSubmitting = false;
           // Redirigir después de 2 segundos a la lista (o lo que queramos)
           setTimeout(() => this.router.navigate(['/usuarios']), 2000);
