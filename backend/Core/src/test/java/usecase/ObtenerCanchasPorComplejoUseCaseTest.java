@@ -85,4 +85,16 @@ class ObtenerCanchasPorComplejoUseCaseTest {
         assertEquals(1, resultado.size());
         assertEquals("Cancha Central", resultado.get(0).getNombre());
     }
+
+    @Test
+    void obtenerPorDueno_UsuarioSinComplejo_RetornaListaVacia() {
+        Long usuarioId = 2L;
+        when(complejoRepositoryPort.buscarPorUsuarioId(usuarioId)).thenReturn(Optional.empty());
+
+        List<CanchaResponseDTO> resultado = obtenerCanchasPorComplejoUseCase.obtenerPorDueno(usuarioId);
+
+        assertNotNull(resultado);
+        assertTrue(resultado.isEmpty());
+        verify(canchaRepositoryPort, never()).buscarPorComplejoId(any());
+    }
 }

@@ -41,7 +41,7 @@ export class AuthPageComponent implements OnInit {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]*$')]], // Added back
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9\\s-]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
       rol: ['DEPORTISTA', Validators.required] // Kept for backend
@@ -127,7 +127,7 @@ export class AuthPageComponent implements OnInit {
 
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {
-        this.registerSuccess = 'ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡Registro exitoso! Ingresando al sistema...';
+        this.registerSuccess = '¡Registro exitoso! Ingresando al sistema...';
         const { email, password } = this.registerForm.value;
         this.authService.login({ email, password }).subscribe({
           next: () => {
@@ -145,7 +145,7 @@ export class AuthPageComponent implements OnInit {
       },
       error: (error) => {
         this.isLoadingRegister = false;
-        let errorMsg = 'OcurriÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ un error al registrar el usuario.';
+        let errorMsg = 'Ocurrio un error al registrar el usuario.';
         if (error.status === 400 || error.status === 409) {
           if (typeof error.error === 'string') {
             try {
@@ -157,7 +157,7 @@ export class AuthPageComponent implements OnInit {
           } else if (error.error?.error) {
             errorMsg = error.error.error;
           } else {
-            errorMsg = 'El correo electrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³nico ya estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ registrado.';
+            errorMsg = 'El correo electronico ya esta registrado.';
           }
         }
         this.registerError = errorMsg;

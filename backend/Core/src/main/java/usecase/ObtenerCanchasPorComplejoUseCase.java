@@ -39,14 +39,11 @@ public class ObtenerCanchasPorComplejoUseCase {
             throw new ComplejoException("El identificador del usuario no puede ser nulo.");
         }
 
-        Complejo complejo = complejoRepositoryPort.buscarPorUsuarioId(idUsuarioDueno)
-                .orElseThrow(() -> new ComplejoException("No se encontro ningun complejo registrado para el usuario con ID: " + idUsuarioDueno));
-
-        List<Cancha> canchas = canchaRepositoryPort.buscarPorComplejoId(complejo.getId());
-
-        return canchas.stream()
-                .map(this::mapearADto)
-                .collect(Collectors.toList());
+        return complejoRepositoryPort.buscarPorUsuarioId(idUsuarioDueno)
+                .map(complejo -> canchaRepositoryPort.buscarPorComplejoId(complejo.getId()).stream()
+                        .map(this::mapearADto)
+                        .collect(Collectors.toList()))
+                .orElse(java.util.Collections.emptyList());
     }
 
     private CanchaResponseDTO mapearADto(Cancha cancha) {
