@@ -7,6 +7,10 @@ import com.activachilecito.core.complejo.model.Complejo;
 import com.activachilecito.core.complejo.output.ComplejoRepositoryPort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class ComplejoRepositoryAdapter implements ComplejoRepositoryPort {
 
@@ -34,5 +38,24 @@ public class ComplejoRepositoryAdapter implements ComplejoRepositoryPort {
     @Override
     public boolean existePorDueno(Long idDueno) {
         return jpaRepository.existsByUsuarioId(idDueno);
+    }
+
+    @Override
+    public Optional<Complejo> buscarPorUsuarioId(Long idDueno) {
+        return jpaRepository.findByUsuarioId(idDueno)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Optional<Complejo> buscarPorId(Long id) {
+        return jpaRepository.findById(id)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Complejo> obtenerTodos() {
+        return jpaRepository.findAll().stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
     }
 }

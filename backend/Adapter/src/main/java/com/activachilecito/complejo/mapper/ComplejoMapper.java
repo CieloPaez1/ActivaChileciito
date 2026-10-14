@@ -5,6 +5,8 @@ import com.activachilecito.complejo.entity.data.ComplejoData;
 import com.activachilecito.core.complejo.model.Complejo;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class ComplejoMapper {
 
@@ -14,11 +16,12 @@ public class ComplejoMapper {
         }
         return Complejo.restaurar(
                 entity.getId(),
+                entity.getUsuarioId(),
                 entity.getNombre(),
                 entity.getDireccion(),
                 entity.getTelefono(),
                 entity.getPrestaciones(),
-                new java.util.ArrayList<>()
+                new ArrayList<>()
         );
     }
 
@@ -26,13 +29,15 @@ public class ComplejoMapper {
         if (model == null) {
             return null;
         }
-        return new ComplejoData(
+        ComplejoData data = new ComplejoData(
                 model.getId(),
                 model.getNombre(),
                 model.getDireccion(),
                 model.getTelefono(),
                 model.getPrestaciones()
         );
+        data.setUsuarioId(model.getUsuarioId());
+        return data;
     }
 
     public ComplejoDto toDto(Complejo model) {
