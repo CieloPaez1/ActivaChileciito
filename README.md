@@ -6,7 +6,7 @@
 
 ---
 
-## 👥 Autores y Equipo Académico
+## Autores y Equipo Académico
 
 * **Autores:**
   * **Páez Campillay Cielo Ailén** — *Optando al título de Ingeniera en Sistemas* — `cieloopaezz@gmail.com`
@@ -18,7 +18,7 @@
 
 ---
 
-## 📌 Descripción del Proyecto
+## Descripción del Proyecto
 
 En la ciudad de Chilecito (La Rioja, Argentina), la organización de actividades deportivas y el alquiler de canchas se gestiona habitualmente mediante canales informales (WhatsApp, llamadas telefónicas y anotaciones manuales en papel). Esta dinámica ocasiona dispersión de información, dificultades para completar equipos deportivos, superposiciones de turnos y una falta de información analítica para los dueños de los predios.
 
@@ -28,7 +28,7 @@ En la ciudad de Chilecito (La Rioja, Argentina), la organización de actividades
 
 ---
 
-## 🏛️ Arquitectura del Sistema
+## Arquitectura del Sistema
 
 El proyecto sigue los principios de la **Arquitectura Hexagonal (Puertos y Adaptadores)** y **Clean Architecture**, garantizando el aislamiento del núcleo del negocio (*Core*) respecto de los frameworks e infraestructura técnica (*Adapters*):
 
@@ -48,17 +48,17 @@ ActivaChilecito/
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 * **Backend:** Java 21 (LTS), Spring Boot 3.3.x, Spring Security 6, Spring Data JPA, Maven.
 * **Autenticación y Seguridad:** JSON Web Tokens (JWT - RFC 7519), Google OAuth 2.0 (RFC 6749), Criptografía BCrypt ($2^{12}$ iteraciones).
-* **Base de Datos:** PostgreSQL 16 (Motor relacional ACID, restricciones de exclusión para no-solapamiento de turnos, soporte de datos semiestructurados con `JSONB`).
+* **Base de Datos:** PostgreSQL 16 (Motor relacional ACID, restricciones de exclusión para no-solapamiento de turnos, soporte de datos semiestructurados con JSONB).
 * **Frontend:** Angular 18 (SPA), TypeScript, Tailwind CSS, RxJS, HTML5.
 * **Metodología de Desarrollo:** OpenUP (Open Unified Process).
 
 ---
 
-## 🚀 Puesta en Marcha en Entorno Local
+## Puesta en Marcha en Entorno Local
 
 ### 1. Requisitos Previos Instalados
 * **Java Development Kit (JDK):** Versión 21 o superior.
@@ -92,7 +92,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 El servidor backend iniciará en el puerto `8080`:  
-👉 **API Base URL:** `http://localhost:8080`
+* **API Base URL:** `http://localhost:8080`
 
 ---
 
@@ -106,11 +106,11 @@ npm install
 npm start
 ```
 La aplicación cliente se compilará y quedará accesible en:  
-👉 **Frontend URL:** `http://localhost:4200`
+* **Frontend URL:** `http://localhost:4200`
 
 ---
 
-## 🧪 Pruebas Automatizadas
+## Pruebas Automatizadas
 
 Para ejecutar las pruebas unitarias y de integración de los casos de uso:
 ```bash
@@ -118,9 +118,8 @@ cd backend/Core
 mvn test
 ```
 
-
 ---
 
-## 📄 Licencia y Derechos Académicos
+## Licencia y Derechos Académicos
 
 Este proyecto ha sido desarrollado con fines académicos en el marco del **Trabajo Final de Grado** para la obtención de los títulos de **Ingeniera en Sistemas** y **Licenciado en Sistemas** en la **Universidad Nacional de Chilecito (UNdeC)**.
