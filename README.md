@@ -42,14 +42,8 @@ ActivaChilecito/
 │       ├── src/main/java/.../controller/  # Endpoints REST (Auth, Canchas, Reservas)
 │       ├── src/main/java/.../config/      # Seguridad Spring Security, JWT, CORS, OAuth2
 │       └── src/main/java/.../entity/data/ # Entidades JPA (UsuarioData, ComplejoData)
-├── frontend/                  # Single Page Application (Angular 18, TypeScript, Tailwind CSS)
-│   └── src/app/features/      # Módulos SPA (auth, perfil, complejos, reservas, actividades)
-└── documentacion/             # Diagramas UML y modelos formales para Draw.io
-    ├── diagrama_casos_de_uso_por_modulo.drawio
-    ├── diagrama_secuencias_por_modulo.drawio
-    ├── diagrama_clases_completo.drawio
-    ├── diagrama_entidad_relacion.drawio
-    └── diagrama_despliegue.drawio
+└── frontend/                  # Single Page Application (Angular 18, TypeScript, Tailwind CSS)
+    └── src/app/features/      # Módulos SPA (auth, perfil, complejos, reservas, actividades)
 ```
 
 ---
@@ -124,16 +118,6 @@ cd backend/Core
 mvn test
 ```
 
----
-
-## 📑 Diagramas UML Oficiales
-
-Los archivos `.drawio` listos para ser abiertos y editados en [app.diagrams.net](https://app.diagrams.net/) se encuentran en la carpeta `/documentacion`:
-* `diagrama_casos_de_uso_por_modulo.drawio`: Especificación completa con actores tradicionales (monigotes) y bifurcación de roles.
-* `diagrama_secuencias_por_modulo.drawio`: 5 pestañas de secuencia con interacción de entidades de dominio.
-* `diagrama_clases_completo.drawio`: Modelo orientado a objetos con métodos, atributos y enumeraciones.
-* `diagrama_entidad_relacion.drawio`: Modelo físico relacional en notación Crow's Foot.
-* `diagrama_despliegue.drawio`: Arquitectura física distribuida en 3 capas.
 
 ---
 
