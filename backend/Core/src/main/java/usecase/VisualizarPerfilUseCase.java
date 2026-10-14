@@ -21,6 +21,7 @@ public class VisualizarPerfilUseCase {
                 .apellido(usuario.getApellido())
                 .email(usuario.getEmail())
                 .rol(usuario.getRol().name())
+                .telefono(usuario.getTelefono())
                 .activo(usuario.isActivo())
                 .build();
     }

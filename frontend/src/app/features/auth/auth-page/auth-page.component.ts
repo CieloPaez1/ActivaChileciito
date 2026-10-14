@@ -74,14 +74,7 @@ export class AuthPageComponent implements OnInit {
   registerInfo: string = '';
 
   loginWithGoogle(): void {
-    const msg = '✨ ¡El inicio de sesión con Google estará disponible próximamente!';
-    if (this.isRightPanelActive) {
-      this.registerInfo = msg;
-      setTimeout(() => this.registerInfo = '', 4000);
-    } else {
-      this.loginInfo = msg;
-      setTimeout(() => this.loginInfo = '', 4000);
-    }
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   }
 
   ngOnInit(): void {
@@ -134,18 +127,25 @@ export class AuthPageComponent implements OnInit {
 
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {
-        this.isLoadingRegister = false;
-        this.registerSuccess = '¡Registro exitoso! Ahora puedes iniciar sesión.';
-        this.registerForm.reset({ rol: 'DEPORTISTA' });
-        
-        // Volver al login tras 2 segundos
-        setTimeout(() => {
-          this.togglePanel(false);
-        }, 2000);
+        this.registerSuccess = 'ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡Registro exitoso! Ingresando al sistema...';
+        const { email, password } = this.registerForm.value;
+        this.authService.login({ email, password }).subscribe({
+          next: () => {
+            this.isLoadingRegister = false;
+            this.router.navigate(['/dashboard']);
+          },
+          error: (loginErr) => {
+            this.isLoadingRegister = false;
+            this.registerForm.reset({ rol: 'DEPORTISTA' });
+            setTimeout(() => {
+              this.togglePanel(false);
+            }, 1500);
+          }
+        });
       },
       error: (error) => {
         this.isLoadingRegister = false;
-        let errorMsg = 'Ocurrió un error al registrar el usuario.';
+        let errorMsg = 'OcurriÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ un error al registrar el usuario.';
         if (error.status === 400 || error.status === 409) {
           if (typeof error.error === 'string') {
             try {
@@ -157,7 +157,7 @@ export class AuthPageComponent implements OnInit {
           } else if (error.error?.error) {
             errorMsg = error.error.error;
           } else {
-            errorMsg = 'El correo electrónico ya está registrado.';
+            errorMsg = 'El correo electrÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³nico ya estÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ registrado.';
           }
         }
         this.registerError = errorMsg;

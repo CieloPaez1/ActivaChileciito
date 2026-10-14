@@ -11,5 +11,6 @@ public class PerfilResponseDTO {
     private String apellido;
     private String email;
     private String rol;
+    private String telefono;
     private boolean activo;
 }

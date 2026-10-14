@@ -26,6 +26,9 @@ public class ModificarPerfilUseCase {
         if (request.getTelefono() != null && !request.getTelefono().trim().isEmpty()) {
             usuario.setTelefono(request.getTelefono());
         }
+        if (request.getRol() != null) {
+            usuario.setRol(request.getRol());
+        }
 
         usuarioOutput.guardar(usuario);
 
@@ -35,6 +38,7 @@ public class ModificarPerfilUseCase {
                 .apellido(usuario.getApellido())
                 .email(usuario.getEmail())
                 .rol(usuario.getRol().name())
+                .telefono(usuario.getTelefono())
                 .activo(usuario.isActivo())
                 .build();
     }

@@ -10,7 +10,7 @@ import { LoginRequest, LoginResponse, RegisterRequest, Usuario, Rol } from '../m
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
   
-  // Guardamos el estado de autenticación en un BehaviorSubject para reaccionar a cambios en la UI
+  // Guardamos el estado de autenticaciÃ³n en un BehaviorSubject para reaccionar a cambios en la UI
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   // Verifica si hay token al iniciar
-  private checkToken() {
+  public checkToken() {
     const token = this.getToken();
     if (token) {
       try {

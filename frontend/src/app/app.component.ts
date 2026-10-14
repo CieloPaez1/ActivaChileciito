@@ -21,6 +21,7 @@ export class AppComponent {
     return url.includes('/login') || 
            url.includes('/register') || 
            url.includes('/forgot-password') || 
+           url.includes('/reset-password') || url.includes('/complete-profile') ||
            url.includes('/dashboard');
   }
 }

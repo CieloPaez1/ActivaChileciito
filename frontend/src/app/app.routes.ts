@@ -1,3 +1,5 @@
+import { CompleteProfileComponent } from './features/auth/complete-profile/complete-profile.component';
+import { Oauth2RedirectComponent } from './features/auth/oauth2-redirect/oauth2-redirect.component';
 import { Routes } from '@angular/router';
 
 import { PerfilComponent } from './features/perfil/perfil.component';
@@ -9,6 +11,8 @@ import { HomeComponent } from './features/home/home.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 
 export const routes: Routes = [
+  { path: 'complete-profile', component: CompleteProfileComponent },
+  { path: 'oauth2/redirect', component: Oauth2RedirectComponent },
   { path: '', component: HomeComponent },
   { path: 'login', component: AuthPageComponent },
   { path: 'register', component: AuthPageComponent },
