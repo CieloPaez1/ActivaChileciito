@@ -30,6 +30,12 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   { 
+    path: 'complejo/canchas', 
+    loadComponent: () => import('./features/complejo/canchas-admin/canchas-admin.component').then(m => m.CanchasAdminComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['DUENO_DE_COMPLEJO'] }
+  },
+  { 
     path: 'perfil', 
     component: PerfilComponent,
     canActivate: [authGuard]
@@ -38,7 +44,7 @@ export const routes: Routes = [
     path: 'admin/usuarios', 
     component: UsuariosComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['SUPERUSUARIO'] }
+    data: { roles: ['DUENO_DE_COMPLEJO'] }
   },
   { path: '**', redirectTo: 'login' }
 ];

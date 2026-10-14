@@ -1,0 +1,220 @@
+<div class="canchas-wrapper">
+  <!-- Glowing background orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Header Nav -->
+  <nav class="glass-nav">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+      <div class="brand d-flex align-items-center gap-3">
+        <img src="/images/logo.png" alt="Activa Chilecito" class="nav-logo drop-shadow-glow">
+        <span class="text-white fw-bold fs-5 tracking-wide">GESTIÓN DE CANCHAS</span>
+      </div>
+      <div class="d-flex gap-2">
+        <a routerLink="/dashboard" class="btn-glass-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Panel
+        </a>
+        <button class="btn-brand-glow" (click)="abrirModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Nueva Cancha
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4 position-relative z-index-1 pb-5">
+
+    <!-- Alert Messages -->
+    <div *ngIf="successMessage" class="alert-glass alert-success mb-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="alert-glass alert-danger mb-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Stats Banner -->
+    <div class="hero-stats-card mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-7">
+          <h2 class="title-main">Infraestructura y Disponibilidad</h2>
+          <p class="subtitle-main">Configura tus canchas, superficies y la agenda semanal de turnos disponibles para los deportistas.</p>
+        </div>
+        <div class="col-md-5 d-flex gap-3 justify-content-md-end mt-3 mt-md-0">
+          <div class="stat-box">
+            <span class="stat-number">{{ canchas.length }}</span>
+            <span class="stat-label">Canchas Totales</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number text-brand-lime">{{ canchas.length }}</span>
+            <span class="stat-label">Operativas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-brand-lime" role="status"></div>
+      <p class="text-muted mt-3">Cargando instalaciones deportivas...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && canchas.length === 0" class="empty-state-card text-center py-5">
+      <div class="empty-icon-circle mb-3">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+      </div>
+      <h3 class="text-white fw-bold">Aún no tienes canchas registradas</h3>
+      <p class="text-muted max-w-md mx-auto mb-4">
+        Comienza agregando las canchas de tu complejo (Fútbol 5, Pádel, Tenis) junto con sus horarios de atención semanal.
+      </p>
+      <button class="btn-brand-glow px-4 py-2" (click)="abrirModal()">
+        + Registrar Primera Cancha
+      </button>
+    </div>
+
+    <!-- Canchas Grid -->
+    <div *ngIf="!isLoading && canchas.length > 0" class="row g-4">
+      <div *ngFor="let cancha of canchas" class="col-md-6 col-lg-4">
+        <div class="cancha-card">
+          <!-- Card Header -->
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <span class="badge-deporte">{{ cancha.deporte }}</span>
+              <h3 class="cancha-name mt-2 mb-0">{{ cancha.nombre }}</h3>
+            </div>
+            <span class="status-pill" [class.status-active]="cancha.activa">
+              {{ cancha.activa ? 'Activa' : 'Inactiva' }}
+            </span>
+          </div>
+
+          <!-- Attributes -->
+          <div class="cancha-details mb-3">
+            <div class="detail-item">
+              <span class="detail-label">Suelo:</span>
+              <span class="detail-value">{{ cancha.tipoSuelo }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Precio:</span>
+              <span class="detail-value text-brand-lime fw-bold">${{ cancha.precioTurno | number:'1.2-2' }} / turno</span>
+            </div>
+          </div>
+
+          <hr class="card-divider">
+
+          <!-- Horarios Disponibilidad Section -->
+          <div class="horarios-section">
+            <h4 class="horarios-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Grilla Semanal ({{ cancha.horarios ? cancha.horarios.length : 0 }} franjas)
+            </h4>
+
+            <div *ngIf="cancha.horarios && cancha.horarios.length > 0; else sinHorarios" class="horarios-chips">
+              <div *ngFor="let h of cancha.horarios" class="horario-chip">
+                <span class="chip-dia">{{ getNombreDia(h.diaSemana) }}</span>
+                <span class="chip-horas">{{ formatearHora(h.horaInicio) }} - {{ formatearHora(h.horaFin) }}</span>
+              </div>
+            </div>
+
+            <ng-template #sinHorarios>
+              <p class="text-muted small fst-italic mb-0">Sin horarios asignados todavía.</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Registrar Cancha -->
+  <div *ngIf="showModal" class="modal-backdrop-custom" (click)="cerrarModal()">
+    <div class="modal-content-glass" (click)="$event.stopPropagation()">
+      <div class="modal-header-custom">
+        <h3 class="text-white fw-bold mb-0">Registrar Nueva Cancha</h3>
+        <button class="btn-close-custom" (click)="cerrarModal()">&times;</button>
+      </div>
+
+      <div class="modal-body-custom mt-3">
+        <!-- Nombre -->
+        <div class="form-group mb-3">
+          <label class="form-label-custom">Nombre / Identificador de la Cancha *</label>
+          <input type="text" [(ngModel)]="nombre" placeholder="ej. Cancha 1 - Techada" class="form-control-glass">
+        </div>
+
+        <!-- Deporte & Tipo Suelo -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label-custom">Deporte *</label>
+            <select [(ngModel)]="deporte" class="form-control-glass">
+              <option *ngFor="let d of deportesDisponibles" [value]="d">{{ d }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label-custom">Tipo de Suelo *</label>
+            <select [(ngModel)]="tipoSuelo" class="form-control-glass">
+              <option *ngFor="let s of tiposSueloDisponibles" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Precio Turno -->
+        <div class="form-group mb-4">
+          <label class="form-label-custom">Precio por Turno ($ ARS) *</label>
+          <input type="number" [(ngModel)]="precioTurno" placeholder="15000" class="form-control-glass">
+        </div>
+
+        <hr class="card-divider my-4">
+
+        <!-- Horarios Builder -->
+        <h4 class="text-white fs-6 fw-bold mb-2">Franjas de Disponibilidad Semanal</h4>
+        <p class="text-muted small mb-3">Agrega los días y horarios en los que la cancha está disponible para reservas.</p>
+
+        <div class="row g-2 align-items-end mb-3">
+          <div class="col-md-4">
+            <label class="form-label-custom small">Día</label>
+            <select [(ngModel)]="nuevoDiaSemana" class="form-control-glass form-control-sm">
+              <option [value]="1">Lunes</option>
+              <option [value]="2">Martes</option>
+              <option [value]="3">Miércoles</option>
+              <option [value]="4">Jueves</option>
+              <option [value]="5">Viernes</option>
+              <option [value]="6">Sábado</option>
+              <option [value]="7">Domingo</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label-custom small">Inicio</label>
+            <input type="time" [(ngModel)]="nuevaHoraInicio" class="form-control-glass form-control-sm">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label-custom small">Fin</label>
+            <input type="time" [(ngModel)]="nuevaHoraFin" class="form-control-glass form-control-sm">
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn-add-horario w-100" (click)="agregarFranjaHoraria()">
+              + Añadir
+            </button>
+          </div>
+        </div>
+
+        <!-- Chips de horarios agregados -->
+        <div *ngIf="horariosAgregados.length > 0" class="horarios-builder-list mb-4">
+          <div *ngFor="let item of horariosAgregados; let i = index" class="builder-chip">
+            <span><strong>{{ getNombreDia(item.diaSemana) }}:</strong> {{ formatearHora(item.horaInicio) }} a {{ formatearHora(item.horaFin) }}</span>
+            <button type="button" class="btn-remove-chip" (click)="eliminarFranja(i)">&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-custom mt-4 d-flex justify-content-end gap-2">
+        <button class="btn-glass-secondary" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn-brand-glow" [disabled]="isSaving" (click)="guardarCancha()">
+          {{ isSaving ? 'Guardando...' : 'Guardar y Publicar Cancha' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

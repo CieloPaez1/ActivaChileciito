@@ -69,6 +69,16 @@
 
       <ng-container *ngIf="userRole === 'DUENO_DE_COMPLEJO'">
         <div class="col-md-4">
+          <a routerLink="/complejo/canchas" class="text-decoration-none">
+            <div class="feature-glass-card admin-style active-card cursor-pointer">
+              <div class="icon-wrapper admin-icon">🏟️</div>
+              <h3>Gestión de Canchas</h3>
+              <p>Registra y administra las canchas, superficies y la grilla de disponibilidad semanal.</p>
+              <div class="card-action text-brand-lime fw-bold">Administrar Canchas &rarr;</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
           <div class="feature-glass-card admin-style">
             <div class="icon-wrapper admin-icon">📊</div>
             <h3>Gestión de Reservas</h3>
@@ -77,19 +87,11 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="feature-glass-card admin-style active-card">
+          <div class="feature-glass-card admin-style">
             <div class="icon-wrapper admin-icon">💰</div>
             <h3>Finanzas y Reportes</h3>
             <p>Métricas avanzadas, ingresos y estadísticas en tiempo real.</p>
             <div class="card-action">Ver Analytics</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-glass-card admin-style">
-            <div class="icon-wrapper admin-icon">⚙️</div>
-            <h3>Configuración</h3>
-            <p>Ajusta precios, fotos y características de tus instalaciones.</p>
-            <div class="card-action">Configurar</div>
           </div>
         </div>
       </ng-container>
