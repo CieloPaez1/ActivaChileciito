@@ -7,6 +7,8 @@ import com.activachilecito.core.complejo.model.Complejo;
 import com.activachilecito.core.complejo.output.ComplejoRepositoryPort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ComplejoRepositoryAdapter implements ComplejoRepositoryPort {
 
@@ -26,13 +28,22 @@ public class ComplejoRepositoryAdapter implements ComplejoRepositoryPort {
 
     @Override
     public void guardar(Long idDueno, Complejo complejo) {
+        Optional<ComplejoData> existente = jpaRepository.findByUsuarioId(idDueno);
         ComplejoData entity = mapper.toData(complejo);
         entity.setUsuarioId(idDueno);
+        if (existente.isPresent()) {
+            entity.setId(existente.get().getId());
+        }
         jpaRepository.save(entity);
     }
 
     @Override
     public boolean existePorDueno(Long idDueno) {
         return jpaRepository.existsByUsuarioId(idDueno);
+    }
+
+    @Override
+    public Optional<Complejo> buscarPorDueno(Long idDueno) {
+        return jpaRepository.findByUsuarioId(idDueno).map(mapper::toDomain);
     }
 }

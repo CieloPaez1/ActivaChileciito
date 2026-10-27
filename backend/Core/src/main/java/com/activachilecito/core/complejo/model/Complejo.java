@@ -25,20 +25,32 @@ public class Complejo {
     }
 
     public static Complejo crear(String nombre, String direccion, String telefono, List<String> prestaciones) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new ComplejoException("El nombre del complejo no puede ser nulo ni vacÃ­o.");
-        }
-        if (direccion == null || direccion.trim().isEmpty()) {
-            throw new ComplejoException("La direcciÃ³n del complejo no puede ser nula ni vacÃ­a.");
-        }
-        if (telefono == null || telefono.trim().isEmpty()) {
-            throw new ComplejoException("El telÃ©fono del complejo no puede ser nulo ni vacÃ­o.");
-        }
+        validarCampos(nombre, direccion, telefono);
         return new Complejo(null, nombre, direccion, telefono, prestaciones, new ArrayList<>());
     }
 
     public static Complejo restaurar(Long id, String nombre, String direccion, String telefono, List<String> prestaciones, List<Cancha> canchas) {
         return new Complejo(id, nombre, direccion, telefono, prestaciones, canchas);
+    }
+
+    public void actualizar(String nuevoNombre, String nuevaDireccion, String nuevoTelefono, List<String> nuevasPrestaciones) {
+        validarCampos(nuevoNombre, nuevaDireccion, nuevoTelefono);
+        this.nombre = nuevoNombre;
+        this.direccion = nuevaDireccion;
+        this.telefono = nuevoTelefono;
+        this.prestaciones = nuevasPrestaciones != null ? nuevasPrestaciones : new ArrayList<>();
+    }
+
+    private static void validarCampos(String nombre, String direccion, String telefono) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new ComplejoException("El nombre del complejo no puede ser nulo ni vacío.");
+        }
+        if (direccion == null || direccion.trim().isEmpty()) {
+            throw new ComplejoException("La dirección del complejo no puede ser nula ni vacía.");
+        }
+        if (telefono == null || telefono.trim().isEmpty()) {
+            throw new ComplejoException("El teléfono del complejo no puede ser nulo ni vacío.");
+        }
     }
     
     public void agregarCancha(Cancha cancha) {

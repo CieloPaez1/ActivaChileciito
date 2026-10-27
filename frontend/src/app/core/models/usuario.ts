@@ -8,11 +8,14 @@ export enum EstadoUsuario {
 }
 
 export interface Usuario {
+  id?: number;
   idUsuario?: number;
   nombre: string;
   apellido: string;
   email: string;
-  estado: EstadoUsuario;
+  telefono?: string;
+  activo?: boolean;
+  estado?: EstadoUsuario;
   rol: RolUsuario;
   fechaRegistro?: string;
   perfilDeportivoId?: number;
@@ -41,4 +44,11 @@ export interface RegisterRequest {
 export interface UpdateUserRequest {
   nombre?: string;
   apellido?: string;
+  telefono?: string;
+  rol?: RolUsuario;
+}
+
+export interface CambiarPasswordRequest {
+  passwordActual: string;
+  nuevaPassword: string;
 }

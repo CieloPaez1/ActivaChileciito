@@ -1,86 +1,279 @@
-<div class="container mt-5">
-  <h2 class="mb-4">Mi Perfil</h2>
-  
-  <div class="row">
-    <!-- Datos del perfil -->
-    <div class="col-md-6 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-light">
-          <h5 class="mb-0">Datos Personales</h5>
+<div class="profile-wrapper">
+  <!-- Glowing background orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Glassmorphic Navbar -->
+  <nav class="glass-nav">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+      <div class="brand d-flex align-items-center gap-3">
+        <a routerLink="/dashboard" class="text-decoration-none d-flex align-items-center gap-2">
+          <img src="/images/logo.png" alt="Activa Chilecito" class="nav-logo drop-shadow-glow">
+        </a>
+        <div class="nav-tabs-group d-flex align-items-center gap-2">
+          <a routerLink="/dashboard" class="nav-tab-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            PANEL CENTRAL
+          </a>
+          <a routerLink="/perfil" class="nav-tab-btn active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            MI PERFIL
+          </a>
         </div>
-        <div class="card-body">
-          <div *ngIf="perfilMessage" class="alert alert-info">
-            {{ perfilMessage }}
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn-glass-logout" (click)="logout()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          CERRAR SESIÓN
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5 position-relative z-index-1">
+    
+    <!-- Hero Header -->
+    <div class="hero-glass-card mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-8 text-center text-md-start">
+          <div class="badge-tag mb-2">GESTIÓN DE CUENTA</div>
+          <h1 class="welcome-title">
+            Perfil de <span class="text-brand-lime">{{ usuario?.nombre ? (usuario?.nombre + ' ' + (usuario?.apellido || '')) : (usuario?.email || 'Usuario') }}</span>
+          </h1>
+          <p class="welcome-subtitle mt-2">Consulta y actualiza tu información personal y credenciales de acceso.</p>
+          <div class="d-flex flex-wrap gap-2 mt-3 justify-content-center justify-content-md-start">
+            <div class="role-badge" [class.badge-admin]="usuario?.rol === 'DUENO_DE_COMPLEJO'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              {{ usuario?.rol === 'DUENO_DE_COMPLEJO' ? 'DUEÑO DE COMPLEJO' : 'DEPORTISTA' }}
+            </div>
+            <div class="status-badge" [class.status-inactive]="usuario?.activo === false">
+              <span class="status-dot"></span>
+              {{ usuario?.activo === false ? 'INACTIVO' : 'CUENTA ACTIVA' }}
+            </div>
           </div>
-          
-          <form [formGroup]="perfilForm" (ngSubmit)="onUpdatePerfil()">
-            <div class="mb-3">
-              <label class="form-label text-muted small mb-0">Email</label>
-              <p class="form-control-plaintext pt-0">{{ usuario?.email }}</p>
-            </div>
-            
-            <div class="mb-3">
-              <label class="form-label text-muted small mb-0">Rol</label>
-              <p class="form-control-plaintext pt-0"><span class="badge bg-secondary">{{ usuario?.rol }}</span></p>
-            </div>
-            
-            <div class="mb-3">
-              <label class="form-label text-muted small mb-0">Estado</label>
-              <p class="form-control-plaintext pt-0">
-                <span class="badge" [ngClass]="usuario?.estado === 'ACTIVO' ? 'bg-success' : 'bg-danger'">
-                  {{ usuario?.estado }}
-                </span>
-              </p>
-            </div>
-
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" id="nombre" class="form-control" formControlName="nombre">
-            </div>
-
-            <div class="mb-3">
-              <label for="apellido" class="form-label">Apellido</label>
-              <input type="text" id="apellido" class="form-control" formControlName="apellido">
-            </div>
-
-            <button type="submit" class="btn btn-primary" [disabled]="perfilForm.invalid || isPerfilLoading">
-              <span *ngIf="isPerfilLoading" class="spinner-border spinner-border-sm me-2"></span>
-              Actualizar Datos
-            </button>
-          </form>
+        </div>
+        <div class="col-md-4 text-center mt-4 mt-md-0 d-none d-md-block position-relative">
+          <div class="hero-image-glow"></div>
+          <img src="/images/logo.png" alt="Watermark" class="hero-watermark">
         </div>
       </div>
     </div>
 
-    <!-- Cambiar Contraseña -->
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-header bg-light">
-          <h5 class="mb-0">Cambiar Contraseña</h5>
-        </div>
-        <div class="card-body">
-          <div *ngIf="passwordMessage" class="alert alert-info">
-            {{ passwordMessage }}
+    <!-- Spinner loading initial -->
+    <div *ngIf="isInitialLoading" class="text-center py-5">
+      <div class="spinner-border text-brand-lime" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-white-50 mt-3">Obteniendo datos de tu perfil...</p>
+    </div>
+
+    <!-- Grid: Datos Personales (CU_5 & CU_6) + Cambiar Contraseña (CU_7) -->
+    <div class="row g-4" *ngIf="!isInitialLoading">
+      
+      <!-- CU_5 Visualizar Perfil & CU_6 Modificar Perfil Personal -->
+      <div class="col-lg-7">
+        <div class="feature-glass-card h-100">
+          <div class="card-header-custom d-flex align-items-center gap-3 mb-4">
+            <div class="icon-bubble">👤</div>
+            <div>
+              <h2 class="card-title-text mb-1">Datos Personales</h2>
+              <p class="card-subtitle-text mb-0">Información visible en la plataforma y contacto</p>
+            </div>
           </div>
-          
-          <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
-            <div class="mb-3">
-              <label for="contrasenaActual" class="form-label">Contraseña Actual</label>
-              <input type="password" id="contrasenaActual" class="form-control" formControlName="contrasenaActual">
+
+          <div *ngIf="perfilSuccess" class="alert-custom alert-success-custom mb-4">
+            ✅ {{ perfilSuccess }}
+          </div>
+          <div *ngIf="perfilError" class="alert-custom alert-danger-custom mb-4">
+            ❌ {{ perfilError }}
+          </div>
+
+          <form [formGroup]="perfilForm" (ngSubmit)="onUpdatePerfil()">
+            
+            <div class="info-readonly-card mb-4">
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <span class="info-label">CORREO ELECTRÓNICO (NO EDITABLE)</span>
+                  <div class="info-value d-flex align-items-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span>{{ usuario?.email }}</span>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <span class="info-label">ROL EN EL SISTEMA</span>
+                  <div class="info-value text-brand-lime fw-bold">
+                    {{ usuario?.rol === 'DUENO_DE_COMPLEJO' ? 'DUEÑO DE COMPLEJO' : 'DEPORTISTA' }}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div class="mb-3">
-              <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
-              <input type="password" id="nuevaContrasena" class="form-control" formControlName="nuevaContrasena">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-input-label">Nombre</label>
+                <div class="input-custom-group">
+                  <input type="text" formControlName="nombre" placeholder="Tu nombre" class="form-input-custom" />
+                </div>
+                <div *ngIf="perfilForm.get('nombre')?.invalid && perfilForm.get('nombre')?.touched" class="field-error-text">
+                  * El nombre es obligatorio (mínimo 2 caracteres).
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-input-label">Apellido</label>
+                <div class="input-custom-group">
+                  <input type="text" formControlName="apellido" placeholder="Tu apellido" class="form-input-custom" />
+                </div>
+                <div *ngIf="perfilForm.get('apellido')?.invalid && perfilForm.get('apellido')?.touched" class="field-error-text">
+                  * El apellido es obligatorio (mínimo 2 caracteres).
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-input-label">Teléfono de Contacto</label>
+                <div class="input-custom-group">
+                  <input type="tel" formControlName="telefono" placeholder="Ej: 3825123456" class="form-input-custom" />
+                </div>
+                <div *ngIf="perfilForm.get('telefono')?.invalid && perfilForm.get('telefono')?.touched" class="field-error-text">
+                  * Ingrese un formato numérico válido.
+                </div>
+              </div>
             </div>
 
-            <button type="submit" class="btn btn-warning" [disabled]="passwordForm.invalid || isPasswordLoading">
-              <span *ngIf="isPasswordLoading" class="spinner-border spinner-border-sm me-2"></span>
-              Cambiar Contraseña
-            </button>
+            <div class="mt-4 pt-2">
+              <button type="submit" class="btn-solid-lime w-100" [disabled]="perfilForm.invalid || isPerfilLoading">
+                <span *ngIf="isPerfilLoading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isPerfilLoading ? 'GUARDANDO CAMBIOS...' : 'GUARDAR CAMBIOS' }}
+              </button>
+            </div>
           </form>
         </div>
+      </div>
+
+      <!-- CU_7 Cambiar Contraseña & CU_8 Borrar Perfil -->
+      <div class="col-lg-5">
+        <div class="d-flex flex-column gap-4">
+          
+          <!-- Cambiar contraseña card -->
+          <div class="feature-glass-card">
+            <div class="card-header-custom d-flex align-items-center gap-3 mb-4">
+              <div class="icon-bubble">🔒</div>
+              <div>
+                <h2 class="card-title-text mb-1">Seguridad</h2>
+                <p class="card-subtitle-text mb-0">Cambiar contraseña de inicio de sesión</p>
+              </div>
+            </div>
+
+            <div *ngIf="passwordSuccess" class="alert-custom alert-success-custom mb-4">
+              ✅ {{ passwordSuccess }}
+            </div>
+            <div *ngIf="passwordError" class="alert-custom alert-danger-custom mb-4">
+              ❌ {{ passwordError }}
+            </div>
+
+            <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+              
+              <div class="mb-3">
+                <label class="form-input-label">Contraseña Actual</label>
+                <div class="input-custom-group position-relative">
+                  <input [type]="showCurrentPassword ? 'text' : 'password'" formControlName="passwordActual" placeholder="Ingresa tu contraseña actual" class="form-input-custom pe-5" />
+                  <button type="button" class="btn-toggle-eye" (click)="showCurrentPassword = !showCurrentPassword">
+                    <svg *ngIf="!showCurrentPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg *ngIf="showCurrentPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                  </button>
+                </div>
+                <div *ngIf="passwordForm.get('passwordActual')?.invalid && passwordForm.get('passwordActual')?.touched" class="field-error-text">
+                  * Debe ingresar su contraseña actual.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-input-label">Nueva Contraseña</label>
+                <div class="input-custom-group position-relative">
+                  <input [type]="showNewPassword ? 'text' : 'password'" formControlName="nuevaPassword" placeholder="Mínimo 6 caracteres" class="form-input-custom pe-5" />
+                  <button type="button" class="btn-toggle-eye" (click)="showNewPassword = !showNewPassword">
+                    <svg *ngIf="!showNewPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg *ngIf="showNewPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                  </button>
+                </div>
+                <div *ngIf="passwordForm.get('nuevaPassword')?.invalid && passwordForm.get('nuevaPassword')?.touched" class="field-error-text">
+                  * La contraseña debe tener al menos 6 caracteres.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-input-label">Confirmar Nueva Contraseña</label>
+                <div class="input-custom-group position-relative">
+                  <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmarPassword" placeholder="Repite la nueva contraseña" class="form-input-custom pe-5" />
+                  <button type="button" class="btn-toggle-eye" (click)="showConfirmPassword = !showConfirmPassword">
+                    <svg *ngIf="!showConfirmPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg *ngIf="showConfirmPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                  </button>
+                </div>
+                <div *ngIf="passwordForm.hasError('mismatch') && passwordForm.get('confirmarPassword')?.touched" class="field-error-text">
+                  * Las contraseñas no coinciden.
+                </div>
+              </div>
+
+              <div class="mt-4 pt-2">
+                <button type="submit" class="btn-solid-orange w-100" [disabled]="passwordForm.invalid || isPasswordLoading">
+                  <span *ngIf="isPasswordLoading" class="spinner-border spinner-border-sm me-2"></span>
+                  {{ isPasswordLoading ? 'ACTUALIZANDO CLAVE...' : 'CAMBIAR CONTRASEÑA' }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- CU_8 Borrar Perfil / Zona de Peligro -->
+          <div class="danger-zone-card">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="fs-4">⚠️</span>
+              <div>
+                <h3 class="danger-title mb-0">Dar de baja mi cuenta</h3>
+                <p class="danger-subtitle mb-0">Elimina de forma irreversible tus datos y perfil.</p>
+              </div>
+            </div>
+            <div class="mt-3">
+              <button type="button" class="btn-danger-outline w-100" (click)="openDeleteModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                DAR DE BAJA
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación para Dar de Baja (CU_8) -->
+  <div class="modal-backdrop-custom" *ngIf="showDeleteModal">
+    <div class="modal-card-custom">
+      <div class="modal-icon-warning mb-3">
+        ⚠️
+      </div>
+      <h3 class="modal-title mb-2">¿Estás completamente seguro?</h3>
+      <p class="modal-description mb-3">
+        Esta acción eliminará tu cuenta (<strong>{{ usuario?.email }}</strong>) permanentemente de la base de datos de <strong>ActivaChilecito</strong>. No podrás recuperar tu historial ni tus reservas.
+      </p>
+
+      <div *ngIf="deleteError" class="alert-custom alert-danger-custom mb-3 text-start">
+        ❌ {{ deleteError }}
+      </div>
+
+      <div class="d-flex gap-3 mt-4">
+        <button type="button" class="btn-modal-cancel w-50" (click)="closeDeleteModal()" [disabled]="isDeleting">
+          CANCELAR
+        </button>
+        <button type="button" class="btn-modal-confirm w-50" (click)="confirmarBajaCuenta()" [disabled]="isDeleting">
+          <span *ngIf="isDeleting" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isDeleting ? 'ELIMINANDO...' : 'SÍ, DAR DE BAJA' }}
+        </button>
       </div>
     </div>
   </div>
+
 </div>

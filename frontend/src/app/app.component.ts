@@ -17,11 +17,13 @@ export class AppComponent {
 
   get isStandalonePage(): boolean {
     const url = this.router.url;
-    // Hide standard navbar on auth pages and dashboard
+    // Hide standard navbar on auth pages, dashboard and profile
     return url.includes('/login') || 
            url.includes('/register') || 
            url.includes('/forgot-password') || 
-           url.includes('/reset-password') || url.includes('/complete-profile') ||
-           url.includes('/dashboard');
+           url.includes('/reset-password') || 
+           url.includes('/complete-profile') ||
+           url.includes('/dashboard') ||
+           url.includes('/perfil');
   }
 }

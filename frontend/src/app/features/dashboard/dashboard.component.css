@@ -73,6 +73,35 @@
   height: 35px;
 }
 
+.nav-tabs-group {
+  margin-left: 20px;
+}
+
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.nav-tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-tab-btn.active {
+  color: #0a110d;
+  background: var(--brand-lime, #85bb3a);
+  box-shadow: 0 4px 15px rgba(133, 187, 58, 0.35);
+}
+
 .tracking-wide {
   letter-spacing: 1px;
 }
@@ -283,4 +312,110 @@
 .active-card.admin-style {
   border-color: rgba(255, 204, 0, 0.2);
   background: linear-gradient(180deg, rgba(255, 204, 0, 0.05) 0%, rgba(255,255,255,0.02) 100%);
+}
+
+
+/* Metric Glass Cards */
+.metric-glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  padding: 22px;
+  transition: all 0.3s ease;
+}
+
+.metric-glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(133, 187, 58, 0.3);
+}
+
+.metric-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.metric-value {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.metric-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.metric-trend {
+  font-size: 0.75rem;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* Prestaciones Tags */
+.prestacion-pill {
+  background: rgba(133, 187, 58, 0.15);
+  border: 1px solid rgba(133, 187, 58, 0.3);
+  color: var(--brand-lime, #85bb3a);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.tag-selector-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tag-selector-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.tag-selector-btn.selected {
+  background: var(--brand-lime, #85bb3a);
+  color: #0a110d;
+  border-color: var(--brand-lime, #85bb3a);
+  box-shadow: 0 4px 12px rgba(133, 187, 58, 0.3);
+}
+
+.complejo-empty-icon {
+  font-size: 3.5rem;
+}
+
+.border-white-10 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.fs-7 {
+  font-size: 0.82rem;
+}
+
+.modal-card-large {
+  max-width: 600px;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-close-modal:hover {
+  color: white;
 }
