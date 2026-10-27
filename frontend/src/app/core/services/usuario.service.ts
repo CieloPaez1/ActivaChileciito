@@ -8,19 +8,24 @@ import { Usuario, UpdateUserRequest } from '../models/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = `${environment.apiUrl}/usuarios`;
+  private perfilUrl = `${environment.apiUrl}/perfil`;
+  private usuariosUrl = `${environment.apiUrl}/usuarios`;
 
   constructor(private http: HttpClient) { }
 
   getPerfil(): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/perfil`);
+    return this.http.get<Usuario>(`${this.perfilUrl}/me`);
   }
 
   updatePerfil(data: UpdateUserRequest): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.apiUrl}/perfil`, data);
+    return this.http.put<Usuario>(`${this.perfilUrl}/me`, data);
   }
 
-  changePassword(data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/perfil/password`, data);
+  changePassword(data: { passwordActual: string; nuevaPassword: string }): Observable<void> {
+    return this.http.put<void>(`${this.perfilUrl}/password`, data);
+  }
+
+  eliminarCuenta(): Observable<void> {
+    return this.http.delete<void>(`${this.usuariosUrl}/me`);
   }
 }

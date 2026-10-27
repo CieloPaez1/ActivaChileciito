@@ -52,6 +52,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             user.setApellido(lastName);
             user.setRol(RolUsuario.DEPORTISTA);
             user.setTelefono("");
+            user.setActivo(true);
             user.setPassword(UUID.randomUUID().toString()); 
             user = usuarioOutput.guardar(user);
         }

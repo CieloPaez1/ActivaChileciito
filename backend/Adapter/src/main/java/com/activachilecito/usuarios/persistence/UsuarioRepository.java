@@ -58,7 +58,7 @@ public class UsuarioRepository implements UsuarioOutput {
 
     @Override
     public void eliminar(Long id) {
-        usuarioCrud.deleteById(id);
+        usuarioCrud.findById(id).ifPresent(u -> { u.setActivo(false); usuarioCrud.save(u); });
     }
 
     @Override
