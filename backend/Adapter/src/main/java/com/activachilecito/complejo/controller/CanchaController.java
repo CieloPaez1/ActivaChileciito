@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import output.CanchaResponseDTO;
+import usecase.EliminarCanchaUseCase;
 import usecase.ObtenerCanchasPorComplejoUseCase;
 import usecase.RegistrarCanchaUseCase;
 
@@ -21,6 +22,7 @@ public class CanchaController {
 
     private final RegistrarCanchaUseCase registrarCanchaUseCase;
     private final ObtenerCanchasPorComplejoUseCase obtenerCanchasPorComplejoUseCase;
+    private final EliminarCanchaUseCase eliminarCanchaUseCase;
 
     @PostMapping
     @PreAuthorize("hasRole('DUENO_DE_COMPLEJO')")
@@ -47,5 +49,15 @@ public class CanchaController {
 
         List<CanchaResponseDTO> canchas = obtenerCanchasPorComplejoUseCase.obtenerPorDueno(userDetails.getId());
         return ResponseEntity.ok(canchas);
+    }
+
+    @DeleteMapping("/{canchaId}")
+    @PreAuthorize("hasRole('DUENO_DE_COMPLEJO')")
+    public ResponseEntity<Void> eliminarCancha(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long canchaId) {
+
+        eliminarCanchaUseCase.eliminar(userDetails.getId(), canchaId);
+        return ResponseEntity.noContent().build();
     }
 }

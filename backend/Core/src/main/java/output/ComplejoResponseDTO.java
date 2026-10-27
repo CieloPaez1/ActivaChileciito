@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ComplejoResponseDTO {
+    private Long id;
+    private Long usuarioId;
     private String nombre;
     private String direccion;
     private String telefono;

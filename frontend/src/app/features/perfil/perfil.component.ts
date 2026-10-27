@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UsuarioService } from '../../core/services/usuario.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Usuario } from '../../core/models/usuario';
@@ -9,7 +9,7 @@ import { Usuario } from '../../core/models/usuario';
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })

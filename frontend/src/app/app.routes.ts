@@ -30,6 +30,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   { 
+    path: 'complejos', 
+    loadComponent: () => import('./features/complejo/explorar-complejos/explorar-complejos.component').then(m => m.ExplorarComplejosComponent),
+    canActivate: [authGuard]
+  },
+  { 
     path: 'complejo/canchas', 
     loadComponent: () => import('./features/complejo/canchas-admin/canchas-admin.component').then(m => m.CanchasAdminComponent),
     canActivate: [authGuard, roleGuard],

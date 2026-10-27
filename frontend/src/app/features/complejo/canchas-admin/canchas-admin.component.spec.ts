@@ -12,7 +12,20 @@ describe('CanchasAdminComponent', () => {
   let complejoService: jasmine.SpyObj<ComplejoService>;
 
   beforeEach(async () => {
-    const complejoServiceSpy = jasmine.createSpyObj('ComplejoService', ['obtenerMisCanchas', 'registrarCancha']);
+    const complejoServiceSpy = jasmine.createSpyObj('ComplejoService', [
+      'obtenerMiComplejo',
+      'actualizarMiComplejo',
+      'obtenerMisCanchas',
+      'registrarCancha',
+      'eliminarCancha'
+    ]);
+    complejoServiceSpy.obtenerMiComplejo.and.returnValue(of({
+      id: 1,
+      nombre: 'Complejo Test',
+      direccion: 'Chilecito',
+      telefono: '3825111',
+      prestaciones: ['Iluminacion LED']
+    }));
     complejoServiceSpy.obtenerMisCanchas.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
@@ -50,5 +63,12 @@ describe('CanchasAdminComponent', () => {
     expect(component.horariosAgregados.length).toBe(1);
     expect(component.horariosAgregados[0].diaSemana).toBe(1);
     expect(component.horariosAgregados[0].horaInicio).toBe('18:00:00');
+  });
+
+  it('should toggle prestacion in complex form', () => {
+    component.abrirModalComplejo();
+    expect(component.tienePrestacion('Iluminacion LED')).toBeTrue();
+    component.togglePrestacion('Buffet / Cantina');
+    expect(component.tienePrestacion('Buffet / Cantina')).toBeTrue();
   });
 });

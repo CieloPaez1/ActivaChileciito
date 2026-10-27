@@ -11,4 +11,5 @@ public interface CanchaRepositoryPort {
     List<Cancha> buscarPorComplejoId(Long complejoId);
     List<Cancha> buscarPorComplejoIdYActiva(Long complejoId, boolean activa);
     boolean existePorNombreYComplejoId(String nombre, Long complejoId);
+    void eliminar(Long id);
 }

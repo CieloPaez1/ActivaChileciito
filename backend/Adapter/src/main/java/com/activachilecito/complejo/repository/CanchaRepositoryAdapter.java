@@ -59,4 +59,10 @@ public class CanchaRepositoryAdapter implements CanchaRepositoryPort {
     public boolean existePorNombreYComplejoId(String nombre, Long complejoId) {
         return canchaCrud.existsByNombreIgnoreCaseAndComplejoId(nombre, complejoId);
     }
+
+    @Override
+    @Transactional
+    public void eliminar(Long id) {
+        canchaCrud.deleteById(id);
+    }
 }

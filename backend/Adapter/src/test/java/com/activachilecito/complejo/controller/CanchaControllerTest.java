@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import output.CanchaResponseDTO;
 import output.HorarioResponseDTO;
+import usecase.EliminarCanchaUseCase;
 import usecase.ObtenerCanchasPorComplejoUseCase;
 import usecase.RegistrarCanchaUseCase;
 
@@ -23,7 +24,9 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -41,6 +44,9 @@ public class CanchaControllerTest {
 
     @MockBean
     private ObtenerCanchasPorComplejoUseCase obtenerCanchasPorComplejoUseCase;
+
+    @MockBean
+    private EliminarCanchaUseCase eliminarCanchaUseCase;
 
     @MockBean
     private JwtProviderAdapter jwtProviderAdapter;
@@ -116,5 +122,19 @@ public class CanchaControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].nombre").value("Cancha 1"))
                 .andExpect(jsonPath("$[0].deporte").value("Futbol 5"));
+    }
+
+    @Test
+    void testEliminarCancha_Devuelve204() throws Exception {
+        CustomUserDetails userDetails = new CustomUserDetails(1L, "carlos@test.com", "pass", "DUENO_DE_COMPLEJO", true);
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
+        );
+
+        doNothing().when(eliminarCanchaUseCase).eliminar(1L, 10L);
+
+        mockMvc.perform(delete("/api/canchas/10")
+                        .principal(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())))
+                .andExpect(status().isNoContent());
     }
 }

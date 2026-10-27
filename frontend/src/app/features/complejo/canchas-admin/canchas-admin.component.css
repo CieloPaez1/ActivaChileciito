@@ -283,3 +283,67 @@
   line-height: 1;
 }
 .text-brand-lime { color: #84cc16; }
+
+.prestacion-badge {
+  background: rgba(132, 204, 22, 0.12);
+  border: 1px solid rgba(132, 204, 22, 0.35);
+  color: #bef264;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.prestaciones-selector-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.prestacion-select-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  border-radius: 9999px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.prestacion-select-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(132, 204, 22, 0.4);
+}
+
+.prestacion-select-chip.selected {
+  background: rgba(132, 204, 22, 0.2);
+  border-color: #84cc16;
+  color: #bef264;
+  font-weight: 600;
+}
+
+.check-indicator {
+  font-weight: 700;
+}
+
+.btn-delete-cancha {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  border-radius: 8px;
+  padding: 0.3rem 0.45rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-delete-cancha:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fecaca;
+}

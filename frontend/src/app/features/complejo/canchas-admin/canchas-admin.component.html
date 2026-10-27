@@ -6,16 +6,20 @@
 
   <!-- Header Nav -->
   <nav class="glass-nav">
-    <div class="container d-flex justify-content-between align-items-center py-3">
+    <div class="container d-flex justify-content-between align-items-center py-3 flex-wrap gap-2">
       <div class="brand d-flex align-items-center gap-3">
         <img src="/images/logo.png" alt="Activa Chilecito" class="nav-logo drop-shadow-glow">
-        <span class="text-white fw-bold fs-5 tracking-wide">GESTIÓN DE CANCHAS</span>
+        <span class="text-white fw-bold fs-5 tracking-wide">MI COMPLEJO Y CANCHAS</span>
       </div>
-      <div class="d-flex gap-2">
+      <div class="d-flex gap-2 flex-wrap">
         <a routerLink="/dashboard" class="btn-glass-secondary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Panel
         </a>
+        <button class="btn-glass-secondary" (click)="abrirModalComplejo()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          {{ miComplejo ? 'Editar Complejo' : 'Registrar Complejo' }}
+        </button>
         <button class="btn-brand-glow" (click)="abrirModal()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           Nueva Cancha
@@ -37,24 +41,67 @@
       {{ errorMessage }}
     </div>
 
-    <!-- Stats Banner -->
+    <!-- Ficha Institucional del Complejo (CU-09.1 y CU-09.2) -->
     <div class="hero-stats-card mb-4">
-      <div class="row align-items-center">
-        <div class="col-md-7">
-          <h2 class="title-main">Infraestructura y Disponibilidad</h2>
-          <p class="subtitle-main">Configura tus canchas, superficies y la agenda semanal de turnos disponibles para los deportistas.</p>
+      <div class="row align-items-center" *ngIf="miComplejo; else sinComplejoTemplate">
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge-deporte">FICHA INSTITUCIONAL</span>
+            <span class="status-pill status-active">Verificado en Chilecito</span>
+          </div>
+          <h2 class="title-main mb-2">{{ miComplejo.nombre }}</h2>
+          <div class="d-flex flex-wrap gap-4 text-white-50 small mb-3">
+            <span class="d-flex align-items-center gap-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              {{ miComplejo.direccion }}
+            </span>
+            <span class="d-flex align-items-center gap-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              {{ miComplejo.telefono }}
+            </span>
+          </div>
+
+          <!-- Prestaciones del Complejo -->
+          <div class="d-flex flex-wrap gap-2 mt-2" *ngIf="miComplejo.prestaciones && miComplejo.prestaciones.length > 0">
+            <span *ngFor="let p of miComplejo.prestaciones" class="prestacion-badge">
+              &#10003; {{ p }}
+            </span>
+          </div>
         </div>
-        <div class="col-md-5 d-flex gap-3 justify-content-md-end mt-3 mt-md-0">
-          <div class="stat-box">
-            <span class="stat-number">{{ canchas.length }}</span>
-            <span class="stat-label">Canchas Totales</span>
+
+        <div class="col-lg-4 d-flex flex-column align-items-lg-end justify-content-between mt-3 mt-lg-0 gap-3">
+          <div class="d-flex gap-3">
+            <div class="stat-box">
+              <span class="stat-number">{{ canchas.length }}</span>
+              <span class="stat-label">Canchas</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number text-brand-lime">{{ miComplejo.prestaciones?.length || 0 }}</span>
+              <span class="stat-label">Servicios</span>
+            </div>
           </div>
-          <div class="stat-box">
-            <span class="stat-number text-brand-lime">{{ canchas.length }}</span>
-            <span class="stat-label">Operativas</span>
-          </div>
+          <button class="btn-glass-secondary btn-sm" (click)="abrirModalComplejo()">
+            Editar Datos y Prestaciones
+          </button>
         </div>
       </div>
+
+      <!-- Si aún no tiene complejo registrado -->
+      <ng-template #sinComplejoTemplate>
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h2 class="title-main">Inicializa tu Complejo Deportivo</h2>
+            <p class="subtitle-main mb-0">
+              Registra el nombre comercial de tu predio, ubicación en Chilecito, teléfono y las prestaciones que ofreces (estacionamiento, vestuarios, iluminación, buffet).
+            </p>
+          </div>
+          <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <button class="btn-brand-glow" (click)="abrirModalComplejo()">
+              + Registrar Mi Complejo
+            </button>
+          </div>
+        </div>
+      </ng-template>
     </div>
 
     <!-- Loading State -->
@@ -70,7 +117,7 @@
       </div>
       <h3 class="text-white fw-bold">Aún no tienes canchas registradas</h3>
       <p class="text-muted max-w-md mx-auto mb-4">
-        Comienza agregando las canchas de tu complejo (Fútbol 5, Pádel, Tenis) junto con sus horarios de atención semanal.
+        Comienza agregando las canchas de tu complejo (Fútbol 5, Pádel, Tenis, Básquet) junto con sus horarios de atención semanal.
       </p>
       <button class="btn-brand-glow px-4 py-2" (click)="abrirModal()">
         + Registrar Primera Cancha
@@ -87,20 +134,25 @@
               <span class="badge-deporte">{{ cancha.deporte }}</span>
               <h3 class="cancha-name mt-2 mb-0">{{ cancha.nombre }}</h3>
             </div>
-            <span class="status-pill" [class.status-active]="cancha.activa">
-              {{ cancha.activa ? 'Activa' : 'Inactiva' }}
-            </span>
+            <div class="d-flex align-items-center gap-2">
+              <span class="status-pill" [class.status-active]="cancha.activa">
+                {{ cancha.activa ? 'Activa' : 'Inactiva' }}
+              </span>
+              <button class="btn-delete-cancha" title="Eliminar cancha" (click)="eliminarCancha(cancha)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
           </div>
 
           <!-- Attributes -->
           <div class="cancha-details mb-3">
             <div class="detail-item">
-              <span class="detail-label">Suelo:</span>
+              <span class="detail-label">Superficie:</span>
               <span class="detail-value">{{ cancha.tipoSuelo }}</span>
             </div>
             <div class="detail-item">
-              <span class="detail-label">Precio:</span>
-              <span class="detail-value text-brand-lime fw-bold">${{ cancha.precioTurno | number:'1.2-2' }} / turno</span>
+              <span class="detail-label">Valor Turno:</span>
+              <span class="detail-value text-brand-lime fw-bold">${{ cancha.precioTurno | number:'1.0-0' }} ARS</span>
             </div>
           </div>
 
@@ -129,7 +181,61 @@
     </div>
   </div>
 
-  <!-- Modal Registrar Cancha -->
+  <!-- MODAL 1: Registrar / Editar Complejo Deportivo (CU-09.1 y CU-09.2) -->
+  <div *ngIf="showComplejoModal" class="modal-backdrop-custom" (click)="cerrarModalComplejo()">
+    <div class="modal-content-glass" (click)="$event.stopPropagation()">
+      <div class="modal-header-custom">
+        <h3 class="text-white fw-bold mb-0">
+          {{ miComplejo ? 'Editar Perfil Comercial del Complejo' : 'Registrar Complejo Deportivo' }}
+        </h3>
+        <button class="btn-close-custom" (click)="cerrarModalComplejo()">&times;</button>
+      </div>
+
+      <div class="modal-body-custom mt-3">
+        <div class="form-group mb-3">
+          <label class="form-label-custom">Nombre Comercial del Establecimiento *</label>
+          <input type="text" [(ngModel)]="complejoNombre" placeholder="ej. Complejo Deportivo Chilecito Central" class="form-control-glass">
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-7">
+            <label class="form-label-custom">Dirección Física en Chilecito *</label>
+            <input type="text" [(ngModel)]="complejoDireccion" placeholder="ej. Av. Pelagio B. Luna 250" class="form-control-glass">
+          </div>
+          <div class="col-md-5">
+            <label class="form-label-custom">Teléfono de Atención *</label>
+            <input type="tel" [(ngModel)]="complejoTelefono" placeholder="ej. 3825420000" class="form-control-glass">
+          </div>
+        </div>
+
+        <hr class="card-divider my-4">
+
+        <h4 class="text-white fs-6 fw-bold mb-1">Prestaciones y Comodidades del Predio</h4>
+        <p class="text-muted small mb-3">Selecciona los servicios adicionales con los que cuenta tu establecimiento:</p>
+
+        <div class="prestaciones-selector-grid">
+          <button
+            type="button"
+            *ngFor="let item of prestacionesCatalogo"
+            class="prestacion-select-chip"
+            [class.selected]="tienePrestacion(item)"
+            (click)="togglePrestacion(item)">
+            <span class="check-indicator">{{ tienePrestacion(item) ? '✓' : '+' }}</span>
+            {{ item }}
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer-custom mt-4 d-flex justify-content-end gap-2">
+        <button class="btn-glass-secondary" (click)="cerrarModalComplejo()">Cancelar</button>
+        <button class="btn-brand-glow" [disabled]="isSavingComplejo" (click)="guardarComplejo()">
+          {{ isSavingComplejo ? 'Guardando...' : 'Guardar Datos del Complejo' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Registrar Cancha (CU-10) -->
   <div *ngIf="showModal" class="modal-backdrop-custom" (click)="cerrarModal()">
     <div class="modal-content-glass" (click)="$event.stopPropagation()">
       <div class="modal-header-custom">

@@ -55,6 +55,14 @@ public class Complejo {
         }
     }
 
+    public void actualizarDatos(String nombre, String direccion, String telefono, List<String> prestaciones) {
+        validarCampos(nombre, direccion, telefono);
+        this.nombre = nombre.trim();
+        this.direccion = direccion.trim();
+        this.telefono = telefono.trim();
+        this.prestaciones = prestaciones != null ? prestaciones : new ArrayList<>();
+    }
+
     public void asignarUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
     }

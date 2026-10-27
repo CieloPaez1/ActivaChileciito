@@ -5,6 +5,8 @@ import com.activachilecito.core.complejo.output.ComplejoRepositoryPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import output.UsuarioOutput;
+import usecase.EliminarCanchaUseCase;
+import usecase.GestionarComplejoUseCase;
 import usecase.ObtenerCanchasPorComplejoUseCase;
 import usecase.RegistrarCanchaUseCase;
 import usecase.RegistrarComplejoUseCase;
@@ -20,6 +22,13 @@ public class ComplejoConfig {
     }
 
     @Bean
+    public GestionarComplejoUseCase gestionarComplejoUseCase(
+            ComplejoRepositoryPort complejoRepositoryPort,
+            UsuarioOutput usuarioOutput) {
+        return new GestionarComplejoUseCase(complejoRepositoryPort, usuarioOutput);
+    }
+
+    @Bean
     public RegistrarCanchaUseCase registrarCanchaUseCase(
             ComplejoRepositoryPort complejoRepositoryPort,
             CanchaRepositoryPort canchaRepositoryPort,
@@ -32,5 +41,12 @@ public class ComplejoConfig {
             ComplejoRepositoryPort complejoRepositoryPort,
             CanchaRepositoryPort canchaRepositoryPort) {
         return new ObtenerCanchasPorComplejoUseCase(complejoRepositoryPort, canchaRepositoryPort);
+    }
+
+    @Bean
+    public EliminarCanchaUseCase eliminarCanchaUseCase(
+            ComplejoRepositoryPort complejoRepositoryPort,
+            CanchaRepositoryPort canchaRepositoryPort) {
+        return new EliminarCanchaUseCase(complejoRepositoryPort, canchaRepositoryPort);
     }
 }
