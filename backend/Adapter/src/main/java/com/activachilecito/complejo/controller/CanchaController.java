@@ -1,6 +1,7 @@
 package com.activachilecito.complejo.controller;
 
 import com.activachilecito.usuarios.config.CustomUserDetails;
+import input.ModificarCanchaRequest;
 import input.RegistrarCanchaRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import output.CanchaResponseDTO;
 import usecase.EliminarCanchaUseCase;
+import usecase.ModificarCanchaUseCase;
 import usecase.ObtenerCanchasPorComplejoUseCase;
 import usecase.RegistrarCanchaUseCase;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class CanchaController {
 
     private final RegistrarCanchaUseCase registrarCanchaUseCase;
+    private final ModificarCanchaUseCase modificarCanchaUseCase;
     private final ObtenerCanchasPorComplejoUseCase obtenerCanchasPorComplejoUseCase;
     private final EliminarCanchaUseCase eliminarCanchaUseCase;
 
@@ -32,6 +35,17 @@ public class CanchaController {
 
         CanchaResponseDTO response = registrarCanchaUseCase.registrar(userDetails.getId(), request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{canchaId}")
+    @PreAuthorize("hasRole('DUENO_DE_COMPLEJO')")
+    public ResponseEntity<CanchaResponseDTO> modificarCancha(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long canchaId,
+            @RequestBody ModificarCanchaRequest request) {
+
+        CanchaResponseDTO response = modificarCanchaUseCase.modificar(userDetails.getId(), canchaId, request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/complejo/{complejoId}")

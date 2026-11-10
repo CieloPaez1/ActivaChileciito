@@ -142,4 +142,9 @@ export class PerfilComponent implements OnInit {
       }
     });
   }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

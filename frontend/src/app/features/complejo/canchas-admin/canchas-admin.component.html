@@ -1,5 +1,4 @@
 <div class="canchas-wrapper">
-  <!-- Glowing background orbs -->
   <div class="glow-orb orb-1"></div>
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
@@ -8,20 +7,20 @@
   <nav class="glass-nav">
     <div class="container d-flex justify-content-between align-items-center py-3 flex-wrap gap-2">
       <div class="brand d-flex align-items-center gap-3">
-        <img src="/images/logo.png" alt="Activa Chilecito" class="nav-logo drop-shadow-glow">
-        <span class="text-white fw-bold fs-5 tracking-wide">MI COMPLEJO Y CANCHAS</span>
+        <img src="/images/logo.png" alt="Activa Chilecito" class="nav-logo">
+        <span class="text-white fw-bold fs-5 d-none d-sm-inline">MI COMPLEJO Y CANCHAS</span>
       </div>
       <div class="d-flex gap-2 flex-wrap">
         <a routerLink="/dashboard" class="btn-glass-secondary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Panel
         </a>
         <button class="btn-glass-secondary" (click)="abrirModalComplejo()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
           {{ miComplejo ? 'Editar Complejo' : 'Registrar Complejo' }}
         </button>
         <button class="btn-brand-glow" (click)="abrirModal()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           Nueva Cancha
         </button>
       </div>
@@ -30,47 +29,41 @@
 
   <div class="container mt-4 position-relative z-index-1 pb-5">
 
-    <!-- Alert Messages -->
+    <!-- Mensajes -->
     <div *ngIf="successMessage" class="alert-glass alert-success mb-4">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
       {{ successMessage }}
     </div>
-
-    <div *ngIf="errorMessage" class="alert-glass alert-danger mb-4">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    <div *ngIf="errorMessage && canchas.length === 0" class="alert-glass alert-danger mb-4">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
       {{ errorMessage }}
     </div>
 
-    <!-- Ficha Institucional del Complejo (CU-09.1 y CU-09.2) -->
+    <!-- Ficha del Complejo (CU-11) -->
     <div class="hero-stats-card mb-4">
-      <div class="row align-items-center" *ngIf="miComplejo; else sinComplejoTemplate">
-        <div class="col-lg-8">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <span class="badge-deporte">FICHA INSTITUCIONAL</span>
-            <span class="status-pill status-active">Verificado en Chilecito</span>
+      <div *ngIf="miComplejo; else sinComplejoTemplate">
+        <div class="row align-items-start g-3">
+          <div class="col-lg-8">
+            <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+              <span class="badge-deporte">FICHA INSTITUCIONAL</span>
+              <span class="status-pill status-active">Verificado en Chilecito</span>
+            </div>
+            <h2 class="title-main mb-2">{{ miComplejo.nombre }}</h2>
+            <div class="d-flex flex-wrap gap-3 text-white-50 small mb-3">
+              <span class="d-flex align-items-center gap-1">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                {{ miComplejo.direccion }}
+              </span>
+              <span class="d-flex align-items-center gap-1">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                {{ miComplejo.telefono }}
+              </span>
+            </div>
+            <div class="d-flex flex-wrap gap-2" *ngIf="miComplejo.prestaciones && miComplejo.prestaciones.length > 0">
+              <span *ngFor="let p of miComplejo.prestaciones" class="prestacion-badge">&#10003; {{ p }}</span>
+            </div>
           </div>
-          <h2 class="title-main mb-2">{{ miComplejo.nombre }}</h2>
-          <div class="d-flex flex-wrap gap-4 text-white-50 small mb-3">
-            <span class="d-flex align-items-center gap-1">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              {{ miComplejo.direccion }}
-            </span>
-            <span class="d-flex align-items-center gap-1">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a3e635" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              {{ miComplejo.telefono }}
-            </span>
-          </div>
-
-          <!-- Prestaciones del Complejo -->
-          <div class="d-flex flex-wrap gap-2 mt-2" *ngIf="miComplejo.prestaciones && miComplejo.prestaciones.length > 0">
-            <span *ngFor="let p of miComplejo.prestaciones" class="prestacion-badge">
-              &#10003; {{ p }}
-            </span>
-          </div>
-        </div>
-
-        <div class="col-lg-4 d-flex flex-column align-items-lg-end justify-content-between mt-3 mt-lg-0 gap-3">
-          <div class="d-flex gap-3">
+          <div class="col-lg-4 d-flex justify-content-lg-end align-items-start gap-3 mt-2 mt-lg-0">
             <div class="stat-box">
               <span class="stat-number">{{ canchas.length }}</span>
               <span class="stat-label">Canchas</span>
@@ -80,144 +73,139 @@
               <span class="stat-label">Servicios</span>
             </div>
           </div>
-          <button class="btn-glass-secondary btn-sm" (click)="abrirModalComplejo()">
-            Editar Datos y Prestaciones
-          </button>
         </div>
       </div>
 
-      <!-- Si aún no tiene complejo registrado -->
       <ng-template #sinComplejoTemplate>
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <h2 class="title-main">Inicializa tu Complejo Deportivo</h2>
-            <p class="subtitle-main mb-0">
-              Registra el nombre comercial de tu predio, ubicación en Chilecito, teléfono y las prestaciones que ofreces (estacionamiento, vestuarios, iluminación, buffet).
-            </p>
-          </div>
-          <div class="col-md-4 text-md-end mt-3 mt-md-0">
-            <button class="btn-brand-glow" (click)="abrirModalComplejo()">
-              + Registrar Mi Complejo
-            </button>
-          </div>
+        <div class="text-center py-4">
+          <div class="empty-icon mb-3">🏢</div>
+          <h4 class="text-white fw-bold mb-2">Complejo no registrado</h4>
+          <p class="text-white-50 mb-3">Registra los datos de tu complejo deportivo para comenzar a gestionar tus canchas.</p>
+          <button class="btn-brand-glow" (click)="abrirModalComplejo()">
+            + Registrar mi Complejo
+          </button>
         </div>
       </ng-template>
     </div>
 
-    <!-- Loading State -->
-    <div *ngIf="isLoading" class="text-center py-5">
-      <div class="spinner-border text-brand-lime" role="status"></div>
-      <p class="text-muted mt-3">Cargando instalaciones deportivas...</p>
-    </div>
-
-    <!-- Empty State -->
-    <div *ngIf="!isLoading && canchas.length === 0" class="empty-state-card text-center py-5">
-      <div class="empty-icon-circle mb-3">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-      </div>
-      <h3 class="text-white fw-bold">Aún no tienes canchas registradas</h3>
-      <p class="text-muted max-w-md mx-auto mb-4">
-        Comienza agregando las canchas de tu complejo (Fútbol 5, Pádel, Tenis, Básquet) junto con sus horarios de atención semanal.
-      </p>
-      <button class="btn-brand-glow px-4 py-2" (click)="abrirModal()">
-        + Registrar Primera Cancha
+    <!-- Lista de Canchas -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+      <h3 class="text-white fw-bold mb-0">
+        Mis Canchas
+        <span class="badge-count ms-2">{{ canchas.length }}</span>
+      </h3>
+      <button class="btn-brand-glow" (click)="abrirModal()" *ngIf="miComplejo">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Nueva Cancha
       </button>
     </div>
 
-    <!-- Canchas Grid -->
-    <div *ngIf="!isLoading && canchas.length > 0" class="row g-4">
-      <div *ngFor="let cancha of canchas" class="col-md-6 col-lg-4">
-        <div class="cancha-card">
-          <!-- Card Header -->
-          <div class="d-flex justify-content-between align-items-start mb-3">
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-brand-lime" role="status"></div>
+      <p class="text-white-50 mt-3">Cargando canchas...</p>
+    </div>
+
+    <!-- Sin canchas -->
+    <div *ngIf="!isLoading && canchas.length === 0 && miComplejo" class="empty-state-card text-center py-5">
+      <div class="empty-icon mb-3">🏟️</div>
+      <h4 class="text-white fw-bold mb-2">Aun no tienes canchas registradas</h4>
+      <p class="text-white-50 mb-3">Agrega tu primera cancha para que los deportistas puedan verla en el catalogo.</p>
+      <button class="btn-brand-glow" (click)="abrirModal()">+ Agregar Primera Cancha</button>
+    </div>
+
+    <!-- Grid de Canchas -->
+    <div class="row g-3" *ngIf="!isLoading && canchas.length > 0">
+      <div *ngFor="let cancha of canchas" class="col-12 col-md-6 col-xl-4">
+        <div class="cancha-card h-100">
+          <!-- Header de la card -->
+          <div class="cancha-card-header d-flex justify-content-between align-items-start mb-3">
             <div>
-              <span class="badge-deporte">{{ cancha.deporte }}</span>
-              <h3 class="cancha-name mt-2 mb-0">{{ cancha.nombre }}</h3>
+              <span class="sport-tag">{{ cancha.deporte }}</span>
+              <h4 class="text-white fw-bold fs-5 mt-2 mb-0">{{ cancha.nombre }}</h4>
             </div>
-            <div class="d-flex align-items-center gap-2">
-              <span class="status-pill" [class.status-active]="cancha.activa">
-                {{ cancha.activa ? 'Activa' : 'Inactiva' }}
-              </span>
-              <button class="btn-delete-cancha" title="Eliminar cancha" (click)="eliminarCancha(cancha)">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-              </button>
+            <span class="price-tag">${{ cancha.precioTurno | number:'1.0-0' }}</span>
+          </div>
+
+          <!-- Info de la cancha -->
+          <div class="cancha-info mb-3">
+            <div class="info-row">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+              <span class="text-white-50 small">Superficie:</span>
+              <span class="text-white small fw-semibold">{{ cancha.tipoSuelo }}</span>
+            </div>
+            <div class="info-row mt-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span class="text-white-50 small">Horarios:</span>
+              <span class="text-white small fw-semibold">{{ cancha.horarios?.length || 0 }} franja(s)</span>
             </div>
           </div>
 
-          <!-- Attributes -->
-          <div class="cancha-details mb-3">
-            <div class="detail-item">
-              <span class="detail-label">Superficie:</span>
-              <span class="detail-value">{{ cancha.tipoSuelo }}</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">Valor Turno:</span>
-              <span class="detail-value text-brand-lime fw-bold">${{ cancha.precioTurno | number:'1.0-0' }} ARS</span>
+          <!-- Horarios -->
+          <div class="horarios-box mb-3" *ngIf="cancha.horarios && cancha.horarios.length > 0">
+            <div *ngFor="let h of cancha.horarios" class="slot-badge">
+              <strong>{{ getNombreDia(h.diaSemana) }}:</strong> {{ formatearHora(h.horaInicio) }} – {{ formatearHora(h.horaFin) }}
             </div>
           </div>
+          <div class="text-white-50 small fst-italic mb-3" *ngIf="!cancha.horarios || cancha.horarios.length === 0">
+            Sin franjas horarias asignadas
+          </div>
 
-          <hr class="card-divider">
+          <!-- Estado -->
+          <div class="mb-3">
+            <span class="status-pill" [class.status-active]="cancha.activa" [class.status-inactive]="!cancha.activa">
+              {{ cancha.activa ? 'Activa' : 'Inactiva' }}
+            </span>
+          </div>
 
-          <!-- Horarios Disponibilidad Section -->
-          <div class="horarios-section">
-            <h4 class="horarios-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              Grilla Semanal ({{ cancha.horarios ? cancha.horarios.length : 0 }} franjas)
-            </h4>
-
-            <div *ngIf="cancha.horarios && cancha.horarios.length > 0; else sinHorarios" class="horarios-chips">
-              <div *ngFor="let h of cancha.horarios" class="horario-chip">
-                <span class="chip-dia">{{ getNombreDia(h.diaSemana) }}</span>
-                <span class="chip-horas">{{ formatearHora(h.horaInicio) }} - {{ formatearHora(h.horaFin) }}</span>
-              </div>
-            </div>
-
-            <ng-template #sinHorarios>
-              <p class="text-muted small fst-italic mb-0">Sin horarios asignados todavía.</p>
-            </ng-template>
+          <!-- Acciones -->
+          <div class="cancha-actions d-flex gap-2 mt-auto">
+            <button class="btn-edit flex-fill" (click)="abrirModalEditar(cancha)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              Editar
+            </button>
+            <button class="btn-delete flex-fill" (click)="eliminarCancha(cancha)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path><path d="M9 6V4h6v2"></path></svg>
+              Dar de Baja
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 1: Registrar / Editar Complejo Deportivo (CU-09.1 y CU-09.2) -->
+  <!-- MODAL 1: Gestionar Complejo (CU-11.1 y CU-11.2) -->
   <div *ngIf="showComplejoModal" class="modal-backdrop-custom" (click)="cerrarModalComplejo()">
     <div class="modal-content-glass" (click)="$event.stopPropagation()">
       <div class="modal-header-custom">
         <h3 class="text-white fw-bold mb-0">
-          {{ miComplejo ? 'Editar Perfil Comercial del Complejo' : 'Registrar Complejo Deportivo' }}
+          {{ miComplejo ? 'Editar Perfil Comercial' : 'Registrar Complejo Deportivo' }}
         </h3>
         <button class="btn-close-custom" (click)="cerrarModalComplejo()">&times;</button>
       </div>
 
       <div class="modal-body-custom mt-3">
         <div class="form-group mb-3">
-          <label class="form-label-custom">Nombre Comercial del Establecimiento *</label>
-          <input type="text" [(ngModel)]="complejoNombre" placeholder="ej. Complejo Deportivo Chilecito Central" class="form-control-glass">
+          <label class="form-label-custom">Nombre comercial del complejo *</label>
+          <input type="text" [(ngModel)]="complejoNombre" placeholder="ej. Complejo Deportivo La Rioja" class="form-control-glass">
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label-custom">Direccion en Chilecito *</label>
+          <input type="text" [(ngModel)]="complejoDireccion" placeholder="ej. Av. Joaquin V. Gonzalez 450" class="form-control-glass">
+        </div>
+        <div class="form-group mb-4">
+          <label class="form-label-custom">Telefono de contacto *</label>
+          <input type="tel" [(ngModel)]="complejoTelefono" placeholder="ej. 03825-432100" class="form-control-glass">
         </div>
 
-        <div class="row g-3 mb-3">
-          <div class="col-md-7">
-            <label class="form-label-custom">Dirección Física en Chilecito *</label>
-            <input type="text" [(ngModel)]="complejoDireccion" placeholder="ej. Av. Pelagio B. Luna 250" class="form-control-glass">
-          </div>
-          <div class="col-md-5">
-            <label class="form-label-custom">Teléfono de Atención *</label>
-            <input type="tel" [(ngModel)]="complejoTelefono" placeholder="ej. 3825420000" class="form-control-glass">
-          </div>
-        </div>
+        <hr class="card-divider my-3">
 
-        <hr class="card-divider my-4">
-
-        <h4 class="text-white fs-6 fw-bold mb-1">Prestaciones y Comodidades del Predio</h4>
-        <p class="text-muted small mb-3">Selecciona los servicios adicionales con los que cuenta tu establecimiento:</p>
-
-        <div class="prestaciones-selector-grid">
+        <h5 class="text-white fw-semibold mb-3 fs-6">Prestaciones y Servicios del Complejo</h5>
+        <div class="prestaciones-grid">
           <button
-            type="button"
             *ngFor="let item of prestacionesCatalogo"
-            class="prestacion-select-chip"
+            type="button"
+            class="prestacion-chip"
             [class.selected]="tienePrestacion(item)"
             (click)="togglePrestacion(item)">
             <span class="check-indicator">{{ tienePrestacion(item) ? '✓' : '+' }}</span>
@@ -235,11 +223,13 @@
     </div>
   </div>
 
-  <!-- MODAL 2: Registrar Cancha (CU-10) -->
+  <!-- MODAL 2: Registrar / Editar Cancha (CU-12.1 y CU-12.2) -->
   <div *ngIf="showModal" class="modal-backdrop-custom" (click)="cerrarModal()">
     <div class="modal-content-glass" (click)="$event.stopPropagation()">
       <div class="modal-header-custom">
-        <h3 class="text-white fw-bold mb-0">Registrar Nueva Cancha</h3>
+        <h3 class="text-white fw-bold mb-0">
+          {{ modoEdicion ? 'Modificar Datos de Cancha' : 'Registrar Nueva Cancha' }}
+        </h3>
         <button class="btn-close-custom" (click)="cerrarModal()">&times;</button>
       </div>
 
@@ -252,13 +242,13 @@
 
         <!-- Deporte & Tipo Suelo -->
         <div class="row g-3 mb-3">
-          <div class="col-md-6">
+          <div class="col-12 col-sm-6">
             <label class="form-label-custom">Deporte *</label>
             <select [(ngModel)]="deporte" class="form-control-glass">
               <option *ngFor="let d of deportesDisponibles" [value]="d">{{ d }}</option>
             </select>
           </div>
-          <div class="col-md-6">
+          <div class="col-12 col-sm-6">
             <label class="form-label-custom">Tipo de Suelo *</label>
             <select [(ngModel)]="tipoSuelo" class="form-control-glass">
               <option *ngFor="let s of tiposSueloDisponibles" [value]="s">{{ s }}</option>
@@ -266,61 +256,66 @@
           </div>
         </div>
 
-        <!-- Precio Turno -->
+        <!-- Precio -->
         <div class="form-group mb-4">
           <label class="form-label-custom">Precio por Turno ($ ARS) *</label>
-          <input type="number" [(ngModel)]="precioTurno" placeholder="15000" class="form-control-glass">
+          <input type="number" [(ngModel)]="precioTurno" placeholder="15000" class="form-control-glass" min="1">
         </div>
 
-        <hr class="card-divider my-4">
+        <hr class="card-divider my-3">
 
         <!-- Horarios Builder -->
-        <h4 class="text-white fs-6 fw-bold mb-2">Franjas de Disponibilidad Semanal</h4>
-        <p class="text-muted small mb-3">Agrega los días y horarios en los que la cancha está disponible para reservas.</p>
+        <h5 class="text-white fw-semibold fs-6 mb-1">Franjas de Disponibilidad Semanal</h5>
+        <p class="text-white-50 small mb-3">Agrega los dias y horarios en que la cancha esta disponible.</p>
 
         <div class="row g-2 align-items-end mb-3">
-          <div class="col-md-4">
-            <label class="form-label-custom small">Día</label>
+          <div class="col-12 col-sm-4">
+            <label class="form-label-custom small">Dia</label>
             <select [(ngModel)]="nuevoDiaSemana" class="form-control-glass form-control-sm">
               <option [value]="1">Lunes</option>
               <option [value]="2">Martes</option>
-              <option [value]="3">Miércoles</option>
+              <option [value]="3">Miercoles</option>
               <option [value]="4">Jueves</option>
               <option [value]="5">Viernes</option>
-              <option [value]="6">Sábado</option>
+              <option [value]="6">Sabado</option>
               <option [value]="7">Domingo</option>
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-5 col-sm-3">
             <label class="form-label-custom small">Inicio</label>
             <input type="time" [(ngModel)]="nuevaHoraInicio" class="form-control-glass form-control-sm">
           </div>
-          <div class="col-md-3">
+          <div class="col-5 col-sm-3">
             <label class="form-label-custom small">Fin</label>
             <input type="time" [(ngModel)]="nuevaHoraFin" class="form-control-glass form-control-sm">
           </div>
-          <div class="col-md-2">
+          <div class="col-2 col-sm-2 d-flex align-items-end">
             <button type="button" class="btn-add-horario w-100" (click)="agregarFranjaHoraria()">
-              + Añadir
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
           </div>
         </div>
 
-        <!-- Chips de horarios agregados -->
+        <!-- Chips de horarios -->
         <div *ngIf="horariosAgregados.length > 0" class="horarios-builder-list mb-4">
           <div *ngFor="let item of horariosAgregados; let i = index" class="builder-chip">
-            <span><strong>{{ getNombreDia(item.diaSemana) }}:</strong> {{ formatearHora(item.horaInicio) }} a {{ formatearHora(item.horaFin) }}</span>
+            <span><strong>{{ getNombreDia(item.diaSemana) }}:</strong> {{ formatearHora(item.horaInicio) }} – {{ formatearHora(item.horaFin) }}</span>
             <button type="button" class="btn-remove-chip" (click)="eliminarFranja(i)">&times;</button>
           </div>
         </div>
+        <p class="text-white-50 small fst-italic" *ngIf="horariosAgregados.length === 0">
+          Sin franjas horarias agregadas aun.
+        </p>
       </div>
 
       <div class="modal-footer-custom mt-4 d-flex justify-content-end gap-2">
         <button class="btn-glass-secondary" (click)="cerrarModal()">Cancelar</button>
         <button class="btn-brand-glow" [disabled]="isSaving" (click)="guardarCancha()">
-          {{ isSaving ? 'Guardando...' : 'Guardar y Publicar Cancha' }}
+          <span *ngIf="isSaving">Guardando...</span>
+          <span *ngIf="!isSaving">{{ modoEdicion ? 'Guardar Cambios' : 'Registrar Cancha' }}</span>
         </button>
       </div>
     </div>
   </div>
+
 </div>

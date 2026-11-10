@@ -1,114 +1,543 @@
-<div class="dashboard-wrapper">
-  <!-- Glowing background orbs -->
-  <div class="glow-orb orb-1"></div>
-  <div class="glow-orb orb-2"></div>
-  <div class="glow-orb orb-3"></div>
-
-  <!-- Glassmorphic Navbar -->
-  <nav class="glass-nav">
-    <div class="container d-flex justify-content-between align-items-center py-3">
-      <div class="brand d-flex align-items-center gap-3">
-        <img src="/images/logo.png" alt="Activa Chilecito" class="nav-logo drop-shadow-glow">
-        <span class="text-white fw-bold fs-5 tracking-wide">PANEL CENTRAL</span>
+<div class="dashboard-layout">
+  <!-- SIDEBAR IZQUIERDO (Guiado por Imagen 1) -->
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo-container">
+        <!-- El logo.png ya contiene el escudo y las letras de ActivaChilecito -->
+        <img src="/images/logo.png" alt="Activa Chilecito" class="brand-logo">
       </div>
-      <div class="d-flex align-items-center gap-2">
-        <a routerLink="/perfil" class="btn-glass-logout text-decoration-none">
+    </div>
+
+    <!-- Menú Dueño de Complejo -->
+    <nav class="sidebar-nav" *ngIf="userRole === 'DUENO_DE_COMPLEJO'">
+      <button
+        class="nav-item-btn"
+        [class.active]="activeTab === 'complejo'"
+        (click)="cambiarTab('complejo')">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Mi Complejo</span>
+        </div>
+        <span class="badge-status-pending" *ngIf="!miComplejo">Pendiente</span>
+      </button>
+
+      <button
+        class="nav-item-btn"
+        [class.active]="activeTab === 'canchas'"
+        (click)="cambiarTab('canchas')">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+          <span>Mis Canchas</span>
+        </div>
+      </button>
+
+      <button
+        class="nav-item-btn disabled-btn"
+        [class.active]="activeTab === 'reservas'"
+        (click)="cambiarTab('reservas')">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <div>
+            <div class="item-title">Reservas</div>
+            <div class="item-sub">Módulo 3</div>
+          </div>
+        </div>
+      </button>
+
+      <button
+        class="nav-item-btn disabled-btn"
+        [class.active]="activeTab === 'metricas'"
+        (click)="cambiarTab('metricas')">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <div>
+            <div class="item-title">Métricas y Finanzas</div>
+            <div class="item-sub">Módulo 4</div>
+          </div>
+        </div>
+      </button>
+
+      <button
+        class="nav-item-btn disabled-btn"
+        [class.active]="activeTab === 'partidos'"
+        (click)="cambiarTab('partidos')">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 15 10 13 14 11 14 9 10 12 6"></polygon></svg>
+          <div>
+            <div class="item-title">Partidos Abiertos</div>
+            <div class="item-sub">Módulo 5</div>
+          </div>
+        </div>
+      </button>
+
+      <a routerLink="/perfil" class="nav-item-btn text-decoration-none">
+        <div class="nav-item-content">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          MI PERFIL
+          <span>Mi Perfil</span>
+        </div>
+      </a>
+    </nav>
+
+    <!-- Menú Deportista -->
+    <nav class="sidebar-nav" *ngIf="userRole !== 'DUENO_DE_COMPLEJO'">
+      <a routerLink="/complejos" class="nav-item-btn active text-decoration-none">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+          <span>Complejos y Canchas</span>
+        </div>
+      </a>
+      <a routerLink="/perfil" class="nav-item-btn text-decoration-none">
+        <div class="nav-item-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Mi Perfil</span>
+        </div>
+      </a>
+    </nav>
+
+    <!-- Cerrar Sesión abajo -->
+    <div class="sidebar-footer">
+      <button class="btn-logout-sidebar" (click)="logout()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="dashboard-main">
+    <!-- TOP HEADER: Solo dice ¡Bienvenido! sin Panel Central ni Hola -->
+    <header class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+      <div class="welcome-box">
+        <h1 class="welcome-title mb-0">¡Bienvenido, {{ userName }}!</h1>
+      </div>
+      <div class="user-header-profile">
+        <a routerLink="/perfil" class="avatar-circle-btn" title="Ver mi perfil">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </a>
-        <button class="btn-glass-logout" (click)="logout()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-          CERRAR SESIÓN
+      </div>
+    </header>
+
+    <!-- Mensajes de Estado -->
+    <div *ngIf="successMessage" class="alert-banner alert-success mb-3">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert-banner alert-danger mb-3">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      {{ errorMessage }}
+    </div>
+
+    <!-- METRICS STRIP (Imagen 1) -->
+    <section class="metrics-strip mb-4" *ngIf="userRole === 'DUENO_DE_COMPLEJO'">
+      <div class="metric-item">
+        <span class="metric-label">Ocupación de hoy:</span>
+        <span class="metric-value">85%</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-item">
+        <span class="metric-label">Reservas activas:</span>
+        <span class="metric-value">12</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-item">
+        <span class="metric-label">Ingresos del día:</span>
+        <span class="metric-value text-lime-bright">$45.000</span>
+      </div>
+      <div class="metric-divider"></div>
+      <div class="metric-item">
+        <span class="metric-label">Canchas operativas:</span>
+        <span class="metric-value">{{ canchasOperativasCount }}/{{ canchas.length }}</span>
+      </div>
+    </section>
+
+    <!-- SPINNER -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-brand-lime" role="status"></div>
+      <p class="text-white-50 mt-3">Cargando información del predio...</p>
+    </div>
+
+    <div *ngIf="!isLoading">
+      <!-- ========================================== -->
+      <!-- TAB 1: MIS CANCHAS (Diseño Imagen 1)       -->
+      <!-- ========================================== -->
+      <section *ngIf="activeTab === 'canchas'" class="panel-card">
+        <div class="panel-card-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 class="panel-title mb-0">Mis Canchas</h2>
+          <button class="btn-lime-pill" (click)="abrirModalNuevaCancha()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Registrar Nueva Cancha
+          </button>
+        </div>
+
+        <!-- Tabla de Canchas -->
+        <div class="table-responsive" *ngIf="canchas.length > 0">
+          <table class="table-canchas-custom">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Disciplina</th>
+                <th>Características</th>
+                <th>Estado</th>
+                <th class="text-end pe-3">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cancha of canchas">
+                <!-- Nombre -->
+                <td class="court-name-cell">
+                  <span class="text-white fw-semibold">{{ cancha.nombre }}</span>
+                  <span class="price-hint d-block text-white-50 small">${{ cancha.precioTurno | number:'1.0-0' }} / turno</span>
+                </td>
+
+                <!-- Disciplina -->
+                <td>
+                  <span class="sport-badge-pill" [ngClass]="getDeporteBadgeClass(cancha.deporte)">
+                    {{ cancha.deporte }}
+                  </span>
+                </td>
+
+                <!-- Características -->
+                <td class="characteristics-cell">
+                  <span class="text-light-gray">{{ cancha.tipoSuelo }}</span>
+                  <span *ngIf="cancha.horarios?.length" class="text-white-50 ms-2 small">({{ cancha.horarios.length }} franja/s)</span>
+                </td>
+
+                <!-- Estado (Toggle Switch interactivo) -->
+                <td>
+                  <div class="status-toggle-wrapper">
+                    <label class="switch-custom">
+                      <input type="checkbox" [checked]="cancha.activa" (change)="toggleEstadoCancha(cancha)">
+                      <span class="slider-round"></span>
+                    </label>
+                    <span class="status-toggle-text" [class.text-active]="cancha.activa">
+                      {{ cancha.activa ? 'Activa' : 'En mantenimiento' }}
+                    </span>
+                  </div>
+                </td>
+
+                <!-- Acciones -->
+                <td class="text-end pe-3">
+                  <div class="d-inline-flex gap-2">
+                    <button class="btn-icon-action btn-edit-icon" title="Editar Cancha" (click)="abrirModalEditarCancha(cancha)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </button>
+                    <button class="btn-icon-action btn-trash-icon" title="Eliminar Cancha" (click)="eliminarCancha(cancha)">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v6M14 11v6"></path><path d="M9 6V4h6v2"></path></svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sin canchas registradas -->
+        <div *ngIf="canchas.length === 0" class="empty-canchas-box text-center py-5">
+          <div class="empty-icon-art mb-3">🏟️</div>
+          <h4 class="text-white fw-bold mb-2">Aún no tienes canchas registradas</h4>
+          <p class="text-white-50 mb-3">Publica tus canchas con sus características y horarios semanales para comenzar a gestionarlas.</p>
+          <button class="btn-lime-pill" (click)="abrirModalNuevaCancha()">
+            + Registrar mi Primera Cancha
+          </button>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB 2: MI COMPLEJO                         -->
+      <!-- ========================================== -->
+      <section *ngIf="activeTab === 'complejo'">
+        <!-- CASO A: Complejo Pendiente (Diseño Imagen 2) -->
+        <div *ngIf="!miComplejo" class="panel-card card-onboarding text-center py-5">
+          <h2 class="onboarding-title mb-2">¡Comencemos a activar tu complejo!</h2>
+          <p class="onboarding-subtitle mb-4">
+            Para que los deportistas de Chilecito puedan ver tus canchas y realizar reservas, primero debes registrar la información de tu establecimiento.
+          </p>
+
+          <div class="stadium-graphic-wrapper mb-4">
+            <div class="stadium-icon-box">
+              <svg width="90" height="90" viewBox="0 0 64 64" fill="none">
+                <rect x="8" y="24" width="48" height="30" rx="8" stroke="#85bb3a" stroke-width="3" fill="rgba(133, 187, 58, 0.1)"/>
+                <ellipse cx="32" cy="39" rx="16" ry="9" stroke="#85bb3a" stroke-width="2"/>
+                <line x1="32" y1="30" x2="32" y2="48" stroke="#85bb3a" stroke-width="2"/>
+                <rect x="24" y="44" width="16" height="10" stroke="#85bb3a" stroke-width="2" fill="#0d1f12"/>
+                <line x1="16" y1="14" x2="16" y2="24" stroke="#85bb3a" stroke-width="2"/>
+                <line x1="48" y1="14" x2="48" y2="24" stroke="#85bb3a" stroke-width="2"/>
+                <rect x="12" y="10" width="8" height="6" rx="2" fill="#85bb3a"/>
+                <rect x="44" y="10" width="8" height="6" rx="2" fill="#85bb3a"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <button class="btn-lime-pill btn-lime-lg" (click)="abrirModalRegistroComplejo()">
+              + Registrar Mi Complejo
+            </button>
+          </div>
+
+          <div class="steps-progress-row d-flex justify-content-center align-items-center gap-3 flex-wrap">
+            <div class="step-badge step-current">
+              <span class="step-dot active-dot"></span>
+              Paso 1: Registrar el Complejo
+            </div>
+            <span class="step-arrow">&mdash;</span>
+            <div class="step-badge">
+              <span class="step-dot"></span>
+              Paso 2: Cargar las Canchas
+            </div>
+            <span class="step-arrow">&mdash;</span>
+            <div class="step-badge">
+              <span class="step-dot"></span>
+              Paso 3: ¡Listo para recibir reservas!
+            </div>
+          </div>
+          <div class="text-white-50 small mt-2">(Inicia el CU_11_1)</div>
+        </div>
+
+        <!-- CASO B: Complejo Registrado (Diseño Imagen 3) -->
+        <div *ngIf="miComplejo" class="panel-card">
+          <div class="panel-card-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+            <h2 class="panel-title mb-0">Datos de mi Complejo</h2>
+            <button class="btn-lime-pill" [disabled]="isSavingComplejo" (click)="guardarDatosComplejo()">
+              <span *ngIf="isSavingComplejo">Guardando...</span>
+              <span *ngIf="!isSavingComplejo">+ Guardar Cambios</span>
+            </button>
+          </div>
+
+          <div class="row g-4">
+            <!-- Columna Izquierda: Formulario Principal -->
+            <div class="col-lg-7">
+              <div class="form-group mb-3">
+                <label class="form-field-label">Nombre Comercial</label>
+                <input type="text" [(ngModel)]="complejoNombre" class="input-dark-custom" placeholder="Complejo Deportivo San Román">
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-field-label">Dirección Física</label>
+                <input type="text" [(ngModel)]="complejoDireccion" class="input-dark-custom" placeholder="La Plata 450, Chilecito, La Rioja">
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-field-label">Teléfono de Contacto</label>
+                <input type="tel" [(ngModel)]="complejoTelefono" class="input-dark-custom" placeholder="3825-456789">
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-field-label">Descripción / Servicios</label>
+                <textarea [(ngModel)]="complejoDescripcion" rows="3" class="input-dark-custom" placeholder="Complejo deportivo con canchas de fútbol, tenis y pádel. Cantina, vestuarios, estacionamiento y wi-fi libre."></textarea>
+              </div>
+
+              <div class="mt-3">
+                <label class="form-field-label small mb-2">Servicios y Prestaciones habilitadas:</label>
+                <div class="d-flex flex-wrap gap-2">
+                  <button
+                    *ngFor="let p of prestacionesCatalogo"
+                    type="button"
+                    class="prestacion-pill-btn"
+                    [class.active]="tienePrestacion(p)"
+                    (click)="togglePrestacion(p)">
+                    {{ tienePrestacion(p) ? '✓' : '+' }} {{ p }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Fotos y Horarios -->
+            <div class="col-lg-5">
+              <!-- Galería de Fotos -->
+              <div class="section-box mb-4">
+                <label class="form-field-label">Galería de Fotos</label>
+                <div class="gallery-preview-grid mt-2">
+                  <div class="photo-thumb photo-mock-1"></div>
+                  <div class="photo-thumb photo-mock-2"></div>
+                  <div class="photo-thumb add-photo-box">
+                    <span class="plus-icon">+</span>
+                    <span class="small">Agregar Foto</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Horarios de Atención -->
+              <div class="section-box">
+                <label class="form-field-label">Horarios de Atención</label>
+                <div class="days-chips-row my-2">
+                  <span
+                    *ngFor="let d of diasAtencion"
+                    class="day-chip"
+                    [class.selected]="diaSeleccionadoAtencion === d"
+                    (click)="diaSeleccionadoAtencion = d">
+                    {{ d.substring(0, 3) }}
+                  </span>
+                </div>
+                <div class="d-flex align-items-center gap-2 mt-3">
+                  <select [(ngModel)]="horaApertura" class="input-dark-custom select-custom">
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="16:00">16:00</option>
+                  </select>
+                  <span class="text-white-50">a</span>
+                  <select [(ngModel)]="horaCierre" class="input-dark-custom select-custom">
+                    <option value="22:00">22:00</option>
+                    <option value="23:00">23:00</option>
+                    <option value="00:00">00:00</option>
+                    <option value="01:00">01:00</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB MÓDULOS EN DESARROLLO                  -->
+      <!-- ========================================== -->
+      <section *ngIf="activeTab === 'reservas' || activeTab === 'metricas' || activeTab === 'partidos'" class="panel-card text-center py-5">
+        <div class="empty-icon-art mb-3">⏳</div>
+        <h3 class="text-white fw-bold mb-2">Próximamente disponible</h3>
+        <p class="text-white-50 mb-4">Esta funcionalidad se habilitará en las siguientes etapas según el diagrama de fases.</p>
+        <button class="btn-lime-pill" (click)="cambiarTab('canchas')">
+          Volver a Mis Canchas
+        </button>
+      </section>
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: REGISTRAR / EDITAR CANCHA          -->
+  <!-- ========================================== -->
+  <div *ngIf="showCanchaModal" class="modal-backdrop-custom" (click)="cerrarModalCancha()">
+    <div class="modal-card-glass" (click)="$event.stopPropagation()">
+      <div class="modal-header-line d-flex justify-content-between align-items-center pb-3 mb-3">
+        <h3 class="text-white fw-bold mb-0">
+          {{ modoEdicionCancha ? 'Modificar Cancha' : 'Registrar Nueva Cancha' }}
+        </h3>
+        <button class="btn-close-modal" (click)="cerrarModalCancha()">&times;</button>
+      </div>
+
+      <div class="modal-body-content">
+        <div class="form-group mb-3">
+          <label class="form-field-label">Nombre de la Cancha *</label>
+          <input type="text" [(ngModel)]="canchaNombre" placeholder="ej. Cancha Principal - Sintético" class="input-dark-custom">
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-sm-6">
+            <label class="form-field-label">Disciplina *</label>
+            <select [(ngModel)]="canchaDeporte" class="input-dark-custom">
+              <option *ngFor="let d of deportesDisponibles" [value]="d">{{ d }}</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-field-label">Tipo de Suelo / Superficie *</label>
+            <select [(ngModel)]="canchaTipoSuelo" class="input-dark-custom">
+              <option *ngFor="let s of tiposSueloDisponibles" [value]="s">{{ s }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group mb-4">
+          <label class="form-field-label">Precio por Turno ($ ARS) *</label>
+          <input type="number" [(ngModel)]="canchaPrecioTurno" placeholder="15000" class="input-dark-custom">
+        </div>
+
+        <hr class="divider-line my-3">
+
+        <h5 class="text-white fs-6 fw-bold mb-1">Franjas Horarias Semanales</h5>
+        <p class="text-white-50 small mb-3">Configura los días y horarios disponibles para reservas.</p>
+
+        <div class="row g-2 align-items-end mb-3">
+          <div class="col-sm-4">
+            <label class="form-field-label small">Día</label>
+            <select [(ngModel)]="nuevoDiaSemana" class="input-dark-custom select-sm">
+              <option [value]="1">Lunes</option>
+              <option [value]="2">Martes</option>
+              <option [value]="3">Miércoles</option>
+              <option [value]="4">Jueves</option>
+              <option [value]="5">Viernes</option>
+              <option [value]="6">Sábado</option>
+              <option [value]="7">Domingo</option>
+            </select>
+          </div>
+          <div class="col-sm-3 col-6">
+            <label class="form-field-label small">Desde</label>
+            <input type="time" [(ngModel)]="nuevaHoraInicio" class="input-dark-custom select-sm">
+          </div>
+          <div class="col-sm-3 col-6">
+            <label class="form-field-label small">Hasta</label>
+            <input type="time" [(ngModel)]="nuevaHoraFin" class="input-dark-custom select-sm">
+          </div>
+          <div class="col-sm-2 col-12">
+            <button type="button" class="btn-lime-pill w-100 py-2" (click)="agregarFranjaHoraria()">
+              + Añadir
+            </button>
+          </div>
+        </div>
+
+        <!-- Chips de horarios -->
+        <div class="d-flex flex-wrap gap-2 mb-3" *ngIf="horariosAgregados.length > 0">
+          <div *ngFor="let h of horariosAgregados; let i = index" class="slot-pill-chip">
+            <span><strong>{{ getNombreDia(h.diaSemana) }}:</strong> {{ formatearHora(h.horaInicio) }} a {{ formatearHora(h.horaFin) }}</span>
+            <button type="button" class="btn-remove-slot" (click)="eliminarFranja(i)">&times;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-line d-flex justify-content-end gap-2 pt-3 mt-3">
+        <button class="btn-cancel-modal" (click)="cerrarModalCancha()">Cancelar</button>
+        <button class="btn-lime-pill" [disabled]="isSavingCancha" (click)="guardarCancha()">
+          {{ isSavingCancha ? 'Guardando...' : (modoEdicionCancha ? 'Guardar Cambios' : 'Registrar Cancha') }}
         </button>
       </div>
     </div>
-  </nav>
+  </div>
 
-  <div class="container mt-5 position-relative z-index-1">
-    
-    <!-- Hero Glass Card -->
-    <div class="hero-glass-card">
-      <div class="row align-items-center">
-        <div class="col-md-8 text-center text-md-start">
-          <h1 class="welcome-title">Bienvenido, <span class="text-brand-lime">{{ userName }}</span></h1>
-          <p class="welcome-subtitle mt-2">Tu centro de control en ActivaChilecito.</p>
-          <div class="role-badge mt-4" [class.badge-admin]="userRole === 'DUENO_DE_COMPLEJO'">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            {{ userRole === 'DUENO_DE_COMPLEJO' ? 'DUEÑO DE COMPLEJO' : 'DEPORTISTA' }}
-          </div>
+  <!-- ========================================== -->
+  <!-- MODAL: REGISTRAR COMPLEJO (PASO 1 ONBOARD) -->
+  <!-- ========================================== -->
+  <div *ngIf="showComplejoModal" class="modal-backdrop-custom" (click)="cerrarModalComplejo()">
+    <div class="modal-card-glass" (click)="$event.stopPropagation()">
+      <div class="modal-header-line d-flex justify-content-between align-items-center pb-3 mb-3">
+        <h3 class="text-white fw-bold mb-0">Registrar Mi Complejo Deportivo</h3>
+        <button class="btn-close-modal" (click)="cerrarModalComplejo()">&times;</button>
+      </div>
+
+      <div class="modal-body-content">
+        <div class="form-group mb-3">
+          <label class="form-field-label">Nombre Comercial del Complejo *</label>
+          <input type="text" [(ngModel)]="complejoNombre" placeholder="ej. Complejo Deportivo San Román" class="input-dark-custom">
         </div>
-        <div class="col-md-4 text-center mt-4 mt-md-0 d-none d-md-block position-relative">
-          <div class="hero-image-glow"></div>
-          <img src="/images/logo.png" alt="Watermark" class="hero-watermark">
+        <div class="form-group mb-3">
+          <label class="form-field-label">Dirección Física en Chilecito *</label>
+          <input type="text" [(ngModel)]="complejoDireccion" placeholder="ej. La Plata 450, Chilecito" class="input-dark-custom">
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-field-label">Teléfono de Contacto *</label>
+          <input type="tel" [(ngModel)]="complejoTelefono" placeholder="ej. 3825-456789" class="input-dark-custom">
+        </div>
+
+        <div class="mt-3">
+          <label class="form-field-label small mb-2">Selecciona los servicios del complejo:</label>
+          <div class="d-flex flex-wrap gap-2">
+            <button
+              *ngFor="let p of prestacionesCatalogo"
+              type="button"
+              class="prestacion-pill-btn"
+              [class.active]="tienePrestacion(p)"
+              (click)="togglePrestacion(p)">
+              {{ tienePrestacion(p) ? '✓' : '+' }} {{ p }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Glassy Grid Layout -->
-    <div class="row mt-5 g-4">
-      <ng-container *ngIf="userRole === 'DEPORTISTA'">
-        <div class="col-md-4">
-          <a routerLink="/complejos" class="text-decoration-none">
-            <div class="feature-glass-card active-card cursor-pointer">
-              <div class="icon-wrapper">🏟️</div>
-              <h3>Complejos y Canchas</h3>
-              <p>Explora los predios deportivos de Chilecito, sus comodidades y horarios de atención por disciplina.</p>
-              <div class="card-action text-brand-lime fw-bold">Explorar Catálogo &rarr;</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-glass-card">
-            <div class="icon-wrapper">⚽</div>
-            <h3>Partidos Abiertos</h3>
-            <p>Visualiza convocatorias comunitarias y súmate a equipos en Chilecito.</p>
-            <div class="card-action">Próximamente (Módulo 3)</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <a routerLink="/perfil" class="text-decoration-none">
-            <div class="feature-glass-card cursor-pointer">
-              <div class="icon-wrapper">👤</div>
-              <h3>Mi Perfil y Seguridad</h3>
-              <p>Actualiza tus datos de contacto, cambia tu contraseña o administra tu cuenta.</p>
-              <div class="card-action">Configurar Perfil &rarr;</div>
-            </div>
-          </a>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="userRole === 'DUENO_DE_COMPLEJO'">
-        <div class="col-md-4">
-          <a routerLink="/complejo/canchas" class="text-decoration-none">
-            <div class="feature-glass-card admin-style active-card cursor-pointer">
-              <div class="icon-wrapper admin-icon">🏟️</div>
-              <h3>Mi Complejo y Canchas</h3>
-              <p>Administra la ficha institucional de tu predio, prestaciones, canchas y grilla horaria semanal.</p>
-              <div class="card-action text-brand-lime fw-bold">Gestionar Predio &rarr;</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a routerLink="/complejos" class="text-decoration-none">
-            <div class="feature-glass-card admin-style cursor-pointer">
-              <div class="icon-wrapper admin-icon">📋</div>
-              <h3>Catálogo Público</h3>
-              <p>Visualiza cómo se presenta tu complejo y tus canchas ante la comunidad de deportistas.</p>
-              <div class="card-action text-brand-lime fw-bold">Ver Catálogo &rarr;</div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a routerLink="/perfil" class="text-decoration-none">
-            <div class="feature-glass-card admin-style cursor-pointer">
-              <div class="icon-wrapper admin-icon">🔐</div>
-              <h3>Mi Cuenta y Seguridad</h3>
-              <p>Actualiza tus datos de propietario, teléfono de contacto y credenciales de acceso.</p>
-              <div class="card-action">Configurar Cuenta &rarr;</div>
-            </div>
-          </a>
-        </div>
-      </ng-container>
+      <div class="modal-footer-line d-flex justify-content-end gap-2 pt-3 mt-3">
+        <button class="btn-cancel-modal" (click)="cerrarModalComplejo()">Cancelar</button>
+        <button class="btn-lime-pill" [disabled]="isSavingComplejo" (click)="guardarDatosComplejo()">
+          {{ isSavingComplejo ? 'Guardando...' : 'Activar Complejo' }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

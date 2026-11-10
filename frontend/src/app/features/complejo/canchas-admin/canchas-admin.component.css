@@ -1,349 +1,422 @@
+/* ===== BASE & BACKGROUND ===== */
 .canchas-wrapper {
   min-height: 100vh;
-  background-color: #030712;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(132, 204, 22, 0.1) 0px, transparent 50%);
-  color: #f9fafb;
+  background: #0a110d;
+  font-family: 'Inter', sans-serif;
   position: relative;
   overflow-x: hidden;
-  font-family: 'Inter', system-ui, sans-serif;
 }
+
 .glow-orb {
-  position: absolute;
+  position: fixed;
   border-radius: 50%;
-  filter: blur(120px);
+  filter: blur(100px);
   pointer-events: none;
   z-index: 0;
 }
-.orb-1 { width: 450px; height: 450px; background: rgba(132, 204, 22, 0.15); top: -80px; left: -80px; }
-.orb-2 { width: 500px; height: 500px; background: rgba(6, 182, 212, 0.12); top: 40%; right: -100px; }
-.orb-3 { width: 350px; height: 350px; background: rgba(16, 185, 129, 0.12); bottom: 50px; left: 20%; }
+.orb-1 { width: 400px; height: 400px; background: rgba(133, 187, 58, 0.08); top: -10%; left: -10%; }
+.orb-2 { width: 350px; height: 350px; background: rgba(16, 185, 129, 0.06); bottom: 10%; right: -5%; }
+.orb-3 { width: 250px; height: 250px; background: rgba(133, 187, 58, 0.05); top: 50%; left: 50%; }
+
+.z-index-1 { position: relative; z-index: 1; }
+
+/* ===== NAVBAR ===== */
 .glass-nav {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 17, 13, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(133, 187, 58, 0.15);
   position: sticky;
   top: 0;
   z-index: 100;
 }
-.nav-logo { height: 42px; object-fit: contain; }
+
+.nav-logo {
+  height: 36px;
+  width: auto;
+}
+
+/* ===== BUTTONS ===== */
 .btn-brand-glow {
-  background: linear-gradient(135deg, #84cc16 0%, #10b981 100%);
+  background: linear-gradient(135deg, #85bb3a 0%, #10b981 100%);
   color: #022c22;
   font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.1rem;
   border: none;
-  border-radius: 9999px;
-  padding: 0.6rem 1.4rem;
-  font-size: 0.9rem;
+  border-radius: 10px;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(132, 204, 22, 0.35);
-  cursor: pointer;
-  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
-.btn-brand-glow:hover { transform: translateY(-2px); color: #000; }
+.btn-brand-glow:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(133, 187, 58, 0.4); }
+.btn-brand-glow:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
 .btn-glass-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
-  font-weight: 600;
-  border-radius: 9999px;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cbd5e1;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
   cursor: pointer;
-  text-decoration: none;
-}
-.btn-glass-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-.hero-stats-card {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 2rem;
-}
-.title-main { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; }
-.subtitle-main { color: #94a3b8; margin-bottom: 0; font-size: 0.95rem; }
-.stat-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 0.8rem 1.4rem;
-  text-align: center;
-}
-.stat-number { display: block; font-size: 1.8rem; font-weight: 800; line-height: 1; }
-.stat-label {
-  display: block;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: #94a3b8;
-  letter-spacing: 0.05em;
-  margin-top: 0.3rem;
-}
-.alert-glass {
-  border-radius: 12px;
-  padding: 1rem 1.2rem;
-  display: flex;
-  align-items: center;
-  font-size: 0.95rem;
-  backdrop-filter: blur(12px);
-}
-.alert-success { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #6ee7b7; }
-.alert-danger { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; }
-.empty-state-card {
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 4rem 2rem;
-}
-.empty-icon-circle {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: rgba(132, 204, 22, 0.1);
-  color: #84cc16;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
 }
-.cancha-card {
+.btn-glass-secondary:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+/* ===== CARDS ===== */
+.hero-stats-card {
   background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(16px);
+  border: 1px solid rgba(133, 187, 58, 0.15);
+  border-radius: 20px;
+  padding: 1.75rem;
+}
+
+.empty-state-card {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.cancha-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  height: 100%;
+  padding: 1.4rem;
   display: flex;
   flex-direction: column;
+  transition: transform 0.2s, border-color 0.2s;
 }
 .cancha-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(132, 204, 22, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+  border-color: rgba(133, 187, 58, 0.3);
 }
+
+/* ===== BADGES & PILLS ===== */
 .badge-deporte {
   background: rgba(6, 182, 212, 0.15);
-  color: #38bdf8;
-  font-size: 0.75rem;
+  color: #22d3ee;
+  font-size: 0.7rem;
   font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 0.3rem 0.7rem;
-  border-radius: 9999px;
-  display: inline-block;
 }
-.cancha-name { font-size: 1.25rem; font-weight: 700; color: #fff; }
+
+.badge-count {
+  background: rgba(133, 187, 58, 0.2);
+  color: #a3e635;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
 .status-pill {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  padding: 0.25rem 0.6rem;
-  border-radius: 9999px;
-  background: rgba(148, 163, 184, 0.15);
-  color: #94a3b8;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
 }
-.status-active {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+.status-active { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.status-inactive { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+.prestacion-badge {
+  background: rgba(133, 187, 58, 0.1);
+  border: 1px solid rgba(133, 187, 58, 0.25);
+  color: #bef264;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
 }
-.cancha-details { display: flex; justify-content: space-between; margin-top: 1rem; }
-.detail-item { display: flex; flex-direction: column; }
-.detail-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; }
-.detail-value { font-size: 0.95rem; color: #cbd5e1; }
-.card-divider { border: none; border-top: 1px solid rgba(255, 255, 255, 0.06); margin: 1rem 0; }
-.horarios-section { flex-grow: 1; }
-.horarios-title {
-  font-size: 0.85rem;
+
+.sport-tag {
+  background: rgba(6, 182, 212, 0.15);
+  color: #22d3ee;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: #94a3b8;
+  padding: 0.18rem 0.5rem;
+  border-radius: 5px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
 }
-.horarios-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.horario-chip {
-  background: rgba(255, 255, 255, 0.04);
+
+.price-tag {
+  color: #a3e635;
+  font-weight: 800;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+/* ===== STAT BOXES ===== */
+.stat-box {
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 0.35rem 0.6rem;
-  font-size: 0.78rem;
+  border-radius: 12px;
+  padding: 0.75rem 1.1rem;
+  text-align: center;
+  min-width: 70px;
+}
+.stat-number { display: block; font-size: 1.5rem; font-weight: 800; color: #fff; }
+.stat-label { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ===== CANCHA INFO ===== */
+.info-row { display: flex; align-items: center; gap: 0.4rem; }
+
+.horarios-box {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
 }
-.chip-dia { font-weight: 700; color: #84cc16; }
-.chip-horas { color: #e2e8f0; }
+
+.slot-badge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.btn-edit {
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-edit:hover { background: rgba(99,102,241,0.3); color: #fff; }
+
+.btn-delete {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #f87171;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-delete:hover { background: rgba(239,68,68,0.25); color: #fff; }
+
+/* ===== ALERTS ===== */
+.alert-glass {
+  border-radius: 12px;
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.alert-success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); color: #34d399; }
+.alert-danger { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #f87171; }
+
+/* ===== EMPTY ICON ===== */
+.empty-icon { font-size: 3rem; }
+
+/* ===== MODALES ===== */
 .modal-backdrop-custom {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  inset: 0;
   background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
-  z-index: 999;
+  backdrop-filter: blur(4px);
+  z-index: 1050;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
 }
+
 .modal-content-glass {
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 20, 15, 0.97);
+  border: 1px solid rgba(133, 187, 58, 0.2);
   border-radius: 20px;
-  padding: 2rem;
-  max-width: 620px;
+  padding: 1.75rem;
   width: 100%;
+  max-width: 580px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(133,187,58,0.3) transparent;
 }
+
 .modal-header-custom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 1rem;
+  gap: 1rem;
 }
+
 .btn-close-custom {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.08);
   border: none;
   color: #94a3b8;
-  font-size: 1.8rem;
-  line-height: 1;
+  font-size: 1.3rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
 }
-.btn-close-custom:hover { color: #fff; }
+.btn-close-custom:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.modal-footer-custom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ===== FORM ===== */
 .form-label-custom {
   display: block;
-  font-size: 0.85rem;
+  color: #94a3b8;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 0.4rem;
 }
+
 .form-control-glass {
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  padding: 0.6rem 0.9rem;
   color: #fff;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.form-control-glass:focus {
-  border-color: #84cc16;
-  box-shadow: 0 0 10px rgba(132, 204, 22, 0.3);
-}
-.form-control-glass option { background: #0f172a; color: #fff; }
-.btn-add-horario {
-  background: rgba(132, 204, 22, 0.2);
-  border: 1px solid rgba(132, 204, 22, 0.4);
-  color: #a3e635;
-  font-weight: 700;
-  padding: 0.45rem 0.8rem;
-  border-radius: 8px;
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-add-horario:hover { background: rgba(132, 204, 22, 0.3); color: #bef264; }
-.horarios-builder-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  background: rgba(0, 0, 0, 0.25);
-  padding: 0.75rem;
   border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  outline: none;
+  box-sizing: border-box;
 }
-.builder-chip {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
+.form-control-glass:focus { border-color: rgba(133, 187, 58, 0.5); }
+.form-control-glass option { background: #0f172a; color: #fff; }
+.form-control-sm { padding: 0.45rem 0.7rem; font-size: 0.85rem; }
+
+.card-divider { border-color: rgba(255, 255, 255, 0.08); }
+
+/* ===== HORARIOS BUILDER ===== */
+.btn-add-horario {
+  background: rgba(133, 187, 58, 0.15);
+  border: 1px solid rgba(133, 187, 58, 0.3);
+  color: #a3e635;
+  border-radius: 9px;
+  padding: 0.48rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  transition: all 0.2s;
+  height: 38px;
 }
-.btn-remove-chip {
-  background: transparent;
-  border: none;
-  color: #ef4444;
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-.text-brand-lime { color: #84cc16; }
+.btn-add-horario:hover { background: rgba(133,187,58,0.3); }
 
-.prestacion-badge {
-  background: rgba(132, 204, 22, 0.12);
-  border: 1px solid rgba(132, 204, 22, 0.35);
+.horarios-builder-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.builder-chip {
+  background: rgba(133, 187, 58, 0.1);
+  border: 1px solid rgba(133, 187, 58, 0.25);
   color: #bef264;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.3rem 0.75rem;
-  border-radius: 9999px;
-}
-
-.prestaciones-selector-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.prestacion-select-chip {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #cbd5e1;
-  border-radius: 9999px;
-  padding: 0.45rem 0.9rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem 0.3rem 0.8rem;
+  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
 }
 
-.prestacion-select-chip:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(132, 204, 22, 0.4);
-}
-
-.prestacion-select-chip.selected {
-  background: rgba(132, 204, 22, 0.2);
-  border-color: #84cc16;
-  color: #bef264;
-  font-weight: 600;
-}
-
-.check-indicator {
-  font-weight: 700;
-}
-
-.btn-delete-cancha {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+.btn-remove-chip {
+  background: rgba(239, 68, 68, 0.2);
+  border: none;
   color: #f87171;
-  border-radius: 8px;
-  padding: 0.3rem 0.45rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.75rem;
   cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.btn-remove-chip:hover { background: rgba(239,68,68,0.4); }
+
+/* ===== PRESTACIONES GRID ===== */
+.prestaciones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 0.5rem;
 }
 
-.btn-delete-cancha:hover {
-  background: rgba(239, 68, 68, 0.25);
-  color: #fecaca;
+.prestacion-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: left;
+  transition: all 0.2s;
+}
+.prestacion-chip:hover { border-color: rgba(133,187,58,0.3); color: #cbd5e1; }
+.prestacion-chip.selected {
+  background: rgba(133, 187, 58, 0.15);
+  border-color: rgba(133, 187, 58, 0.4);
+  color: #bef264;
+}
+.check-indicator {
+  font-weight: 700;
+  min-width: 14px;
+  color: #a3e635;
+}
+
+/* ===== TEXT UTILS ===== */
+.title-main { font-size: 1.5rem; font-weight: 800; color: #fff; }
+.text-brand-lime { color: #a3e635; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero-stats-card { padding: 1.25rem; }
+  .title-main { font-size: 1.2rem; }
+  .cancha-card { padding: 1.1rem; }
+  .modal-content-glass { padding: 1.25rem; }
+  .prestaciones-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .btn-brand-glow, .btn-glass-secondary { padding: 0.45rem 0.8rem; font-size: 0.8rem; }
+  .modal-content-glass { padding: 1rem; }
+  .prestaciones-grid { grid-template-columns: 1fr; }
+  .cancha-actions { flex-direction: column; }
 }

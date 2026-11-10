@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ComplejoService } from '../../../core/services/complejo.service';
-import { Cancha, Complejo, HorarioRequest, RegistrarCanchaRequest } from '../../../core/models/complejo.model';
+import { Cancha, Complejo, HorarioRequest, ModificarCanchaRequest, RegistrarCanchaRequest } from '../../../core/models/complejo.model';
 
 @Component({
   selector: 'app-canchas-admin',
@@ -19,7 +19,7 @@ export class CanchasAdminComponent implements OnInit {
   errorMessage: string = '';
   successMessage: string = '';
 
-  // Modal Complejo (CU-09.1 y CU-09.2)
+  // Modal Complejo (CU-11.1 y CU-11.2)
   showComplejoModal: boolean = false;
   isSavingComplejo: boolean = false;
   complejoNombre: string = '';
@@ -38,53 +38,37 @@ export class CanchasAdminComponent implements OnInit {
     'Alquiler de equipamiento'
   ];
 
-  // Modal Cancha (CU-10)
+  // Modal Cancha - Registrar / Editar (CU-12.1 y CU-12.2)
   showModal: boolean = false;
   isSaving: boolean = false;
+  modoEdicion: boolean = false;
+  canchaEditandoId: number | null = null;
 
-  // New Court model
   nombre: string = '';
   deporte: string = 'Futbol 5';
   tipoSuelo: string = 'Cesped Sintetico';
   precioTurno: number | null = null;
 
-  // Schedule slot builder
   nuevoDiaSemana: number = 1;
   nuevaHoraInicio: string = '18:00';
   nuevaHoraFin: string = '23:00';
   horariosAgregados: HorarioRequest[] = [];
 
   readonly diasSemanaMap: { [key: number]: string } = {
-    1: 'Lunes',
-    2: 'Martes',
-    3: 'Miercoles',
-    4: 'Jueves',
-    5: 'Viernes',
-    6: 'Sabado',
-    7: 'Domingo'
+    1: 'Lunes', 2: 'Martes', 3: 'Miercoles', 4: 'Jueves',
+    5: 'Viernes', 6: 'Sabado', 7: 'Domingo'
   };
 
   readonly deportesDisponibles: string[] = [
-    'Futbol 5',
-    'Futbol 7',
-    'Futbol 11',
-    'Padel',
-    'Tenis',
-    'Basquet'
+    'Futbol 5', 'Futbol 7', 'Futbol 11', 'Padel', 'Tenis', 'Basquet'
   ];
 
   readonly tiposSueloDisponibles: string[] = [
-    'Cesped Sintetico',
-    'Cristal / Alfombra',
-    'Polvo de Ladrillo',
-    'Cemento Pulido',
-    'Parquet'
+    'Cesped Sintetico', 'Cristal / Alfombra', 'Polvo de Ladrillo',
+    'Cemento Pulido', 'Parquet'
   ];
 
-  constructor(
-    private complejoService: ComplejoService,
-    private router: Router
-  ) {}
+  constructor(private complejoService: ComplejoService, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarDatosIniciales();
@@ -115,15 +99,15 @@ export class CanchasAdminComponent implements OnInit {
       error: (err) => {
         this.isLoading = false;
         if (err.status === 400 && err.error?.error?.includes('previamente')) {
-          this.errorMessage = 'Aun no tienes un complejo registrado. Registra los datos de tu complejo para comenzar a cargar tus canchas.';
+          this.errorMessage = 'Aun no tienes un complejo registrado. Registra los datos de tu complejo para comenzar a cargar canchas.';
         } else {
-          this.errorMessage = err.error?.error || 'No se pudieron cargar las canchas del complejo.';
+          this.errorMessage = err.error?.error || 'No se pudieron cargar las canchas.';
         }
       }
     });
   }
 
-  // --- Gestión del Complejo (CU-09.1 y CU-09.2) ---
+  // --- CU-11.1 y CU-11.2: Gestión del Complejo ---
 
   abrirModalComplejo(): void {
     if (this.miComplejo) {
@@ -186,7 +170,7 @@ export class CanchasAdminComponent implements OnInit {
       next: (complejoActualizado) => {
         this.isSavingComplejo = false;
         this.miComplejo = complejoActualizado;
-        this.successMessage = `¡Datos y prestaciones de "${complejoActualizado.nombre}" guardados exitosamente!`;
+        this.successMessage = `Datos del complejo "${complejoActualizado.nombre}" guardados exitosamente.`;
         this.cerrarModalComplejo();
         this.cargarCanchas();
       },
@@ -197,15 +181,35 @@ export class CanchasAdminComponent implements OnInit {
     });
   }
 
-  // --- Gestión de Canchas y Horarios (CU-10 y CU-11) ---
+  // --- CU-12.1: Registrar Cancha ---
 
   abrirModal(): void {
     if (!this.miComplejo) {
-      alert('Primero debes registrar los datos de tu Complejo Deportivo antes de agregar canchas.');
+      alert('Primero debes registrar los datos de tu Complejo Deportivo.');
       this.abrirModalComplejo();
       return;
     }
+    this.modoEdicion = false;
+    this.canchaEditandoId = null;
     this.limpiarFormulario();
+    this.showModal = true;
+  }
+
+  // --- CU-12.2: Modificar Datos de Cancha ---
+
+  abrirModalEditar(cancha: Cancha): void {
+    this.modoEdicion = true;
+    this.canchaEditandoId = cancha.id ?? null;
+    this.nombre = cancha.nombre;
+    this.deporte = cancha.deporte;
+    this.tipoSuelo = cancha.tipoSuelo;
+    this.precioTurno = cancha.precioTurno;
+    // Cargar horarios existentes
+    this.horariosAgregados = (cancha.horarios || []).map(h => ({
+      diaSemana: h.diaSemana,
+      horaInicio: this.formatearHora(h.horaInicio),
+      horaFin: this.formatearHora(h.horaFin)
+    }));
     this.showModal = true;
   }
 
@@ -219,12 +223,10 @@ export class CanchasAdminComponent implements OnInit {
       alert('Debes indicar tanto la hora de inicio como la de fin.');
       return;
     }
-
     if (this.nuevaHoraInicio >= this.nuevaHoraFin) {
-      alert('La hora de inicio debe ser estrictamente anterior a la hora de fin.');
+      alert('La hora de inicio debe ser anterior a la hora de fin.');
       return;
     }
-
     const formattedInicio = this.nuevaHoraInicio.length === 5 ? `${this.nuevaHoraInicio}:00` : this.nuevaHoraInicio;
     const formattedFin = this.nuevaHoraFin.length === 5 ? `${this.nuevaHoraFin}:00` : this.nuevaHoraFin;
 
@@ -249,46 +251,67 @@ export class CanchasAdminComponent implements OnInit {
       return;
     }
     if (this.horariosAgregados.length === 0) {
-      if (!confirm('No has asignado ninguna franja horaria. ¿Deseas guardar la cancha sin horarios por ahora?')) {
+      if (!confirm('No asignaste ninguna franja horaria. ¿Deseas guardar la cancha sin horarios por ahora?')) {
         return;
       }
     }
-
-    const payload: RegistrarCanchaRequest = {
-      nombre: this.nombre.trim(),
-      deporte: this.deporte,
-      tipoSuelo: this.tipoSuelo,
-      precioTurno: this.precioTurno,
-      horarios: this.horariosAgregados
-    };
 
     this.isSaving = true;
     this.errorMessage = '';
     this.successMessage = '';
 
-    this.complejoService.registrarCancha(payload).subscribe({
-      next: (nuevaCancha) => {
-        this.isSaving = false;
-        this.successMessage = `¡Cancha "${nuevaCancha.nombre}" registrada exitosamente!`;
-        this.cerrarModal();
-        this.cargarCanchas();
-      },
-      error: (err) => {
-        this.isSaving = false;
-        this.errorMessage = err.error?.error || 'Error al guardar la cancha.';
-      }
-    });
+    if (this.modoEdicion && this.canchaEditandoId) {
+      const payload: ModificarCanchaRequest = {
+        nombre: this.nombre.trim(),
+        deporte: this.deporte,
+        tipoSuelo: this.tipoSuelo,
+        precioTurno: this.precioTurno,
+        horarios: this.horariosAgregados
+      };
+      this.complejoService.modificarCancha(this.canchaEditandoId, payload).subscribe({
+        next: (canchaActualizada) => {
+          this.isSaving = false;
+          this.successMessage = `Cancha "${canchaActualizada.nombre}" modificada exitosamente.`;
+          this.cerrarModal();
+          this.cargarCanchas();
+        },
+        error: (err) => {
+          this.isSaving = false;
+          this.errorMessage = err.error?.error || 'Error al modificar la cancha.';
+        }
+      });
+    } else {
+      const payload: RegistrarCanchaRequest = {
+        nombre: this.nombre.trim(),
+        deporte: this.deporte,
+        tipoSuelo: this.tipoSuelo,
+        precioTurno: this.precioTurno,
+        horarios: this.horariosAgregados
+      };
+      this.complejoService.registrarCancha(payload).subscribe({
+        next: (nuevaCancha) => {
+          this.isSaving = false;
+          this.successMessage = `Cancha "${nuevaCancha.nombre}" registrada exitosamente.`;
+          this.cerrarModal();
+          this.cargarCanchas();
+        },
+        error: (err) => {
+          this.isSaving = false;
+          this.errorMessage = err.error?.error || 'Error al guardar la cancha.';
+        }
+      });
+    }
   }
+
+  // --- CU-12.3: Dar de Baja Cancha ---
 
   eliminarCancha(cancha: Cancha): void {
     if (!cancha.id) return;
-    if (!confirm(`¿Estás seguro de que deseas dar de baja la cancha "${cancha.nombre}"? Se eliminarán también sus horarios asociados.`)) {
+    if (!confirm(`¿Estas seguro de que deseas dar de baja la cancha "${cancha.nombre}"? Se eliminaran tambien sus horarios asociados.`)) {
       return;
     }
-
     this.errorMessage = '';
     this.successMessage = '';
-
     this.complejoService.eliminarCancha(cancha.id).subscribe({
       next: () => {
         this.successMessage = `Cancha "${cancha.nombre}" eliminada correctamente.`;

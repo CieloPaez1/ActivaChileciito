@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface CanchaRepositoryPort {
     Cancha guardar(Cancha cancha);
+    Cancha actualizar(Long id, Cancha cancha);
     Optional<Cancha> buscarPorId(Long id);
     List<Cancha> buscarPorComplejoId(Long complejoId);
     List<Cancha> buscarPorComplejoIdYActiva(Long complejoId, boolean activa);

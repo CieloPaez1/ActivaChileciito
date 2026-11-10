@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap, map } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse, RegisterRequest, Usuario, Rol } from '../models/usuario';
 
@@ -10,7 +10,6 @@ import { LoginRequest, LoginResponse, RegisterRequest, Usuario, Rol } from '../m
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
   
-  // Guardamos el estado de autenticaciÃ³n en un BehaviorSubject para reaccionar a cambios en la UI
   private currentUserSubject = new BehaviorSubject<Usuario | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -18,21 +17,21 @@ export class AuthService {
     this.checkToken();
   }
 
-  // Verifica si hay token al iniciar
   public checkToken() {
     const token = this.getToken();
     if (token) {
       try {
         if (token.startsWith('jwt-token-')) {
-          // Mock token from backend (e.g. jwt-token-email@ejemplo.com-uuid)
           const email = token.split('-')[2];
           this.currentUserSubject.next({ email: email, rol: Rol.DEPORTISTA } as Usuario);
         } else {
-          // Decode real JWT base64
+          // Decodificar JWT
           const payload = JSON.parse(atob(token.split('.')[1]));
+          const rolExtraido = payload.rol || payload.role || payload.Rol || Rol.DEPORTISTA;
           const usuarioInfo: Partial<Usuario> = {
+            id: payload.id,
             email: payload.sub,
-            rol: payload.role as Rol
+            rol: rolExtraido as Rol
           };
           this.currentUserSubject.next(usuarioInfo as Usuario);
         }
@@ -47,7 +46,7 @@ export class AuthService {
       tap(response => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
-          this.checkToken(); // Actualiza el subject
+          this.checkToken();
         }
       })
     );
@@ -64,7 +63,6 @@ export class AuthService {
   executePasswordReset(token: string, nuevaClave: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/password-reset/execute`, { token, nuevaClave });
   }
-
 
   logout(): void {
     localStorage.removeItem('token');

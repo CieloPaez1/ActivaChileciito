@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import output.UsuarioOutput;
 import usecase.EliminarCanchaUseCase;
 import usecase.GestionarComplejoUseCase;
+import usecase.ModificarCanchaUseCase;
 import usecase.ObtenerCanchasPorComplejoUseCase;
 import usecase.RegistrarCanchaUseCase;
 import usecase.RegistrarComplejoUseCase;
@@ -34,6 +35,13 @@ public class ComplejoConfig {
             CanchaRepositoryPort canchaRepositoryPort,
             UsuarioOutput usuarioOutput) {
         return new RegistrarCanchaUseCase(complejoRepositoryPort, canchaRepositoryPort, usuarioOutput);
+    }
+
+    @Bean
+    public ModificarCanchaUseCase modificarCanchaUseCase(
+            ComplejoRepositoryPort complejoRepositoryPort,
+            CanchaRepositoryPort canchaRepositoryPort) {
+        return new ModificarCanchaUseCase(complejoRepositoryPort, canchaRepositoryPort);
     }
 
     @Bean

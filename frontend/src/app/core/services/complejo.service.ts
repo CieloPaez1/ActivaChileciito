@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Cancha, Complejo, RegistrarCanchaRequest } from '../models/complejo.model';
+import { Cancha, Complejo, ModificarCanchaRequest, RegistrarCanchaRequest } from '../models/complejo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,10 @@ export class ComplejoService {
 
   registrarCancha(cancha: RegistrarCanchaRequest): Observable<Cancha> {
     return this.http.post<Cancha>(`${this.apiUrl}/canchas`, cancha);
+  }
+
+  modificarCancha(canchaId: number, request: ModificarCanchaRequest): Observable<Cancha> {
+    return this.http.put<Cancha>(`${this.apiUrl}/canchas/${canchaId}`, request);
   }
 
   obtenerMisCanchas(): Observable<Cancha[]> {

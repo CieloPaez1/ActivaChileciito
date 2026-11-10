@@ -16,37 +16,37 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: AuthPageComponent },
   { path: 'register', component: AuthPageComponent },
-  { 
-    path: 'forgot-password', 
-    loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) 
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./features/auth/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
   },
-  { 
-    path: 'reset-password', 
-    loadComponent: () => import('./features/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent) 
+  {
+    path: 'reset-password',
+    loadComponent: () => import('./features/auth/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
-  { 
-    path: 'dashboard', 
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard]
   },
-  { 
-    path: 'complejos', 
-    loadComponent: () => import('./features/complejo/explorar-complejos/explorar-complejos.component').then(m => m.ExplorarComplejosComponent),
-    canActivate: [authGuard]
+  {
+    // CU_13 y CU_14: accesible por Visitante y Usuario Autenticado (sin authGuard)
+    path: 'complejos',
+    loadComponent: () => import('./features/complejo/explorar-complejos/explorar-complejos.component').then(m => m.ExplorarComplejosComponent)
   },
-  { 
-    path: 'complejo/canchas', 
+  {
+    path: 'complejo/canchas',
     loadComponent: () => import('./features/complejo/canchas-admin/canchas-admin.component').then(m => m.CanchasAdminComponent),
     canActivate: [authGuard, roleGuard],
     data: { roles: ['DUENO_DE_COMPLEJO'] }
   },
-  { 
-    path: 'perfil', 
+  {
+    path: 'perfil',
     component: PerfilComponent,
     canActivate: [authGuard]
   },
-  { 
-    path: 'admin/usuarios', 
+  {
+    path: 'admin/usuarios',
     component: UsuariosComponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['DUENO_DE_COMPLEJO'] }

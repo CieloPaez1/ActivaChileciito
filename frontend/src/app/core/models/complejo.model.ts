@@ -31,6 +31,15 @@ export interface RegistrarCanchaRequest {
   horarios: HorarioRequest[];
 }
 
+export interface ModificarCanchaRequest {
+  nombre?: string;
+  deporte?: string;
+  tipoSuelo?: string;
+  precioTurno?: number;
+  activa?: boolean;
+  horarios?: HorarioRequest[];
+}
+
 export interface Complejo {
   id?: number;
   usuarioId?: number;
